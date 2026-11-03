@@ -95,17 +95,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
+
 ?>
 
-
 <!DOCTYPE html>
-
 <html lang="pt-br">
 
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Cadastrar ADMs e Usuários</title>
@@ -125,287 +123,246 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <body>
 
-<header class="cabecalho">
+    <header class="cabecalho">
 
-      <h2>
+        <h2>
             <img src="../assets/icons/TREM_AZUL.svg" alt="">
             Bem vindo, Administrador
         </h2>
 
-         <a href="../logout.php">
-    <img src="../assets/icons/exit.svg" class="item" alt="Sair">
-</a>
-
-</header>
-
-
-<div class="layout">
-
-    <aside class="menu-lateral">
-
-        <a href="tela_inicial.php" class="item">
-
-            <img
-                src="../assets/icons/dashboard_branco.svg"
-                alt="">
-
-            Dashboard
-
+        <a href="../logout.php">
+            <img src="../assets/icons/exit.svg" class="item" alt="Sair">
         </a>
 
+    </header>
 
-        <a href="gerenciar_sensores.php" class="item">
+    <div class="layout">
 
-            <img
-                src="../assets/icons/sensor_branco.svg"
-                alt="">
+        <aside class="menu-lateral">
 
-            Sensores
+            <a href="tela_inicial.php" class="item">
 
-        </a>
+                <img src="../assets/icons/dashboard_branco.svg" alt="">
 
+                Dashboard
 
-        <a href="rotas.php" class="item">
+            </a>
 
-            <img src="../assets/icons/relatorio_branco.svg" alt="">
+            <a href="gerenciar_sensores.php" class="item">
 
-            Rotas
+                <img src="../assets/icons/sensor_branco.svg" alt="">
 
-        </a>
+                Sensores
 
+            </a>
 
-        <a href="cadastro_admin.php" class="item ativo">
+            <a href="rotas.php" class="item">
 
-            <img
-                src="../assets/icons/cadastrar_preto.svg"
-                alt="">
+                <img src="../assets/icons/relatorio_branco.svg" alt="">
 
-            Cadastrar ADMs e Usuários
+                Rotas
 
-        </a>
+            </a>
 
+            <a href="cadastro_admin.php" class="item ativo">
 
-        <a href="usuarios_cadastrados.php" class="item">
-
-            <img
-                src="../assets/icons/usuarios_branco.svg"
-                alt="">
-
-            Usuários Cadastrados
-
-        </a>
-
-    </aside>
-
-
-    <main class="conteudo">
-
-        <div class="planilha_dashboard"
-            style="max-width: 800px; margin: 0 auto; padding: 30px;">
-
-            <h2 style="margin-bottom: 25px; color: white;">
+                <img src="../assets/icons/cadastrar_preto.svg" alt="">
 
                 Cadastrar ADMs e Usuários
 
-            </h2>
+            </a>
 
+            <a href="usuarios_cadastrados.php" class="item">
 
-            <?php if ($mensagem != ""): ?>
+                <img src="../assets/icons/usuarios_branco.svg" alt="">
 
-                <div class="alert alert-success">
+                Usuários Cadastrados
 
-                    <?= htmlspecialchars($mensagem) ?>
+            </a>
 
-                </div>
+        </aside>
 
-            <?php endif; ?>
+        <main class="conteudo">
 
+            <div class="planilha_dashboard cadastro_container">
 
-            <?php if ($erro != ""): ?>
+                <h2 class="titulo_cadastro">
+                    Cadastrar ADMs e Usuários
+                </h2>
 
-                <div class="alert alert-danger">
+                <?php if ($mensagem != ""): ?>
 
-                    <?= htmlspecialchars($erro) ?>
+                    <div class="alert alert-success">
 
-                </div>
-
-            <?php endif; ?>
-
-
-            <form method="POST">
-
-
-                <div class="row">
-
-                 <input
-        type="hidden"
-        name="csrf_token"
-        value="<?= e(gerarTokenCsrf()) ?>"
-    >
-
-
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label" style="color: white;">
-
-                            Nome completo
-
-                        </label>
-
-                        <input
-                            type="text"
-                            name="nome"
-                            class="form-control"
-                            placeholder="Digite o nome completo"
-                            value="<?= htmlspecialchars($_POST["nome"] ?? "") ?>"
-                            required>
+                        <?= htmlspecialchars($mensagem) ?>
 
                     </div>
 
+                <?php endif; ?>
 
-                    <div class="col-md-6 mb-3">
+                <?php if ($erro != ""): ?>
 
-                        <label class="form-label" style="color: white;">
+                    <div class="alert alert-danger">
 
-                            CPF
-
-                        </label>
-
-                        <input
-                            type="text"
-                            name="cpf"
-                            class="form-control"
-                            placeholder="Digite o CPF"
-                            value="<?= htmlspecialchars($_POST["cpf"] ?? "") ?>"
-                            required>
+                        <?= htmlspecialchars($erro) ?>
 
                     </div>
 
+                <?php endif; ?>
 
-                    <div class="col-md-6 mb-3">
+                <form method="POST">
 
-                        <label class="form-label" style="color: white;">
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="<?= e(gerarTokenCsrf()) ?>"
+                    >
 
-                            Telefone
+                    <div class="row">
 
-                        </label>
+                        <div class="col-md-6 mb-3">
 
-                        <input
-                            type="text"
-                            name="telefone"
-                            class="form-control"
-                            placeholder="Digite o telefone"
-                            value="<?= htmlspecialchars($_POST["telefone"] ?? "") ?>"
-                            required>
+                            <label class="form-label">
+                                Nome completo
+                            </label>
+
+                            <input
+                                type="text"
+                                name="nome"
+                                class="form-control"
+                                placeholder="Digite o nome completo"
+                                value="<?= htmlspecialchars($_POST["nome"] ?? "") ?>"
+                                required>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                CPF
+                            </label>
+
+                            <input
+                                type="text"
+                                name="cpf"
+                                class="form-control"
+                                placeholder="Digite o CPF"
+                                value="<?= htmlspecialchars($_POST["cpf"] ?? "") ?>"
+                                required>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Telefone
+                            </label>
+
+                            <input
+                                type="text"
+                                name="telefone"
+                                class="form-control"
+                                placeholder="Digite o telefone"
+                                value="<?= htmlspecialchars($_POST["telefone"] ?? "") ?>"
+                                required>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                E-mail
+                            </label>
+
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control"
+                                placeholder="Digite o e-mail"
+                                value="<?= htmlspecialchars($_POST["email"] ?? "") ?>"
+                                required>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Senha
+                            </label>
+
+                            <input
+                                type="password"
+                                name="senha"
+                                class="form-control"
+                                placeholder="Digite a senha"
+                                required>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Tipo de acesso
+                            </label>
+
+                            <select
+                                name="tipo"
+                                class="form-select"
+                                required>
+
+                                <option value="">
+                                    Selecione o tipo
+                                </option>
+
+                                <option
+                                    value="usuario"
+                                    <?= ($_POST["tipo"] ?? "") == "usuario" ? "selected" : "" ?>>
+
+                                    Usuário
+
+                                </option>
+
+                                <option
+                                    value="administrador"
+                                    <?= ($_POST["tipo"] ?? "") == "administrador" ? "selected" : "" ?>>
+
+                                    Administrador
+
+                                </option>
+
+                            </select>
+
+                        </div>
 
                     </div>
 
+                    <div class="d-flex gap-2 mt-3">
 
-                    <div class="col-md-6 mb-3">
+                        <button
+                            type="submit"
+                            class="btn btn-primary">
 
-                        <label class="form-label" style="color: white;">
+                            Cadastrar
 
-                            E-mail
+                        </button>
 
-                        </label>
+                        <a
+                            href="usuarios_cadastrados.php"
+                            class="btn btn-secondary">
 
-                        <input
-                            type="email"
-                            name="email"
-                            class="form-control"
-                            placeholder="Digite o e-mail"
-                            value="<?= htmlspecialchars($_POST["email"] ?? "") ?>"
-                            required>
+                            Ver usuários cadastrados
 
-                    </div>
-
-
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label" style="color: white;">
-
-                            Senha
-
-                        </label>
-
-                        <input
-                            type="password"
-                            name="senha"
-                            class="form-control"
-                            placeholder="Digite a senha"
-                            required>
+                        </a>
 
                     </div>
 
+                </form>
 
-                    <div class="col-md-6 mb-3">
+            </div>
 
-                        <label class="form-label" style="color: white;">
+        </main>
 
-                            Tipo de acesso
-
-                        </label>
-
-                        <select
-                            name="tipo"
-                            class="form-select"
-                            required>
-
-                            <option value="">
-                                Selecione o tipo
-                            </option>
-
-                            <option
-                                value="usuario"
-                                <?= ($_POST["tipo"] ?? "") == "usuario" ? "selected" : "" ?>>
-
-                                Usuário
-
-                            </option>
-
-                            <option
-                                value="administrador"
-                                <?= ($_POST["tipo"] ?? "") == "administrador" ? "selected" : "" ?>>
-
-                                Administrador
-
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-                <div class="d-flex gap-2 mt-3">
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary">
-
-                        Cadastrar
-
-                    </button>
-
-                    <a
-                        href="usuarios_cadastrados.php"
-                        class="btn btn-secondary">
-
-                        Ver usuários cadastrados
-
-                    </a>
-
-                </div>
-
-
-            </form>
-
-        </div>
-
-    </main>
-
-</div>
+    </div>
 
 </body>
 

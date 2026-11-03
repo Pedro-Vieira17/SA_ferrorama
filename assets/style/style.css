@@ -516,3 +516,53 @@ body {
     }
 
 }
+
+.cadastro_container {
+    width: 100%;
+    max-width: none;
+    min-height: auto;
+    height: auto;
+    margin: 0;
+    padding: 30px;
+    border-radius: 20px;
+    background-color: #0f172a !important;
+}
+
+.titulo_cadastro {
+    color: white;
+    margin-bottom: 25px;
+    font-size: 28px;
+}
+
+.cadastro_container .form-label {
+    color: white;
+}
+
+.cadastro_container .form-control,
+.cadastro_container .form-select {
+    height: 45px;
+    border-radius: 7px;
+}
+
+.cadastro_container .row {
+    width: 100%;
+}
+
+.cadastro_container .btn {
+    padding: 9px 15px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 500px) {
+
+    .cadastro_container {
+        padding: 20px;
+        min-height: auto;
+    }
+
+    .titulo_cadastro {
+        font-size: 23px;
+    }
+
+}
