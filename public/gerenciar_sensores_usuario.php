@@ -166,106 +166,96 @@ $sensoresInativos = $statusData["Inativo"] ?? 0;
 
            
 
-        
-
-            <form action="gerenciar_sensores_usuario.php"
-                method="GET"
-                class="filtros_sensor d-flex flex-wrap gap-2 align-items-end mb-3">
-
-                <input
-                    type="hidden"
-                    name="pesquisa"
-                    value="<?= htmlspecialchars($pesquisa) ?>">
-
-                <div>
-
-                    <label for="tipo" class="form-label" style="color: white;">
-                        Tipo de Dado
-                    </label>
-
-                    <select name="tipo" id="tipo" class="form-select">
-
-                        <option value="">Todos</option>
-
-                        <?php while ($t = $listaTipos->fetch_assoc()) { ?>
-
-                            <option
-                                value="<?= htmlspecialchars($t["tipo_de_dado"]) ?>"
-                                <?= $filtroTipo === $t["tipo_de_dado"] ? "selected" : "" ?>>
-
-                                <?= htmlspecialchars($t["tipo_de_dado"]) ?>
-
-                            </option>
-
-                        <?php } ?>
-
-                    </select>
-
-                </div>
-
-                <div>
-
-                    <label for="trem" class="form-label" style="color: white;">
-                        Trem
-                    </label>
-
-                    <select name="trem" id="trem" class="form-select">
-
-                        <option value="">Todos</option>
-
-                        <?php while ($tr = $listaTrens->fetch_assoc()) { ?>
-
-                            <option
-                                value="<?= (int) $tr["id"] ?>"
-                                <?= $filtroTrem === (string) $tr["id"] ? "selected" : "" ?>>
-
-                                Trem <?= str_pad($tr["id"], 2, "0", STR_PAD_LEFT) ?>
-
-                            </option>
-
-                        <?php } ?>
-
-                    </select>
-
-                </div>
-
-                <div>
-
-                    <label for="status" class="form-label" style="color: white;">
-                        Status
-                    </label>
-
-                    <select name="status" id="status" class="form-select">
-
-                        <option value="">Todos</option>
-
-                        <?php while ($s = $listaStatus->fetch_assoc()) { ?>
-
-                            <option
-                                value="<?= htmlspecialchars($s["status"]) ?>"
-                                <?= $filtroStatus === $s["status"] ? "selected" : "" ?>>
-
-                                <?= htmlspecialchars($s["status"]) ?>
-
-                            </option>
-
-                        <?php } ?>
-
-                    </select>
-
-                </div>
-
-                <button type="submit" class="botao_cancelar">
-                    Filtrar
-                </button>
-
-                <a href="gerenciar_sensores_usuario.php" class="btn btn-secondary">
-                    Limpar
-                </a>
-
-            </form>
-
             <div class="planilha_dashboard">
+
+              <div class="cabecalho_planilha">
+
+                    <h3>Sensores Cadastrados</h3>
+
+                    <form action="gerenciar_sensores.php"
+                        method="GET"
+                        class="filtros_sensor">
+
+                        <input type="hidden" name="pesquisa" value="<?= htmlspecialchars($pesquisa) ?>">
+
+                        <div>
+                            <label for="tipo" class="form-label">Tipo de Dado</label>
+
+                            <select name="tipo" id="tipo" class="form-select">
+
+                                <option value="">Todos</option>
+
+                                <?php while ($t = $listaTipos->fetch_assoc()) { ?>
+
+                                    <option
+                                        value="<?= htmlspecialchars($t["tipo_de_dado"]) ?>"
+                                        <?= $filtroTipo === $t["tipo_de_dado"] ? "selected" : "" ?>>
+
+                                        <?= htmlspecialchars($t["tipo_de_dado"]) ?>
+
+                                    </option>
+
+                                <?php } ?>
+
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="trem" class="form-label">Trem</label>
+
+                            <select name="trem" id="trem" class="form-select">
+
+                                <option value="">Todos</option>
+
+                                <?php while ($tr = $listaTrens->fetch_assoc()) { ?>
+
+                                    <option
+                                        value="<?= (int)$tr["id"] ?>"
+                                        <?= $filtroTrem === (string)$tr["id"] ? "selected" : "" ?>>
+
+                                        Trem <?= str_pad($tr["id"], 2, "0", STR_PAD_LEFT) ?>
+
+                                    </option>
+
+                                <?php } ?>
+
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="status" class="form-label">Status</label>
+
+                            <select name="status" id="status" class="form-select">
+
+                                <option value="">Todos</option>
+
+                                <?php while ($s = $listaStatus->fetch_assoc()) { ?>
+
+                                    <option
+                                        value="<?= htmlspecialchars($s["status"]) ?>"
+                                        <?= $filtroStatus === $s["status"] ? "selected" : "" ?>>
+
+                                        <?= htmlspecialchars($s["status"]) ?>
+
+                                    </option>
+
+                                <?php } ?>
+
+                            </select>
+                        </div>
+
+                        <button type="submit" class="botao_cancelar">
+                            Filtrar
+                        </button>
+
+                        <a href="gerenciar_sensores.php" class="btn btn-secondary">
+                            Limpar
+                        </a>
+
+                    </form>
+
+
+                </div>
 
                 <div class="table-responsive">
 
