@@ -1,6 +1,8 @@
-* {
+Francisco Henrique Goulart Machado, Agora
+{
     box-sizing: border-box;
 }
+
 
 body {
     margin: 0;
@@ -8,6 +10,7 @@ body {
     color: white;
     overflow-x: hidden;
 }
+
 
 .cabecalho {
     display: flex;
@@ -20,11 +23,13 @@ body {
     width: 100%;
 }
 
+
 .layout {
     display: flex;
     width: 100%;
     min-height: calc(100vh - 70px);
 }
+
 
 .menu-lateral {
     width: 227px;
@@ -32,6 +37,7 @@ body {
     flex-shrink: 0;
    background-color: #0f172a;
 }
+
 
 .item {
     width: 100%;
@@ -46,15 +52,18 @@ body {
     box-sizing: border-box;
 }
 
+
 .item:hover {
     background-color: #cdcdcd;
 }
+
 
 .item.ativo {
     background-color: #dedede;
     font-weight: bold;
     color: black;
 }
+
 
 .conteudo {
     flex: 1;
@@ -63,6 +72,7 @@ body {
     padding: 25px;
     background-color: #2e3747 !important;
 }
+
 
 .titulo_sensores {
     display: flex;
@@ -73,15 +83,18 @@ body {
     flex-wrap: wrap;
 }
 
+
 .titulo_do_sensores {
     color: white;
     margin: 0;
 }
 
+
 .pesquisa_sensor {
     display: flex;
     align-items: center;
 }
+
 
 .campo-com-icone {
     background-image: url(../icons/lupa.svg);
@@ -93,6 +106,7 @@ body {
     max-width: 100%;
 }
 
+
 .planilha_dashboard {
     margin-top: 30px;
     border-radius: 20px;
@@ -103,16 +117,19 @@ body {
     background-color: #0f172a !important;
 }
 
+
 .grafico_sensores {
     width: 340px;
     max-width: 100%;
 }
+
 
 .table {
     width: 100%;
     margin-bottom: 0;
     background-color: transparent !important;
 }
+
 
 .table td,
 .table th,
@@ -122,25 +139,30 @@ body {
     color: white !important;
 }
 
+
 .filtros_sensor {
     width: 100%;
     max-width: 100%;
 }
+
 
 .botao_dashboard {
     border-style: none;
     background-color: #0f172a;
 }
 
+
 .status-ativo {
     color: rgb(0, 128, 0) !important;
     font-weight: bold;
 }
 
+
 .status-alerta {
     color: rgb(255, 0, 0) !important;
     font-weight: bold;
 }
+
 
 .informacoes_dashboard {
     display: flex;
@@ -148,6 +170,7 @@ body {
     flex-wrap: wrap;
     width: 100%;
 }
+
 
 .informacoes {
     background-color: #0f172a;
@@ -158,16 +181,19 @@ body {
     color: white;
 }
 
+
 .informacoes h3 {
     margin-top: 10px;
     font-size: 28px;
     color: white;
 }
 
+
 .informacoes h4 {
     white-space: nowrap;
     color: white;
 }
+
 
 .conteudo {
     flex: 1;
@@ -175,6 +201,7 @@ body {
     padding: 30px;
     background-color: #2e3747 !important;
 }
+
 
 .planilha_dashboard {
     margin-top: 50px;
@@ -185,17 +212,23 @@ body {
 
 
 
+
+
+
     
 }
+
 
 .container-sensor {
     width: 100%;
 }
 
+
 .titulo-sensor {
     color: white;
     margin-bottom: 30px;
 }
+
 
 .form-sensor {
     width: 100%;
@@ -205,21 +238,25 @@ body {
     border-radius: 16px;
 }
 
+
 .form-sensor .linha-formulario {
     display: flex;
     gap: 20px;
 }
+
 
 .grupo-input {
     width: 100%;
     margin-bottom: 20px;
 }
 
+
 .grupo-input label {
     display: block;
     color: white;
     margin-bottom: 7px;
 }
+
 
 .grupo-input input,
 .grupo-input select {
@@ -231,11 +268,13 @@ body {
     background: white;
 }
 
+
 .botoes-formulario {
     margin-top: 10px;
     display: flex;
     gap: 10px;
 }
+
 
 .botao_cancelar {
     border: none;
@@ -246,10 +285,12 @@ body {
     text-decoration: none;
 }
 
+
 .botao_cancelar:hover {
     background: #5c636a;
     color: white;
 }
+
 
 .btn-salvar {
     border: none;
@@ -259,21 +300,27 @@ body {
     color: white;
 }
 
+
 .btn-salvar:hover {
     background: #0b5ed7;
 }
 
+
 @media (max-width: 700px) {
+
 
     .form-sensor {
         padding: 25px;
     }
 
+
     .form-sensor .linha-formulario {
         display: block;
     }
 
+
 }
+
 
 .cabecalho_planilha {
     display: flex;
