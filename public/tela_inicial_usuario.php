@@ -2,6 +2,7 @@
 
 require_once "../infra/seguranca.php";
 require_once "../infra/conexao.php";
+require_once __DIR__ . '/clima.php';
 
 exigirLogin();
 
@@ -12,6 +13,10 @@ if (
     header("Location: ../index.php");
     exit;
 }
+
+// Clima (API Open-Meteo): cidade digitada pelo usuário, padrão Joinville
+$cidade = trim($_GET['cidade'] ?? '') ?: 'Joinville';
+$clima = obterClima($cidade);
 
 $sensores = $conexao->query(
     "SELECT COUNT(*) AS total FROM SENSORES"
@@ -158,6 +163,53 @@ $trens_cadastrados = $conexao->query(
             </div>
 
         </div>
+
+        <!-- ================= CLIMA (API Open-Meteo) ================= -->
+        <div class="planilha_dashboard mt-4 mb-4" style="padding: 24px; color: #d9d9d9;">
+
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+
+                <h3 class="fs-5 mb-0" style="color: #d9d9d9 !important;">
+                    <i class="bi bi-cloud-sun"></i>
+                    Clima
+                </h3>
+
+                <form method="get" class="d-flex gap-2">
+                    <input type="text" name="cidade" class="form-control form-control-sm"
+                        placeholder="Digite a cidade"
+                        value="<?= e($cidade) ?>">
+                    <button type="submit" class="btn btn-sm btn-primary">Ver clima</button>
+                </form>
+
+            </div>
+
+            <?php if ($clima): ?>
+
+                <h4 class="fs-6" style="color: #d9d9d9;">
+                    <i class="bi bi-geo-alt"></i>
+                    <?= e($clima['cidade']) ?>
+                </h4>
+
+                <div style="font-size: 2.2rem; font-weight: bold;">
+                    <?= (int) $clima['temperatura'] ?>°C
+                </div>
+
+                <div class="mb-2"><?= e($clima['condicao']) ?></div>
+
+                <small>
+                    Última atualização da API: <?= e($clima['atualizado']) ?><br>
+                    Consulta feita em: <?= e($clima['consultado']) ?><br>
+                    Dados: <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo.com</a>
+                </small>
+
+            <?php else: ?>
+
+                <p class="mb-0">Cidade não encontrada ou clima indisponível no momento.</p>
+
+            <?php endif; ?>
+
+        </div>
+        <!-- =========================================================== -->
 
         <div class="planilha_dashboard">
 
@@ -328,4 +380,3 @@ $trens_cadastrados = $conexao->query(
 
 </body>
 </html>
-```
