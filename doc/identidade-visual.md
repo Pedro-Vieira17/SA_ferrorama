@@ -2,48 +2,89 @@
 
 ## Ideia da interface
 
-A proposta foi manter o estilo escuro que o Ferrorama já tinha e fazer alguns ajustes para melhorar a leitura e aproximar as cores do tema ferroviário. Azul-marinho continua no cabeçalho, no menu e nos cartões. O verde destaca ações principais, e o amarelo é usado em títulos de tabela e foco. Os nomes dos status continuam aparecendo junto das cores.
+A identidade visual da Ferrorama foi desenvolvida para representar um sistema de monitoramento ferroviário inteligente, utilizando uma aparência moderna, tecnológica e organizada.
+
+A interface utiliza cores escuras, com predominância de azul-marinho e cinza azulado, além de cores de destaque para botões e estados dos elementos monitorados.
 
 ## O que observamos
 
-Na revisão do CSS e das páginas existentes, vimos que o sistema já tinha menu lateral, cartões com indicadores e tabelas. Como várias telas usam o mesmo arquivo `assets/style/style.css`, fizemos os ajustes nele para manter o padrão e evitar mudanças na estrutura das páginas.
+Durante o desenvolvimento, buscamos manter um padrão visual entre as áreas de administrador e usuário.
 
-Também identificamos alguns pontos para melhorar: o foco do teclado não era muito evidente, o menu lateral ocupava espaço em telas pequenas e o login podia ficar apertado no celular.
+O sistema possui dashboards, gráficos, tabelas e formulários para gerenciamento de usuários, trens, sensores e rotas.
+
+A utilização de um CSS compartilhado ajuda a manter as mesmas cores, espaçamentos e estilos nas diferentes páginas.
 
 ## Cores
 
-| Cor | Código | Uso |
-| --- | --- | --- |
-| Azul-marinho | `#0f172a` | Cabeçalho, menu e cartões |
-| Cinza azulado | `#2e3747` | Fundo das páginas |
-| Verde | `#176b63` | Botões principais e página selecionada |
-| Verde escuro | `#10564f` | Estado hover dos botões |
-| Amarelo | `#f0c36d` | Destaques e foco do teclado |
-| Branco | `#ffffff` | Textos e campos |
+A paleta foi definida considerando a proposta tecnológica e ferroviária do sistema.
 
-Escolhemos o verde e o azul por serem cores sóbrias para uma ferramenta de monitoramento. O amarelo serve como destaque e lembra a sinalização de atenção usada no contexto ferroviário. Vermelho e verde dos status existentes continuam indicando situações específicas, sempre acompanhados do texto do status.
+| Cor | Código HEX | Utilização |
+|---|---|---|
+| Azul-marinho | `#0f172a` | Cabeçalho, menu, cartões e tabelas |
+| Cinza azulado | `#2e3747` | Fundo das páginas |
+| Cinza claro | `#cdcdcd` | Efeito hover do menu |
+| Cinza muito claro | `#dedede` | Menu selecionado |
+| Branco | `#ffffff` | Textos e títulos |
+| Verde | `#008000` | Status ativo |
+| Vermelho | `#ff0000` | Alertas |
+| Azul | `#0d6efd` | Botões de salvar |
+| Cinza | `#6c757d` | Botões de cancelar |
+
+O azul-marinho transmite tecnologia e organização. O cinza diferencia as áreas da interface, enquanto o verde e o vermelho facilitam a identificação dos estados dos elementos monitorados.
 
 ## Tipografia e organização
 
-Mantivemos a fonte padrão do navegador para não depender de downloads externos. Também mantivemos os ícones e imagens que já fazem parte do projeto. As telas continuam com a mesma estrutura; os ajustes foram feitos principalmente nas cores de botões, no item selecionado do menu, no foco dos campos e no comportamento em telas estreitas.
+A interface utiliza textos simples, priorizando a leitura das informações. O CSS analisado não define uma família de fontes específica.
 
-## Mudanças feitas
+As páginas são organizadas com cabeçalho, menu lateral e área principal. Os dashboards utilizam cartões e gráficos, enquanto as páginas de gerenciamento apresentam tabelas e formulários.
 
-- Botões principais e item selecionado do menu passaram a usar verde.
-- O foco de campos e links ficou mais visível para quem navega pelo teclado.
-- Em telas estreitas, o menu pode ser rolado na horizontal e o conteúdo usa a largura disponível.
-- A imagem da tela de login fica limitada para não ocupar a tela toda no celular.
+## Usabilidade e responsividade
 
-## Testes e próximos passos
+O sistema utiliza Bootstrap e Flexbox para organizar os elementos da interface.
 
-As alterações foram feitas no CSS compartilhado. Ainda é necessário abrir as páginas no navegador e conferir os tamanhos de computador e celular, além de testar formulários, tabelas, gráficos e navegação por teclado. Não incluímos capturas de tela porque elas precisam ser feitas com o sistema em execução.
+O CSS também possui adaptações para telas menores, como a reorganização dos formulários de sensores e a utilização de rolagem horizontal nas tabelas.
 
-Antes de finalizar a entrega, a equipe deve verificar o contraste das combinações de cores com uma ferramenta de acessibilidade e adicionar capturas reais de antes e depois, caso tenha a versão anterior disponível.
+Alguns pontos que merecem melhorias são o contraste do menu ao passar o mouse, a visibilidade do foco pelo teclado e o comportamento do menu lateral em celulares.
+
+## Inteligência artificial e uso consciente
+
+Utilizamos o ChatGPT como ferramenta de apoio à pesquisa, organização das ideias, compreensão da teoria das cores e sugestões de melhorias visuais.
+
+As sugestões foram avaliadas considerando as necessidades reais da Ferrorama. A inteligência artificial foi utilizada como auxílio, sem substituir as decisões e a participação da equipe.
+
+## Ferramentas utilizadas
+
+- Visual Studio Code: edição do código.
+- Bootstrap 5: organização dos componentes.
+- HTML, CSS, JavaScript e PHP: desenvolvimento do sistema.
+- MySQL: armazenamento dos dados.
+- GitHub: controle e armazenamento do projeto.
+- Google Chrome: visualização das páginas.
+- ChatGPT: apoio à pesquisa e documentação.
+
+## Testes e melhorias
+
+Durante a análise do CSS, identificamos alguns pontos que precisam de atenção:
+
+- Melhorar o contraste de alguns elementos do menu.
+- Verificar a navegação pelo teclado.
+- Testar o menu e as tabelas em celulares.
+- Conferir a legibilidade dos estados dos trens e sensores.
+- Organizar algumas regras CSS repetidas.
+
+Os testes de acessibilidade e responsividade ainda precisam ser realizados e registrados pela equipe.
+
+## Considerações finais
+
+A identidade visual da Ferrorama busca unir tecnologia, organização e facilidade de utilização.
+
+A padronização das cores, tabelas, formulários e dashboards permite que as diferentes páginas tenham a mesma aparência e facilita a identificação das informações.
+
+A pesquisa também mostrou que uma boa interface precisa considerar não apenas a aparência, mas também a acessibilidade e a facilidade de uso.
 
 ## Referências
 
-- WCAG 2.2, contraste de texto: https://www.w3.org/TR/WCAG22/#contrast-minimum
-- Bootstrap 5, tabelas responsivas: https://getbootstrap.com/docs/5.3/content/tables/#responsive-tables
-- Código do próprio Ferrorama: `assets/style/style.css` e páginas de login, dashboard, sensores e rotas.
-
-A documentação foi escrita com auxílio de IA e deve ser revisada pela equipe para confirmar que corresponde às decisões e aos testes realizados.
+- Bootstrap 5.3: https://getbootstrap.com/docs/5.3/
+- WebAIM – Verificador de contraste: https://webaim.org/resources/contrastchecker/
+- OpenAI – ChatGPT: https://chatgpt.com/
+- Projeto Ferrorama: arquivo `assets/style/style.css` e demais arquivos do frontend.
