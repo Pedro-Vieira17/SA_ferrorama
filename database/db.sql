@@ -14,16 +14,19 @@ CREATE TABLE USUARIO (
     tipo ENUM('usuario', 'administrador') NOT NULL DEFAULT 'usuario'
 ) ENGINE=InnoDB;
 
-CREATE TABLE TRENS (
+CREATE TABLE USUARIO (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    localizacao VARCHAR(150) NOT NULL,
-    tipo_de_dado VARCHAR(50) NOT NULL,
-    horario TIME NULL,
-    status ENUM('Ativo', 'Inativo', 'Manutenção', 'Alerta') NOT NULL DEFAULT 'Ativo',
-    usuario_id INT NULL,
-    CONSTRAINT fk_trens_usuario
-        FOREIGN KEY (usuario_id) REFERENCES USUARIO(id)
-        ON DELETE SET NULL ON UPDATE CASCADE
+    CPF VARCHAR(14) NOT NULL UNIQUE,
+    telefone VARCHAR(20) NOT NULL,
+    nome VARCHAR(150) NOT NULL,
+    email VARCHAR(180) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    tipo ENUM('usuario', 'administrador') NOT NULL DEFAULT 'usuario',
+    cep CHAR(8) NULL,
+    logradouro VARCHAR(200) NULL,
+    bairro VARCHAR(100) NULL,
+    cidade VARCHAR(100) NULL,
+    uf CHAR(2) NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE SENSORES (
