@@ -1,8 +1,6 @@
-Francisco Henrique Goulart Machado, Agora
-{
+* {
     box-sizing: border-box;
 }
-
 
 body {
     margin: 0;
@@ -11,6 +9,7 @@ body {
     overflow-x: hidden;
 }
 
+/* CABEÇALHO PRINCIPAL */
 
 .cabecalho {
     display: flex;
@@ -23,6 +22,31 @@ body {
     width: 100%;
 }
 
+.cabecalho h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    font-size: 28px;
+}
+
+.cabecalho h2 img {
+    width: 20px;
+    height: 20px;
+}
+
+.cabecalho > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cabecalho > a img {
+    width: 25px;
+    height: 25px;
+}
+
+/* ESTRUTURA PRINCIPAL */
 
 .layout {
     display: flex;
@@ -30,14 +54,14 @@ body {
     min-height: calc(100vh - 70px);
 }
 
+/* MENU LATERAL */
 
 .menu-lateral {
     width: 227px;
     min-width: 207px;
     flex-shrink: 0;
-   background-color: #0f172a;
+    background-color: #0f172a;
 }
-
 
 .item {
     width: 100%;
@@ -52,11 +76,15 @@ body {
     box-sizing: border-box;
 }
 
+.item img {
+    width: 20px;
+    height: 20px;
+}
 
 .item:hover {
     background-color: #cdcdcd;
+    color: black;
 }
-
 
 .item.ativo {
     background-color: #dedede;
@@ -64,15 +92,17 @@ body {
     color: black;
 }
 
+/* CONTEÚDO */
 
 .conteudo {
     flex: 1;
     min-width: 0;
-    width: calc(100% - 207px);
-    padding: 25px;
+    width: calc(100% - 227px);
+    padding: 12px 25px 25px;
     background-color: #2e3747 !important;
 }
 
+/* TÍTULOS */
 
 .titulo_sensores {
     display: flex;
@@ -83,18 +113,22 @@ body {
     flex-wrap: wrap;
 }
 
-
 .titulo_do_sensores {
     color: white;
     margin: 0;
 }
 
+.titulo-sensor {
+    color: white;
+    margin-bottom: 30px;
+}
+
+/* PESQUISA */
 
 .pesquisa_sensor {
     display: flex;
     align-items: center;
 }
-
 
 .campo-com-icone {
     background-image: url(../icons/lupa.svg);
@@ -106,63 +140,178 @@ body {
     max-width: 100%;
 }
 
+/* PLANILHA */
 
 .planilha_dashboard {
-    margin-top: 30px;
+    margin-top: 20px;
     border-radius: 20px;
     padding: 20px;
     width: 100%;
     max-width: 100%;
-    overflow-x: auto;
     background-color: #0f172a !important;
+    overflow-x: auto;
 }
 
+/* CABEÇALHO DA PLANILHA */
+
+.cabecalho_planilha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    flex-wrap: nowrap;
+    margin-bottom: 15px;
+}
+
+.cabecalho_planilha h3 {
+    color: white;
+    margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* FILTROS DOS SENSORES */
+
+.filtros_sensor {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    width: auto;
+    max-width: 100%;
+    margin: 0;
+    flex-wrap: nowrap;
+}
+
+.filtros_sensor > div {
+    flex-shrink: 0;
+}
+
+.filtros_sensor .form-label {
+    color: white;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.filtros_sensor .form-select {
+    min-width: 100px;
+    height: 35px;
+    font-size: 14px;
+}
+
+.filtros_sensor button,
+.filtros_sensor a {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.botao_cancelar {
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: #6c757d;
+    color: white;
+    text-decoration: none;
+}
+
+.botao_cancelar:hover {
+    background: #5c636a;
+    color: white;
+}
+
+.botao_cadastrar_sensor {
+    flex-shrink: 0;
+    text-align: center;
+}
+
+/* TABELA */
+
+.tabela_responsiva {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 0;
+    background-color: transparent !important;
+    color: white !important;
+}
+
+.table td,
+.table th,
+.table tr,
+.table tbody,
+.table thead {
+    background-color: #0f172a !important;
+    color: white !important;
+}
+
+.table th {
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.table td {
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.table td,
+.table th {
+    padding: 10px 8px;
+}
+
+.table tbody tr:hover td,
+.table tbody tr:hover th {
+    background-color: #17233b !important;
+}
+
+.form_excluir_sensor {
+    display: inline;
+}
+
+.nenhum_sensor {
+    text-align: center;
+    color: #b3b3b3 !important;
+    padding: 25px !important;
+}
+
+.quantidade_sensores {
+    margin-top: 12px;
+    color: #b3b3b3;
+}
+
+/* GRÁFICOS */
 
 .grafico_sensores {
     width: 340px;
     max-width: 100%;
 }
 
-
-.table {
-    width: 100%;
-    margin-bottom: 0;
-    background-color: transparent !important;
-}
-
-
-.table td,
-.table th,
-.table tr,
-.table tbody {
-    background-color: #0f172a !important;
-    color: white !important;
-}
-
-
-.filtros_sensor {
-    width: 100%;
-    max-width: 100%;
-}
-
+/* BOTÕES DO DASHBOARD */
 
 .botao_dashboard {
     border-style: none;
     background-color: #0f172a;
 }
 
+/* STATUS */
 
 .status-ativo {
     color: rgb(0, 128, 0) !important;
     font-weight: bold;
 }
 
-
 .status-alerta {
     color: rgb(255, 0, 0) !important;
     font-weight: bold;
 }
 
+/* INFORMAÇÕES DO DASHBOARD */
 
 .informacoes_dashboard {
     display: flex;
@@ -170,7 +319,6 @@ body {
     flex-wrap: wrap;
     width: 100%;
 }
-
 
 .informacoes {
     background-color: #0f172a;
@@ -181,54 +329,22 @@ body {
     color: white;
 }
 
-
 .informacoes h3 {
     margin-top: 10px;
     font-size: 28px;
     color: white;
 }
 
-
 .informacoes h4 {
     white-space: nowrap;
     color: white;
 }
 
-
-.conteudo {
-    flex: 1;
-    min-width: 0;
-    padding: 30px;
-    background-color: #2e3747 !important;
-}
-
-
-.planilha_dashboard {
-    margin-top: 50px;
-    border-radius: 20px;
-    padding: 20px;
-    width: 100%;
-    background-color: #0f172a !important;
-
-
-
-
-
-
-    
-}
-
+/* FORMULÁRIO DE SENSORES */
 
 .container-sensor {
     width: 100%;
 }
-
-
-.titulo-sensor {
-    color: white;
-    margin-bottom: 30px;
-}
-
 
 .form-sensor {
     width: 100%;
@@ -238,25 +354,21 @@ body {
     border-radius: 16px;
 }
 
-
 .form-sensor .linha-formulario {
     display: flex;
     gap: 20px;
 }
-
 
 .grupo-input {
     width: 100%;
     margin-bottom: 20px;
 }
 
-
 .grupo-input label {
     display: block;
     color: white;
     margin-bottom: 7px;
 }
-
 
 .grupo-input input,
 .grupo-input select {
@@ -268,29 +380,11 @@ body {
     background: white;
 }
 
-
 .botoes-formulario {
     margin-top: 10px;
     display: flex;
     gap: 10px;
 }
-
-
-.botao_cancelar {
-    border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-    background: #6c757d;
-    color: white;
-    text-decoration: none;
-}
-
-
-.botao_cancelar:hover {
-    background: #5c636a;
-    color: white;
-}
-
 
 .btn-salvar {
     border: none;
@@ -300,30 +394,125 @@ body {
     color: white;
 }
 
-
 .btn-salvar:hover {
     background: #0b5ed7;
 }
 
+/* RESPONSIVIDADE */
+
+@media (max-width: 1400px) {
+
+    .cabecalho_planilha {
+        flex-wrap: wrap;
+    }
+
+    .filtros_sensor {
+        flex-wrap: wrap;
+    }
+
+}
+
+@media (max-width: 900px) {
+
+    .conteudo {
+        padding: 15px;
+    }
+
+    .menu-lateral {
+        width: 190px;
+        min-width: 190px;
+    }
+
+    .cabecalho_planilha {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .filtros_sensor {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .botao_cadastrar_sensor {
+        width: 100%;
+    }
+
+}
 
 @media (max-width: 700px) {
 
+    .cabecalho {
+        height: 60px;
+    }
+
+    .cabecalho h2 {
+        font-size: 20px;
+    }
+
+    .layout {
+        min-height: calc(100vh - 60px);
+    }
+
+    .menu-lateral {
+        width: 65px;
+        min-width: 65px;
+    }
+
+    .menu-lateral .item {
+        justify-content: center;
+        padding: 15px 5px;
+        font-size: 0;
+    }
+
+    .menu-lateral .item img {
+        width: 22px;
+        height: 22px;
+    }
+
+    .conteudo {
+        padding: 12px;
+    }
+
+    .planilha_dashboard {
+        padding: 15px;
+    }
+
+    .cabecalho_planilha {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cabecalho_planilha h3 {
+        white-space: normal;
+    }
+
+    .filtros_sensor {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .filtros_sensor > div,
+    .filtros_sensor .form-select {
+        width: 100%;
+    }
+
+    .filtros_sensor button,
+    .filtros_sensor a {
+        width: 100%;
+    }
+
+    .botao_cadastrar_sensor {
+        width: 100%;
+    }
 
     .form-sensor {
         padding: 25px;
     }
 
-
     .form-sensor .linha-formulario {
         display: block;
     }
 
-
-}
-
-
-.cabecalho_planilha {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
