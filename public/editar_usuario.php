@@ -152,7 +152,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <body>
 
-    <div class="container vh-100 d-flex align-items-center justify-content-center">
+    <!-- min-vh-100 + py-4: com os campos de endereço a tela fica mais alta que a janela -->
+    <div class="container min-vh-100 py-4 d-flex align-items-center justify-content-center">
 
         <div class="p-4" style="max-width: 400px; width: 100%;">
 
@@ -245,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <select
                     id="tipo"
                     name="tipo"
-                    class="form-select mb-4"
+                    class="form-select mb-3"
                     required
                 >
                     <option
@@ -262,6 +263,80 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         Administrador
                     </option>
                 </select>
+
+                <!-- ============ ENDEREÇO (API ViaCEP) ============ -->
+
+                <label for="cep" class="form-label" style="color: white;">
+                    CEP
+                </label>
+
+                <input
+                    type="text"
+                    id="cep"
+                    name="cep"
+                    class="form-control"
+                    placeholder="00000-000"
+                    maxlength="9"
+                    autocomplete="off"
+                    value="<?= e($_POST["cep"] ?? "") ?>"
+                >
+
+                <small id="cep-msg" class="d-block mb-3"></small>
+
+                <label for="logradouro" class="form-label" style="color: white;">
+                    Logradouro
+                </label>
+
+                <input
+                    type="text"
+                    id="logradouro"
+                    name="logradouro"
+                    class="form-control mb-3"
+                    placeholder="Rua, avenida..."
+                    value="<?= e($_POST["logradouro"] ?? "") ?>"
+                >
+
+                <label for="bairro" class="form-label" style="color: white;">
+                    Bairro
+                </label>
+
+                <input
+                    type="text"
+                    id="bairro"
+                    name="bairro"
+                    class="form-control mb-3"
+                    placeholder="Bairro"
+                    value="<?= e($_POST["bairro"] ?? "") ?>"
+                >
+
+                <label for="cidade" class="form-label" style="color: white;">
+                    Cidade
+                </label>
+
+                <input
+                    type="text"
+                    id="cidade"
+                    name="cidade"
+                    class="form-control mb-3"
+                    placeholder="Cidade"
+                    value="<?= e($_POST["cidade"] ?? "") ?>"
+                >
+
+                <label for="uf" class="form-label" style="color: white;">
+                    UF
+                </label>
+
+                <input
+                    type="text"
+                    id="uf"
+                    name="uf"
+                    class="form-control mb-4"
+                    placeholder="UF"
+                    maxlength="2"
+                    value="<?= e($_POST["uf"] ?? "") ?>"
+                >
+
+                <!-- =============================================== -->
 
                 <div class="d-flex gap-2">
 
@@ -286,6 +361,71 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
 
     </div>
+
+<script>
+    const cepInput = document.getElementById("cep");
+    const cepMsg = document.getElementById("cep-msg");
+    const camposEndereco = ["logradouro", "bairro", "cidade", "uf"];
+
+    function limparEndereco() {
+        camposEndereco.forEach(function (id) {
+            document.getElementById(id).value = "";
+        });
+    }
+
+    // Máscara: 12345678 -> 12345-678
+    cepInput.addEventListener("input", function () {
+        let v = cepInput.value.replace(/\D/g, "").slice(0, 8);
+        if (v.length > 5) {
+            v = v.slice(0, 5) + "-" + v.slice(5);
+        }
+        cepInput.value = v;
+    });
+
+    async function buscarCep() {
+
+        if (cepInput.value.trim() === "") {
+            cepMsg.textContent = "";
+            return;
+        }
+
+        cepMsg.textContent = "Consultando...";
+        cepMsg.style.color = "#d9d9d9";
+
+        try {
+
+            const res = await fetch(
+                "buscar_cep.php?cep=" + encodeURIComponent(cepInput.value)
+            );
+
+            const dados = await res.json();
+
+            if (!res.ok) {
+                cepMsg.textContent = dados.erro || "Erro ao consultar o CEP.";
+                cepMsg.style.color = "#ff6b6b";
+                limparEndereco();
+                return;
+            }
+
+            cepInput.value = dados.cep;
+
+            camposEndereco.forEach(function (id) {
+                document.getElementById(id).value = dados[id];
+            });
+
+            cepMsg.textContent = "CEP válido ✔";
+            cepMsg.style.color = "#2ecc71";
+
+        } catch (e) {
+
+            cepMsg.textContent = "Erro de conexão com o servidor. Tente novamente.";
+            cepMsg.style.color = "#ff6b6b";
+            limparEndereco();
+        }
+    }
+
+    cepInput.addEventListener("blur", buscarCep);
+</script>
 
 </body>
 

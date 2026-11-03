@@ -334,6 +334,95 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                         </div>
 
+                        <!-- ============ ENDEREÇO (API ViaCEP) ============ -->
+
+                        <div class="col-md-4 mb-3">
+
+                            <label class="form-label">
+                                CEP
+                            </label>
+
+                            <input
+                                type="text"
+                                id="cep"
+                                name="cep"
+                                class="form-control"
+                                placeholder="00000-000"
+                                maxlength="9"
+                                autocomplete="off"
+                                value="<?= htmlspecialchars($_POST["cep"] ?? "") ?>">
+
+                            <small id="cep-msg"></small>
+
+                        </div>
+
+                        <div class="col-md-8 mb-3">
+
+                            <label class="form-label">
+                                Logradouro
+                            </label>
+
+                            <input
+                                type="text"
+                                id="logradouro"
+                                name="logradouro"
+                                class="form-control"
+                                placeholder="Rua, avenida..."
+                                value="<?= htmlspecialchars($_POST["logradouro"] ?? "") ?>">
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+
+                            <label class="form-label">
+                                Bairro
+                            </label>
+
+                            <input
+                                type="text"
+                                id="bairro"
+                                name="bairro"
+                                class="form-control"
+                                placeholder="Bairro"
+                                value="<?= htmlspecialchars($_POST["bairro"] ?? "") ?>">
+
+                        </div>
+
+                        <div class="col-md-5 mb-3">
+
+                            <label class="form-label">
+                                Cidade
+                            </label>
+
+                            <input
+                                type="text"
+                                id="cidade"
+                                name="cidade"
+                                class="form-control"
+                                placeholder="Cidade"
+                                value="<?= htmlspecialchars($_POST["cidade"] ?? "") ?>">
+
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+
+                            <label class="form-label">
+                                UF
+                            </label>
+
+                            <input
+                                type="text"
+                                id="uf"
+                                name="uf"
+                                class="form-control"
+                                placeholder="UF"
+                                maxlength="2"
+                                value="<?= htmlspecialchars($_POST["uf"] ?? "") ?>">
+
+                        </div>
+
+                        <!-- =============================================== -->
+
                     </div>
 
                     <div class="d-flex gap-2 mt-3">
