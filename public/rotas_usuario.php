@@ -70,14 +70,6 @@ $rotas = $conexao->query($sql);
 
         <div class="container-sensor">
 
-            <h1 class="titulo-sensor" style="color: white;">
-                <i class="bi bi-signpost-2"></i>
-                Rotas
-            </h1>
-
-            <p style="color: white;">
-                Consulte as rotas cadastradas e as informações dos trens.
-            </p>
 
             <div class="planilha_dashboard table-responsive">
 

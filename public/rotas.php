@@ -100,25 +100,23 @@ $rotas = $conexao->query($sql);
 
             <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
 
-                <div>
-                    <h1 class="titulo-sensor" style="color: white;">
-                        <i class="bi bi-signpost-2"></i>
-                        Rotas
-                    </h1>
 
-                    <p style="color: white;">
-                        Gerenciamento das rotas dos trens.
-                    </p>
-                </div>
+               
 
-                <a href="cadastrar_rota.php" class="btn btn-primary">
+            </div>
+
+            <div class="planilha_dashboard">
+
+            <div class="cabecalho_planilha">
+
+                <h3 style="color: white;">Rotas Cadastradas</h3>
+
+               <a href="cadastrar_rota.php" class="btn btn-primary">
                     <i class="bi bi-plus-circle"></i>
                     Cadastrar Rota
                 </a>
 
             </div>
-
-            <div class="planilha_dashboard">
 
                 <table class="table table-borderless">
 

@@ -164,53 +164,9 @@ $sensoresInativos = $statusData["Inativo"] ?? 0;
 
         <main class="conteudo">
 
-            <div class="titulo_sensores">
+           
 
-                <h2 class="titulo_do_sensores">
-                    Sensores
-                </h2>
-
-            </div>
-
-            <div class="planilha_dashboard mb-4"
-                style="max-width: 480px; padding: 28px;">
-
-                <h3 class="fs-5 text-center mb-3"
-                    style="color: #d9d9d9 !important;">
-                    Funcionamento dos Sensores
-                </h3>
-
-                <div style="width: 320px; height: 320px; max-width: 100%; margin: 0 auto;">
-                    <canvas id="graficoSensores"></canvas>
-                </div>
-
-                <div class="d-flex justify-content-around text-center mt-3 flex-wrap gap-3"
-                    style="color: #d9d9d9;">
-
-                    <div>
-                        <div style="font-size: 1.8rem; font-weight: bold; color: #2ecc71;">
-                            <?= $sensoresAtivos ?>
-                        </div>
-                        <small>Ativo</small>
-                    </div>
-
-                    <div>
-                        <div style="font-size: 1.8rem; font-weight: bold; color: #f1c40f;">
-                            <?= $sensoresManutencao ?>
-                        </div>
-                        <small>Manutenção</small>
-                    </div>
-
-                    <div>
-                        <div style="font-size: 1.8rem; font-weight: bold; color: #95a5a6;">
-                            <?= $sensoresInativos ?>
-                        </div>
-                        <small>Inativo</small>
-                    </div>
-
-                </div>
-
-            </div>
+        
 
             <form action="gerenciar_sensores_usuario.php"
                 method="GET"
