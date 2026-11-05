@@ -13,7 +13,8 @@ if ($id === false || $id === null || $id <= 0) {
 }
 
 $stmt = $conexao->prepare(
-    "SELECT id, nome, CPF, telefone, email, tipo
+    "SELECT id, nome, CPF, telefone, email, tipo,
+            cep, logradouro, bairro, cidade, uf
      FROM USUARIO
      WHERE id = ?"
 );
@@ -42,6 +43,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = trim($_POST["email"] ?? "");
     $tipo = $_POST["tipo"] ?? "";
 
+    $cep = preg_replace('/\D/', '', $_POST["cep"] ?? "");
+    $logradouro = trim($_POST["logradouro"] ?? "");
+    $bairro = trim($_POST["bairro"] ?? "");
+    $cidade = trim($_POST["cidade"] ?? "");
+    $uf = strtoupper(trim($_POST["uf"] ?? ""));
+
     if (
         $nome === "" ||
         $cpf === "" ||
@@ -58,6 +65,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     } elseif (strlen($cpf) !== 11) {
         $erro = "CPF inválido.";
+
+    } elseif ($cep !== "" && strlen($cep) !== 8) {
+        $erro = "CEP inválido.";
+
+    } elseif ($uf !== "" && !preg_match('/^[A-Z]{2}$/', $uf)) {
+        $erro = "UF inválida.";
 
     } else {
 
@@ -81,17 +94,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $stmt = $conexao->prepare(
                 "UPDATE USUARIO
-                 SET nome = ?, CPF = ?, telefone = ?, email = ?, tipo = ?
+                 SET nome = ?, CPF = ?, telefone = ?, email = ?, tipo = ?,
+                     cep = ?, logradouro = ?, bairro = ?, cidade = ?, uf = ?
                  WHERE id = ?"
             );
 
             $stmt->bind_param(
-                "sssssi",
+                "ssssssssssi",
                 $nome,
                 $cpf,
                 $telefone,
                 $email,
                 $tipo,
+                $cep,
+                $logradouro,
+                $bairro,
+                $cidade,
+                $uf,
                 $id
             );
 
@@ -115,6 +134,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $usuario["telefone"] = $telefone;
                 $usuario["email"] = $email;
                 $usuario["tipo"] = $tipo;
+                $usuario["cep"] = $cep;
+                $usuario["logradouro"] = $logradouro;
+                $usuario["bairro"] = $bairro;
+                $usuario["cidade"] = $cidade;
+                $usuario["uf"] = $uf;
 
             } else {
                 $erro = "Não foi possível atualizar o usuário.";
@@ -122,6 +146,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
+
+// Valores exibidos no formulário: o que foi digitado (se houve erro) ou o que está salvo
+$cepSalvo = (string) ($usuario["cep"] ?? "");
+if (strlen($cepSalvo) === 8) {
+    $cepSalvo = substr($cepSalvo, 0, 5) . "-" . substr($cepSalvo, 5);
+}
+
+$vCep = $_POST["cep"] ?? $cepSalvo;
+$vLogradouro = $_POST["logradouro"] ?? ($usuario["logradouro"] ?? "");
+$vBairro = $_POST["bairro"] ?? ($usuario["bairro"] ?? "");
+$vCidade = $_POST["cidade"] ?? ($usuario["cidade"] ?? "");
+$vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
 
 ?>
 
@@ -278,7 +314,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     placeholder="00000-000"
                     maxlength="9"
                     autocomplete="off"
-                    value="<?= e($_POST["cep"] ?? "") ?>"
+                    value="<?= e($vCep) ?>"
                 >
 
                 <small id="cep-msg" class="d-block mb-3"></small>
@@ -293,7 +329,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     name="logradouro"
                     class="form-control mb-3"
                     placeholder="Rua, avenida..."
-                    value="<?= e($_POST["logradouro"] ?? "") ?>"
+                    value="<?= e($vLogradouro) ?>"
                 >
 
                 <label for="bairro" class="form-label" style="color: white;">
@@ -306,7 +342,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     name="bairro"
                     class="form-control mb-3"
                     placeholder="Bairro"
-                    value="<?= e($_POST["bairro"] ?? "") ?>"
+                    value="<?= e($vBairro) ?>"
                 >
 
                 <label for="cidade" class="form-label" style="color: white;">
@@ -319,7 +355,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     name="cidade"
                     class="form-control mb-3"
                     placeholder="Cidade"
-                    value="<?= e($_POST["cidade"] ?? "") ?>"
+                    value="<?= e($vCidade) ?>"
                 >
 
                 <label for="uf" class="form-label" style="color: white;">
@@ -333,7 +369,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     class="form-control mb-4"
                     placeholder="UF"
                     maxlength="2"
-                    value="<?= e($_POST["uf"] ?? "") ?>"
+                    value="<?= e($vUf) ?>"
                 >
 
                 <!-- =============================================== -->
