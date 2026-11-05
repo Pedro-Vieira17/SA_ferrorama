@@ -44,8 +44,18 @@ function h($valor) {
 </head>
 <body>
 <header class="cabecalho">
-    <h2><img src="../assets/icons/TREM_AZUL.svg" alt=""> Bem vindo, Administrador</h2>
-    <a href="../logout.php"><img src="../assets/icons/exit.svg" class="item" alt="Sair"></a>
+ 
+    <h2>
+        <img src="../assets/icons/TREM_AZUL.svg" alt="">
+        Bem vindo, <?= e($_SESSION["usuario_nome"] ?? "Administrador") ?>
+    </h2>
+ 
+    <span class="badge bg-primary ms-auto me-3">admin</span>
+ 
+    <a href="../logout.php">
+        <img src="../assets/icons/exit.svg" class="item" alt="Sair">
+    </a>
+ 
 </header>
 <div class="layout">
     <aside class="menu-lateral">
