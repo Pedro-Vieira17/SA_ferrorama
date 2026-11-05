@@ -114,17 +114,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             class="p-3"
             style="max-width: 400px; width: 100%;">
 
-            <div class="titulo">
+           <div class="titulo">
 
-                <h1 class="text-nowrap">
-                    🚄Sistema Ferroviário
-                </h1>
+    <h1 class="text-nowrap d-flex align-items-center gap-2">
+        <img src="assets/icons/TREM_AZUL.svg" alt="Ícone Trem" style="width: 32px; height: 32px;">
+        Sistema Ferroviário
+    </h1>
 
-                <p>
-                    Monitoramento em tempo real
-                </p>
+    <p>
+        Monitoramento em tempo real
+    </p>
 
-            </div>
+</div>
 
             <?php if ($erro !== ""): ?>
 
