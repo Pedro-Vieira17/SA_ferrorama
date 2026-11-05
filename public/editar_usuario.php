@@ -147,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-// Valores exibidos no formulário: o que foi digitado (se houve erro) ou o que está salvo
+// Valores exibidos no formulário: o que foi digitado em POST ou o que veio salvo do banco
 $cepSalvo = (string) ($usuario["cep"] ?? "");
 if (strlen($cepSalvo) === 8) {
     $cepSalvo = substr($cepSalvo, 0, 5) . "-" . substr($cepSalvo, 5);
@@ -343,7 +343,7 @@ $vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
                             placeholder="00000-000"
                             maxlength="9"
                             autocomplete="off"
-                            value="<?= e($_POST["cep"] ?? "") ?>"
+                            value="<?= e($vCep) ?>"
                         >
                         <small id="cep-msg" class="d-block mt-1"></small>
                     </div>
@@ -354,18 +354,6 @@ $vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
 
                 <div class="linha-formulario">
 
-<<<<<<< HEAD
-                <input
-                    type="text"
-                    id="cep"
-                    name="cep"
-                    class="form-control"
-                    placeholder="00000-000"
-                    maxlength="9"
-                    autocomplete="off"
-                    value="<?= e($vCep) ?>"
-                >
-=======
                     <div class="grupo-input">
                         <label for="logradouro" style="color: white;">Logradouro</label>
                         <input
@@ -373,10 +361,9 @@ $vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
                             id="logradouro"
                             name="logradouro"
                             placeholder="Rua, avenida..."
-                            value="<?= e($_POST["logradouro"] ?? "") ?>"
+                            value="<?= e($vLogradouro) ?>"
                         >
                     </div>
->>>>>>> d1c2d62a86ac473181ee0613f95f81fc1cc3da63
 
                     <div class="grupo-input">
                         <label for="bairro" style="color: white;">Bairro</label>
@@ -385,24 +372,13 @@ $vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
                             id="bairro"
                             name="bairro"
                             placeholder="Bairro"
-                            value="<?= e($_POST["bairro"] ?? "") ?>"
+                            value="<?= e($vBairro) ?>"
                         >
                     </div>
 
                 </div>
 
-<<<<<<< HEAD
-                <input
-                    type="text"
-                    id="logradouro"
-                    name="logradouro"
-                    class="form-control mb-3"
-                    placeholder="Rua, avenida..."
-                    value="<?= e($vLogradouro) ?>"
-                >
-=======
                 <div class="linha-formulario">
->>>>>>> d1c2d62a86ac473181ee0613f95f81fc1cc3da63
 
                     <div class="grupo-input">
                         <label for="cidade" style="color: white;">Cidade</label>
@@ -411,7 +387,7 @@ $vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
                             id="cidade"
                             name="cidade"
                             placeholder="Cidade"
-                            value="<?= e($_POST["cidade"] ?? "") ?>"
+                            value="<?= e($vCidade) ?>"
                         >
                     </div>
 
@@ -423,7 +399,7 @@ $vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
                             name="uf"
                             placeholder="UF"
                             maxlength="2"
-                            value="<?= e($_POST["uf"] ?? "") ?>"
+                            value="<?= e($vUf) ?>"
                         >
                     </div>
 
