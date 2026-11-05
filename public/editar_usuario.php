@@ -5,11 +5,7 @@ require_once "../infra/conexao.php";
 
 exigirAdministrador();
 
-$id = filter_input(
-    INPUT_GET,
-    "id",
-    FILTER_VALIDATE_INT
-);
+$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
 if ($id === false || $id === null || $id <= 0) {
     header("Location: usuarios_cadastrados.php");
@@ -17,7 +13,8 @@ if ($id === false || $id === null || $id <= 0) {
 }
 
 $stmt = $conexao->prepare(
-    "SELECT id, nome, CPF, telefone, email
+    "SELECT id, nome, CPF, telefone, email, tipo,
+            cep, logradouro, bairro, cidade, uf
      FROM USUARIO
      WHERE id = ?"
 );
@@ -44,6 +41,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $cpf = preg_replace('/\D/', '', $_POST["cpf"] ?? "");
     $telefone = preg_replace('/\D/', '', $_POST["telefone"] ?? "");
     $email = trim($_POST["email"] ?? "");
+    $tipo = $_POST["tipo"] ?? "";
+
+    $cep = preg_replace('/\D/', '', $_POST["cep"] ?? "");
+    $logradouro = trim($_POST["logradouro"] ?? "");
+    $bairro = trim($_POST["bairro"] ?? "");
+    $cidade = trim($_POST["cidade"] ?? "");
+    $uf = strtoupper(trim($_POST["uf"] ?? ""));
 
     if (
         $nome === "" ||
@@ -51,16 +55,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $telefone === "" ||
         $email === ""
     ) {
-
         $erro = "Preencha todos os campos.";
 
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    } elseif (!in_array($tipo, ["usuario", "administrador"], true)) {
+        $erro = "Tipo de acesso inválido.";
 
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erro = "Informe um e-mail válido.";
 
     } elseif (strlen($cpf) !== 11) {
-
         $erro = "CPF inválido.";
+
+    } elseif ($cep !== "" && strlen($cep) !== 8) {
+        $erro = "CEP inválido.";
+
+    } elseif ($uf !== "" && !preg_match('/^[A-Z]{2}$/', $uf)) {
+        $erro = "UF inválida.";
 
     } else {
 
@@ -72,39 +82,50 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
              LIMIT 1"
         );
 
-        $stmt->bind_param(
-            "ssi",
-            $email,
-            $cpf,
-            $id
-        );
-
+        $stmt->bind_param("ssi", $email, $cpf, $id);
         $stmt->execute();
 
         $resultado = $stmt->get_result();
 
         if ($resultado->num_rows > 0) {
-
             $erro = "E-mail ou CPF já está cadastrado.";
 
         } else {
 
             $stmt = $conexao->prepare(
                 "UPDATE USUARIO
-                 SET nome = ?, CPF = ?, telefone = ?, email = ?
+                 SET nome = ?, CPF = ?, telefone = ?, email = ?, tipo = ?,
+                     cep = ?, logradouro = ?, bairro = ?, cidade = ?, uf = ?
                  WHERE id = ?"
             );
 
             $stmt->bind_param(
-                "ssssi",
+                "ssssssssssi",
                 $nome,
                 $cpf,
                 $telefone,
                 $email,
+                $tipo,
+                $cep,
+                $logradouro,
+                $bairro,
+                $cidade,
+                $uf,
                 $id
             );
 
             if ($stmt->execute()) {
+
+                if (
+                    (int) $id === (int) ($_SESSION["usuario_id"] ?? 0) &&
+                    $tipo !== "administrador"
+                ) {
+                    session_unset();
+                    session_destroy();
+
+                    header("Location: ../index.php");
+                    exit;
+                }
 
                 $sucesso = "Usuário atualizado com sucesso.";
 
@@ -112,14 +133,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $usuario["CPF"] = $cpf;
                 $usuario["telefone"] = $telefone;
                 $usuario["email"] = $email;
+                $usuario["tipo"] = $tipo;
+                $usuario["cep"] = $cep;
+                $usuario["logradouro"] = $logradouro;
+                $usuario["bairro"] = $bairro;
+                $usuario["cidade"] = $cidade;
+                $usuario["uf"] = $uf;
 
             } else {
-
                 $erro = "Não foi possível atualizar o usuário.";
             }
         }
     }
 }
+
+// Valores exibidos no formulário: o que foi digitado em POST ou o que veio salvo do banco
+$cepSalvo = (string) ($usuario["cep"] ?? "");
+if (strlen($cepSalvo) === 8) {
+    $cepSalvo = substr($cepSalvo, 0, 5) . "-" . substr($cepSalvo, 5);
+}
+
+$vCep = $_POST["cep"] ?? $cepSalvo;
+$vLogradouro = $_POST["logradouro"] ?? ($usuario["logradouro"] ?? "");
+$vBairro = $_POST["bairro"] ?? ($usuario["bairro"] ?? "");
+$vCidade = $_POST["cidade"] ?? ($usuario["cidade"] ?? "");
+$vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
 
 ?>
 
@@ -129,64 +167,83 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Editar Usuário</title>
 
     <link rel="stylesheet" href="../assets/style/style.css">
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-        crossorigin="anonymous"
-    >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link
-        rel="icon"
-        href="../assets/icons/TREM_AZUL.svg"
-        type="image/x-icon"
-    >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="icon" href="../assets/icons/TREM_AZUL.svg" type="image/svg+xml">
 
 </head>
 
 <body>
 
-    <div class="container vh-100 d-flex align-items-center justify-content-center">
+<header class="cabecalho">
 
-        <div
-            class="p-4"
-            style="max-width: 400px; width: 100%;"
-        >
+    <h2>
+        <img src="../assets/icons/TREM_AZUL.svg" alt="">
+        Bem vindo, Administrador
+    </h2>
 
-            <div class="titulo mb-4" style="color: white;">
+    <a href="../logout.php">
+        <img src="../assets/icons/exit.svg" class="item" alt="Sair">
+    </a>
 
-                <h1>Editar Usuário</h1>
+</header>
 
-            </div>
+<div class="layout">
+
+    <aside class="menu-lateral">
+
+        <a href="tela_inicial.php" class="item">
+            <img src="../assets/icons/dashboard_branco.svg" alt="">
+            Dashboard
+        </a>
+
+        <a href="gerenciar_sensores.php" class="item">
+            <img src="../assets/icons/sensor_branco.svg" alt="">
+            Sensores
+        </a>
+
+        <a href="rotas.php" class="item">
+            <img src="../assets/icons/relatorio_branco.svg" alt="">
+            Rotas
+        </a>
+
+        <a href="cadastro_admin.php" class="item">
+            <img src="../assets/icons/cadastrar_branco.svg" alt="">
+            Cadastrar ADMs e Usuários
+        </a>
+
+        <a href="usuarios_cadastrados.php" class="item ativo">
+            <img src="../assets/icons/usuarios_preto.svg" alt="">
+            Usuários Cadastrados
+        </a>
+
+    </aside>
+
+    <main class="conteudo">
+
+        <div class="container-sensor">
 
             <?php if ($erro !== ""): ?>
-
                 <div class="alert alert-danger">
-
                     <?= e($erro) ?>
-
                 </div>
-
             <?php endif; ?>
 
             <?php if ($sucesso !== ""): ?>
-
                 <div class="alert alert-success">
-
                     <?= e($sucesso) ?>
-
                 </div>
-
             <?php endif; ?>
 
-            <form method="POST">
+            <form class="form-sensor" method="POST">
 
                 <input
                     type="hidden"
@@ -194,79 +251,176 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     value="<?= e(gerarTokenCsrf()) ?>"
                 >
 
-                <label for="nome" class="form-label" style="color: white;">
-                    Nome completo
-                </label>
+                <h3 style="color: white;">
+                    <i class="bi bi-person-gear"></i>
+                    Editar Usuário
+                </h3>
 
-                <input
-                    type="text"
-                    id="nome"
-                    name="nome"
-                    class="form-control mb-3"
-                    value="<?= e($usuario["nome"]) ?>"
-                    maxlength="200"
-                    required
-                >
+                <div class="linha-formulario">
 
-                <label for="cpf" class="form-label" style="color: white;">
-                    CPF
-                </label>
+                    <div class="grupo-input">
+                        <label for="nome" style="color: white;">Nome completo</label>
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            value="<?= e($usuario["nome"]) ?>"
+                            maxlength="200"
+                            required
+                        >
+                    </div>
 
-                <input
-                    type="text"
-                    id="cpf"
-                    name="cpf"
-                    class="form-control mb-3"
-                    value="<?= e($usuario["CPF"]) ?>"
-                    maxlength="11"
-                    inputmode="numeric"
-                    required
-                >
+                    <div class="grupo-input">
+                        <label for="cpf" style="color: white;">CPF</label>
+                        <input
+                            type="text"
+                            id="cpf"
+                            name="cpf"
+                            value="<?= e($usuario["CPF"]) ?>"
+                            maxlength="11"
+                            inputmode="numeric"
+                            required
+                        >
+                    </div>
 
-                <label for="telefone" class="form-label" style="color: white;">
-                    Telefone
-                </label>
+                </div>
 
-                <input
-                    type="text"
-                    id="telefone"
-                    name="telefone"
-                    class="form-control mb-3"
-                    value="<?= e($usuario["telefone"]) ?>"
-                    maxlength="15"
-                    inputmode="numeric"
-                    required
-                >
+                <div class="linha-formulario">
 
-                <label for="email" class="form-label" style="color: white;">
-                    E-mail
-                </label>
+                    <div class="grupo-input">
+                        <label for="telefone" style="color: white;">Telefone</label>
+                        <input
+                            type="text"
+                            id="telefone"
+                            name="telefone"
+                            value="<?= e($usuario["telefone"]) ?>"
+                            maxlength="15"
+                            inputmode="numeric"
+                            required
+                        >
+                    </div>
 
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    class="form-control mb-3"
-                    value="<?= e($usuario["email"]) ?>"
-                    maxlength="200"
-                    required
-                >
+                    <div class="grupo-input">
+                        <label for="email" style="color: white;">E-mail</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value="<?= e($usuario["email"]) ?>"
+                            maxlength="200"
+                            required
+                        >
+                    </div>
 
-                <div class="d-flex gap-2">
+                </div>
+
+                <div class="linha-formulario">
+
+                    <div class="grupo-input">
+                        <label for="tipo" style="color: white;">Tipo de acesso</label>
+                        <select id="tipo" name="tipo" required>
+                            <option
+                                value="usuario"
+                                <?= $usuario["tipo"] === "usuario" ? "selected" : "" ?>
+                            >
+                                Usuário
+                            </option>
+                            <option
+                                value="administrador"
+                                <?= $usuario["tipo"] === "administrador" ? "selected" : "" ?>
+                            >
+                                Administrador
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label for="cep" style="color: white;">CEP</label>
+                        <input
+                            type="text"
+                            id="cep"
+                            name="cep"
+                            placeholder="00000-000"
+                            maxlength="9"
+                            autocomplete="off"
+                            value="<?= e($vCep) ?>"
+                        >
+                        <small id="cep-msg" class="d-block mt-1"></small>
+                    </div>
+
+                </div>
+
+                <!-- ============ ENDEREÇO (API ViaCEP) ============ -->
+
+                <div class="linha-formulario">
+
+                    <div class="grupo-input">
+                        <label for="logradouro" style="color: white;">Logradouro</label>
+                        <input
+                            type="text"
+                            id="logradouro"
+                            name="logradouro"
+                            placeholder="Rua, avenida..."
+                            value="<?= e($vLogradouro) ?>"
+                        >
+                    </div>
+
+                    <div class="grupo-input">
+                        <label for="bairro" style="color: white;">Bairro</label>
+                        <input
+                            type="text"
+                            id="bairro"
+                            name="bairro"
+                            placeholder="Bairro"
+                            value="<?= e($vBairro) ?>"
+                        >
+                    </div>
+
+                </div>
+
+                <div class="linha-formulario">
+
+                    <div class="grupo-input">
+                        <label for="cidade" style="color: white;">Cidade</label>
+                        <input
+                            type="text"
+                            id="cidade"
+                            name="cidade"
+                            placeholder="Cidade"
+                            value="<?= e($vCidade) ?>"
+                        >
+                    </div>
+
+                    <div class="grupo-input">
+                        <label for="uf" style="color: white;">UF</label>
+                        <input
+                            type="text"
+                            id="uf"
+                            name="uf"
+                            placeholder="UF"
+                            maxlength="2"
+                            value="<?= e($vUf) ?>"
+                        >
+                    </div>
+
+                </div>
+
+                <!-- =============================================== -->
+
+                <div class="botoes-formulario">
 
                     <button
-                        type="submit"
-                        class="btn btn-primary"
+                        type="button"
+                        class="botao_cancelar"
+                        onclick="window.location.href='usuarios_cadastrados.php'"
                     >
-                        Salvar as alterações
+                        Cancelar
                     </button>
 
-                    <a
-                        href="usuarios_cadastrados.php"
-                        class="btn btn-secondary"
-                    >
-                        Voltar
-                    </a>
+                    <button type="submit" class="btn-salvar">
+                        <i class="bi bi-check-circle"></i>
+                        Salvar alterações
+                    </button>
 
                 </div>
 
@@ -274,7 +428,74 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         </div>
 
-    </div>
+    </main>
+
+</div>
+
+<script>
+    const cepInput = document.getElementById("cep");
+    const cepMsg = document.getElementById("cep-msg");
+    const camposEndereco = ["logradouro", "bairro", "cidade", "uf"];
+
+    function limparEndereco() {
+        camposEndereco.forEach(function (id) {
+            document.getElementById(id).value = "";
+        });
+    }
+
+    // Máscara: 12345678 -> 12345-678
+    cepInput.addEventListener("input", function () {
+        let v = cepInput.value.replace(/\D/g, "").slice(0, 8);
+        if (v.length > 5) {
+            v = v.slice(0, 5) + "-" + v.slice(5);
+        }
+        cepInput.value = v;
+    });
+
+    async function buscarCep() {
+
+        if (cepInput.value.trim() === "") {
+            cepMsg.textContent = "";
+            return;
+        }
+
+        cepMsg.textContent = "Consultando...";
+        cepMsg.style.color = "#d9d9d9";
+
+        try {
+
+            const res = await fetch(
+                "buscar_cep.php?cep=" + encodeURIComponent(cepInput.value)
+            );
+
+            const dados = await res.json();
+
+            if (!res.ok) {
+                cepMsg.textContent = dados.erro || "Erro ao consultar o CEP.";
+                cepMsg.style.color = "#ff6b6b";
+                limparEndereco();
+                return;
+            }
+
+            cepInput.value = dados.cep;
+
+            camposEndereco.forEach(function (id) {
+                document.getElementById(id).value = dados[id];
+            });
+
+            cepMsg.textContent = "CEP válido ✔";
+            cepMsg.style.color = "#2ecc71";
+
+        } catch (e) {
+
+            cepMsg.textContent = "Erro de conexão com o servidor. Tente novamente.";
+            cepMsg.style.color = "#ff6b6b";
+            limparEndereco();
+        }
+    }
+
+    cepInput.addEventListener("blur", buscarCep);
+</script>
 
 </body>
 

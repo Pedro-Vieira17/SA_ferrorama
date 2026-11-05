@@ -28,6 +28,7 @@ $usuarios = $stmt->get_result();
     <link rel="stylesheet" href="../assets/style/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
           <link rel="icon" href="../assets/icons/TREM_AZUL.svg" type="image/x-icon">
 </head>
 
@@ -42,7 +43,7 @@ $usuarios = $stmt->get_result();
             Bem vindo, Administrador
         </h2>
 
-         <a href="logout.php">
+         <a href="../logout.php">
     <img src="../assets/icons/exit.svg" class="item" alt="Sair">
 </a>
     </header>
@@ -108,7 +109,14 @@ $usuarios = $stmt->get_result();
 
         <main class="conteudo">
 
+        
+
             <div class="planilha_dashboard">
+
+            <h2 class="titulo_cadastro">
+                    Listagem de Usuários Cadastrados
+                </h2>
+
     <table class="table table-borderless">
         <thead>
     <tr>
@@ -148,32 +156,22 @@ $usuarios = $stmt->get_result();
     </td>
 
     <td>
-        <a href="editar_usuario.php?id=<?= (int) $usuario["id"] ?>">
-            Editar
+        <a href="editar_usuario.php?id=<?= (int) $usuario["id"] ?>" class="btn btn-sm btn-warning">
+            <i class="bi bi-pencil"></i> Editar
         </a>
-          <form
-    action="excluir_usuario.php"
-    method="POST"
-    onsubmit="return confirm('Tem certeza que deseja excluir este usuário?');"
->
 
-    <input
-        type="hidden"
-        name="id"
-        value="<?= (int) $usuario["id"] ?>"
-    >
+        <form method="POST" action="excluir_usuario.php" style="display:inline;"
+            onsubmit="return confirm('Deseja realmente excluir este usuário?');">
 
-    <input
-        type="hidden"
-        name="csrf_token"
-        value="<?= e(gerarTokenCsrf()) ?>"
-    >
+            <input type="hidden" name="id" value="<?= (int) $usuario["id"] ?>">
 
-    <button type="submit">
-        Excluir
-    </button>
+            <input type="hidden" name="csrf_token" value="<?= e(gerarTokenCsrf()) ?>">
 
-</form>
+            <button type="submit" class="btn btn-sm btn-danger">
+                <i class="bi bi-trash"></i> Excluir
+            </button>
+
+        </form>
     </td>
 
 </tr>

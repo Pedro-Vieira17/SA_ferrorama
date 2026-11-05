@@ -3,15 +3,12 @@
 require_once "../infra/seguranca.php";
 require_once "../infra/conexao.php";
 
-
 exigirAdministrador();
 
-// Busca os trens cadastrados
 $sql = "SELECT id, localizacao FROM TRENS ORDER BY id";
 
 $resultadoTrens = $conexao->query($sql);
 
-// Mensagens vindas do salvar_sensor.php
 $erro = $_GET['erro'] ?? null;
 $sucesso = $_GET['sucesso'] ?? null;
 
@@ -26,14 +23,12 @@ $sucesso = $_GET['sucesso'] ?? null;
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Cadastrar Sensores</title>
+    <title>Cadastrar Sensor</title>
 
     <link rel="stylesheet" href="../assets/style/style.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-        crossorigin="anonymous">
+        rel="stylesheet">
 
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -42,47 +37,113 @@ $sucesso = $_GET['sucesso'] ?? null;
         href="../assets/icons/TREM_AZUL.svg"
         type="image/x-icon">
 
-</head>
+    <style>
 
+        .area-cadastro {
+            width: 100%;
+        }
+
+        .formulario-sensor {
+            width: 100%;
+            max-width: 850px;
+            background: #0f172a;
+            padding: 35px;
+            border-radius: 16px;
+        }
+
+        .formulario-sensor h3 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .linha-formulario {
+            display: flex;
+            gap: 20px;
+        }
+
+        .grupo-input {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .grupo-input label {
+            display: block;
+            color: white;
+            margin-bottom: 7px;
+        }
+
+        .grupo-input input,
+        .grupo-input select {
+            width: 100%;
+            height: 46px;
+            border: none;
+            border-radius: 7px;
+            padding: 0 12px;
+        }
+
+        .botoes-formulario {
+            margin-top: 10px;
+        }
+
+        .botao_cancelar {
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-salvar {
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            background: #0d6efd;
+            color: white;
+        }
+
+        @media (max-width: 700px) {
+
+            .linha-formulario {
+                display: block;
+            }
+
+            .formulario-sensor {
+                padding: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
 
 <body>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous">
-    </script>
+<header class="cabecalho">
 
+    <h2>
 
-    <!-- CABEÇALHO -->
+        <img src="../assets/icons/TREM_AZUL.svg" alt="">
 
-    <header class="cabecalho">
+        Bem vindo, Administrador
 
-        <h2>
+    </h2>
 
-            <img src="../assets/icons/TREM_AZUL.svg" alt="">
+    <a href="../logout.php">
 
-            Bem vindo, Administrador
+        <img
+            src="../assets/icons/exit.svg"
+            class="item"
+            alt="Sair">
 
-        </h2>
+    </a>
 
+</header>
 
-        <a href="logout.php">
+<div class="layout">
 
-            <img src="../assets/icons/exit.svg"
-                class="item"
-                alt="">
-
-        </a>
-
-    </header>
-
-
-    <div class="layout">
-
-
-        <!-- MENU LATERAL -->
-
-        <aside class="menu-lateral">
+    <aside class="menu-lateral">
 
         <a href="tela_inicial.php" class="item">
 
@@ -94,7 +155,6 @@ $sucesso = $_GET['sucesso'] ?? null;
 
         </a>
 
-
         <a href="gerenciar_sensores.php" class="item ativo">
 
             <img
@@ -105,15 +165,15 @@ $sucesso = $_GET['sucesso'] ?? null;
 
         </a>
 
-
         <a href="rotas.php" class="item">
 
-            <img src="../assets/icons/relatorio_branco.svg" alt="">
+            <img
+                src="../assets/icons/relatorio_branco.svg"
+                alt="">
 
             Rotas
 
         </a>
-
 
         <a href="cadastro_admin.php" class="item">
 
@@ -124,7 +184,6 @@ $sucesso = $_GET['sucesso'] ?? null;
             Cadastrar ADMs e Usuários
 
         </a>
-
 
         <a href="usuarios_cadastrados.php" class="item">
 
@@ -138,74 +197,55 @@ $sucesso = $_GET['sucesso'] ?? null;
 
     </aside>
 
+    <main class="conteudo">
 
-        <!-- CONTEÚDO -->
+    
 
-        <main class="conteudo">
+        <?php if ($erro): ?>
 
+            <div class="alert alert-danger">
 
-            <div class="container-sensor">
+                <?= e($erro) ?>
 
+            </div>
 
-                <h1 class="titulo-sensor" style="color: white;">
+        <?php endif; ?>
 
-                    Cadastrar Novo Sensor
+        <?php if ($sucesso): ?>
 
-                </h1>
+            <div class="alert alert-success">
 
+                Sensor cadastrado com sucesso!
 
-                <!-- MENSAGEM DE ERRO -->
+            </div>
 
-                <?php if ($erro): ?>
+        <?php endif; ?>
 
-                    <div class="alert alert-danger">
+        <div class="area-cadastro">
 
-                        <?= htmlspecialchars($erro) ?>
+            <div class="formulario-sensor">
 
-                    </div>
-
-                <?php endif; ?>
-
-
-                <!-- MENSAGEM DE SUCESSO -->
-
-                <?php if ($sucesso): ?>
-
-                    <div class="alert alert-success">
-
-                        Sensor cadastrado com sucesso!
-
-                    </div>
-
-                <?php endif; ?>
-
-
-                <!-- FORMULÁRIO -->
+                <h3>
+                    <i class="bi bi-cpu"></i>
+                   Cadastrar Novo Sensor
+                </h3>
 
                 <form
-                    class="form-sensor"
                     method="POST"
                     action="salvar_sensor.php">
 
-                    <!-- TOKEN CSRF -->
                     <input
                         type="hidden"
                         name="csrf_token"
                         value="<?= e(gerarTokenCsrf()) ?>">
 
-                    <!-- PRIMEIRA LINHA -->
-
                     <div class="linha-formulario">
-
 
                         <div class="grupo-input">
 
-                            <label for="localizacao" style="color: white;">
-
+                            <label for="localizacao">
                                 Localização
-
                             </label>
-
 
                             <input
                                 type="text"
@@ -216,116 +256,73 @@ $sucesso = $_GET['sucesso'] ?? null;
 
                         </div>
 
-
                         <div class="grupo-input">
 
-                            <label for="tipoDado" style="color: white;">
-
+                            <label for="tipoDado">
                                 Tipo de Dado
-
                             </label>
-
 
                             <select
                                 id="tipoDado"
                                 name="tipoDado"
                                 required>
 
-
-                                <option value="" disabled selected >
-
-                                    Selecione o tipo de dado
-
+                                <option value="" disabled selected>
+                                    Selecione
                                 </option>
-
 
                                 <option value="Velocidade">
-
                                     Velocidade
-
                                 </option>
-
 
                                 <option value="Temperatura">
-
                                     Temperatura
-
                                 </option>
-
 
                                 <option value="Pressão">
-
                                     Pressão
-
                                 </option>
-
 
                             </select>
 
                         </div>
 
-
                     </div>
 
+                    <div class="grupo-input">
 
-                    <!-- SEGUNDA LINHA -->
+                        <label for="tremVinculado">
+                            Trem Vinculado
+                        </label>
 
-                    <div class="linha-formulario">
+                        <select
+                            id="tremVinculado"
+                            name="tremVinculado"
+                            required>
 
+                            <option value="" disabled selected>
+                                Selecione um trem
+                            </option>
 
-                        <div class="grupo-input">
+                            <?php while ($trem = $resultadoTrens->fetch_assoc()): ?>
 
+                                <option value="<?= (int)$trem['id'] ?>">
 
-                            <label for="tremVinculado" style="color: white;">
+                                    Trem <?= str_pad($trem['id'], 2, "0", STR_PAD_LEFT) ?>
 
-                                Trem Vinculado
+                                    -
 
-                            </label>
-
-
-                            <select
-                                id="tremVinculado"
-                                name="tremVinculado"
-                                required>
-
-
-                                <option value="" disabled selected>
-
-                                    Selecione um trem
+                                    <?= e($trem['localizacao']) ?>
 
                                 </option>
 
+                            <?php endwhile; ?>
 
-                                <?php while ($trem = $resultadoTrens->fetch_assoc()): ?>
-
-
-                                    <option value="<?= $trem['id'] ?>">
-
-                                        Trem <?= str_pad($trem['id'], 2, "0", STR_PAD_LEFT) ?>
-
-                                        -
-
-                                        <?= htmlspecialchars($trem['localizacao']) ?>
-
-                                    </option>
-
-
-                                <?php endwhile; ?>
-
-
-                            </select>
-
-
-                        </div>
-
+                        </select>
 
                     </div>
-
-
-                    <!-- BOTÕES -->
 
                     <div class="botoes-formulario">
-
 
                         <button
                             type="button"
@@ -336,30 +333,26 @@ $sucesso = $_GET['sucesso'] ?? null;
 
                         </button>
 
-
                         <button
                             type="submit"
                             class="btn-salvar">
 
+                            <i class="bi bi-check-circle"></i>
                             Salvar
 
                         </button>
 
-
                     </div>
-
 
                 </form>
 
-
             </div>
 
+        </div>
 
-        </main>
+    </main>
 
-
-    </div>
-
+</div>
 
 </body>
 

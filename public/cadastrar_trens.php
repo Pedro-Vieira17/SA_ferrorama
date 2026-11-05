@@ -3,12 +3,153 @@
 require_once "../infra/seguranca.php";
 require_once "../infra/conexao.php";
 
-
 exigirAdministrador();
 
-// Mensagens vindas de salvar_trem.php
-$erro = $_GET['erro'] ?? null;
-$sucesso = $_GET['sucesso'] ?? null;
+$erro = "";
+$sucesso = "";
+
+$localizacao = "";
+$tipo_de_dado = "";
+$horario = "";
+$status = "";
+$usuario_id_form = "";
+
+$tiposPermitidos = [
+    "Temperatura",
+    "Velocidade",
+    "Localização",
+    "Pressão"
+];
+
+$statusPermitidos = [
+    "Ativo",
+    "Inativo",
+    "Manutenção"
+];
+
+$consultaUsuarios = $conexao->query("
+    SELECT id, nome, tipo
+    FROM USUARIO
+    ORDER BY nome ASC
+");
+
+$usuarios = $consultaUsuarios
+    ? $consultaUsuarios->fetch_all(MYSQLI_ASSOC)
+    : [];
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    validarTokenCsrf();
+
+    $localizacao = trim($_POST["localizacao"] ?? "");
+    $tipo_de_dado = trim($_POST["tipo_de_dado"] ?? "");
+    $horario = trim($_POST["horario"] ?? "");
+    $status = trim($_POST["status"] ?? "");
+    $usuario_id_form = $_POST["usuario_id"] ?? "";
+
+    $usuario_id = filter_var(
+        $usuario_id_form,
+        FILTER_VALIDATE_INT
+    );
+
+    if (
+        $localizacao === "" ||
+        $tipo_de_dado === "" ||
+        $horario === "" ||
+        $status === "" ||
+        $usuario_id === false ||
+        $usuario_id <= 0
+    ) {
+        $erro = "Preencha todos os campos corretamente.";
+    } elseif (
+        !in_array($tipo_de_dado, $tiposPermitidos, true) ||
+        !in_array($status, $statusPermitidos, true)
+    ) {
+        $erro = "Selecione um tipo de dado e um status válidos.";
+    } elseif (
+        strlen($localizacao) > 800 ||
+        !preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $horario)
+    ) {
+        $erro = "Verifique a localização e o horário informados.";
+    } else {
+
+        $stmtUsuario = $conexao->prepare("
+            SELECT id
+            FROM USUARIO
+            WHERE id = ?
+        ");
+
+        if (!$stmtUsuario) {
+
+            $erro = "Erro ao verificar o usuário responsável.";
+
+        } else {
+
+            $stmtUsuario->bind_param("i", $usuario_id);
+            $stmtUsuario->execute();
+
+            $resultadoUsuario = $stmtUsuario->get_result();
+            $usuarioExiste = $resultadoUsuario->num_rows > 0;
+
+            $stmtUsuario->close();
+
+            if (!$usuarioExiste) {
+
+                $erro = "O usuário responsável selecionado não existe.";
+
+            } else {
+
+                $sql = "
+                    INSERT INTO TRENS (
+                        localizacao,
+                        tipo_de_dado,
+                        horario,
+                        status,
+                        usuario_id
+                    )
+                    VALUES (?, ?, ?, ?, ?)
+                ";
+
+                $stmt = $conexao->prepare($sql);
+
+                if (!$stmt) {
+
+                    $erro = "Erro ao preparar o cadastro do trem.";
+
+                } else {
+
+                    $stmt->bind_param(
+                        "ssssi",
+                        $localizacao,
+                        $tipo_de_dado,
+                        $horario,
+                        $status,
+                        $usuario_id
+                    );
+
+                    if ($stmt->execute()) {
+
+                        $sucesso = "Trem cadastrado com sucesso!";
+
+                        $localizacao = "";
+                        $tipo_de_dado = "";
+                        $horario = "";
+                        $status = "";
+                        $usuario_id_form = "";
+
+                    } else {
+
+                        $erro = "Erro ao cadastrar o trem.";
+
+                    }
+
+                    $stmt->close();
+
+                }
+            }
+        }
+    }
+}
 
 ?>
 
@@ -18,309 +159,268 @@ $sucesso = $_GET['sucesso'] ?? null;
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Cadastrar Trens</title>
+    <title>Cadastrar Trem</title>
 
-    <link
-        rel="stylesheet"
-        href="../assets/style/style.css">
+    <link rel="stylesheet" href="../assets/style/style.css">
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
-    <link
-        rel="stylesheet"
+    <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <link
-        rel="icon"
-        href="../assets/icons/TREM_AZUL.svg"
-        type="image/x-icon">
+    <link rel="icon" href="../assets/icons/TREM_AZUL.svg">
+
+    <style>
+        .formulario-trem {
+            background: #0f172a;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 700px;
+        }
+
+        .formulario-trem h3 {
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        .campo label {
+            color: white;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .campo input,
+        .campo select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 7px;
+        }
+
+        .botoes {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+    </style>
 
 </head>
 
 <body>
 
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
-</script>
-
-
 <header class="cabecalho">
 
     <h2>
-
-        <img
-            src="../assets/icons/TREM_AZUL.svg"
-            alt="">
-
+        <img src="../assets/icons/TREM_AZUL.svg" alt="">
         Bem vindo, Administrador
-
     </h2>
 
-    <a href="logout.php">
-    <img src="../assets/icons/exit.svg" class="item" alt="Sair">
-</a>
+    <a href="../logout.php">
+        <img src="../assets/icons/exit.svg" class="item" alt="Sair">
+    </a>
 
 </header>
-
 
 <div class="layout">
 
     <aside class="menu-lateral">
 
         <a href="tela_inicial.php" class="item ativo">
-
-            <img
-                src="../assets/icons/dashboard_preto.svg"
-                alt="">
-
+            <img src="../assets/icons/dashboard_preto.svg" alt="">
             Dashboard
-
         </a>
-
 
         <a href="gerenciar_sensores.php" class="item">
-
-            <img
-                src="../assets/icons/sensor_branco.svg"
-                alt="">
-
+            <img src="../assets/icons/sensor_branco.svg" alt="">
             Sensores
-
         </a>
-
 
         <a href="rotas.php" class="item">
-
             <img src="../assets/icons/relatorio_branco.svg" alt="">
-
             Rotas
-
         </a>
-
 
         <a href="cadastro_admin.php" class="item">
-
-            <img
-                src="../assets/icons/cadastrar_branco.svg"
-                alt="">
-
+            <img src="../assets/icons/cadastrar_branco.svg" alt="">
             Cadastrar ADMs e Usuários
-
         </a>
 
-
         <a href="usuarios_cadastrados.php" class="item">
-
-            <img
-                src="../assets/icons/usuarios_branco.svg"
-                alt="">
-
+            <img src="../assets/icons/usuarios_branco.svg" alt="">
             Usuários Cadastrados
-
         </a>
 
     </aside>
 
-
     <main class="conteudo">
 
-        <div class="container-sensor">
+        <?php if ($erro !== ""): ?>
 
-            <h1
-                class="titulo-sensor"
-                style="color: white;">
+            <div class="alert alert-danger">
+                <?= e($erro) ?>
+            </div>
 
-                Cadastrar Novo Trem
+        <?php endif; ?>
 
-            </h1>
+        <?php if ($sucesso !== ""): ?>
 
+            <div class="alert alert-success">
+                <?= e($sucesso) ?>
+            </div>
 
-            <?php if ($erro): ?>
+        <?php endif; ?>
 
-                <div class="alert alert-danger">
+        <?php if (empty($usuarios)): ?>
 
-                    <?= htmlspecialchars($erro) ?>
+            <div class="alert alert-warning">
+                Não existem usuários cadastrados para selecionar como responsáveis.
+            </div>
+
+        <?php endif; ?>
+
+        <div class="formulario-trem">
+
+            <h3>
+                <i class="bi bi-train-front"></i>
+                Cadastrar Trem
+            </h3>
+
+            <form method="POST">
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="<?= e(gerarTokenCsrf()) ?>"
+                >
+
+                <div class="campo">
+
+                    <label for="localizacao">Localização</label>
+
+                    <input
+                        type="text"
+                        id="localizacao"
+                        name="localizacao"
+                        maxlength="200"
+                        placeholder="Ex.: Estação Central"
+                        value="<?= e($localizacao) ?>"
+                        required
+                    >
 
                 </div>
 
-            <?php endif; ?>
+                <div class="campo">
 
+                    <label for="tipo_de_dado">Tipo de Dado</label>
 
-            <?php if ($sucesso): ?>
+                    <select
+                        id="tipo_de_dado"
+                        name="tipo_de_dado"
+                        required
+                    >
 
-                <div class="alert alert-success">
+                        <option value="">Selecione</option>
 
-                    Trem cadastrado com sucesso!
-
-                </div>
-
-            <?php endif; ?>
-
-
-            <form
-                class="form-sensor"
-                method="POST"
-                action="salvar_trem.php">
-
-
-                <!-- LOCALIZAÇÃO + TIPO DE DADO -->
-
-                <div class="linha-formulario">
-
-                    <div class="grupo-input">
-
-                        <label
-                            for="localizacao"
-                            style="color: white;">
-
-                            Localização
-
-                        </label>
-
-                        <input
-                            type="text"
-                            id="localizacao"
-                            name="localizacao"
-                            required
-                            placeholder="Ex: Estação central - Eixo B">
-
-                    </div>
-
-
-                    <div class="grupo-input">
-
-                        <label
-                            for="tipoDado"
-                            style="color: white;">
-
-                            Tipo de Dado
-
-                        </label>
-
-                        <select
-                            id="tipoDado"
-                            name="tipoDado"
-                            required>
+                        <?php foreach ($tiposPermitidos as $opcao): ?>
 
                             <option
-                                value=""
-                                disabled
-                                selected>
-
-                                Selecione o tipo de dado
-
+                                value="<?= e($opcao) ?>"
+                                <?= $tipo_de_dado === $opcao ? "selected" : "" ?>
+                            >
+                                <?= e($opcao) ?>
                             </option>
 
-                            <option value="Velocidade">
-                                Velocidade
-                            </option>
+                        <?php endforeach; ?>
 
-                            <option value="Temperatura">
-                                Temperatura
-                            </option>
-
-                            <option value="Pressão">
-                                Pressão
-                            </option>
-
-                        </select>
-
-                    </div>
+                    </select>
 
                 </div>
 
+                <div class="campo">
 
-                <!-- HORÁRIO + STATUS -->
+                    <label for="horario">Horário</label>
 
-                <div class="linha-formulario">
+                    <input
+                        type="time"
+                        id="horario"
+                        name="horario"
+                        value="<?= e($horario) ?>"
+                        required
+                    >
 
-                    <div class="grupo-input">
+                </div>
 
-                        <label
-                            for="horario"
-                            style="color: white;">
+                <div class="campo">
 
-                            Horário
+                    <label for="status">Status</label>
 
-                        </label>
+                    <select id="status" name="status" required>
 
-                        <input
-                            type="time"
-                            id="horario"
-                            name="horario"
-                            required>
+                        <option value="">Selecione</option>
 
-                    </div>
-
-
-                    <div class="grupo-input">
-
-                        <label
-                            for="status"
-                            style="color: white;">
-
-                            Status
-
-                        </label>
-
-                        <select
-                            id="status"
-                            name="status"
-                            required>
+                        <?php foreach ($statusPermitidos as $opcao): ?>
 
                             <option
-                                value=""
-                                disabled
-                                selected>
-
-                                Selecione um status
-
+                                value="<?= e($opcao) ?>"
+                                <?= $status === $opcao ? "selected" : "" ?>
+                            >
+                                <?= e($opcao) ?>
                             </option>
 
-                            <option value="Ativo">
-                                Ativo
-                            </option>
+                        <?php endforeach; ?>
 
-                            <option value="Inativo">
-                                Inativo
-                            </option>
-
-                            <option value="Manutenção">
-                                Manutenção
-                            </option>
-
-                        </select>
-
-                    </div>
+                    </select>
 
                 </div>
 
+                <div class="campo">
 
-                <!-- BOTÕES -->
+                    <label for="usuario_id">Usuário responsável</label>
 
-                <div class="botoes-formulario">
+                    <select
+                        id="usuario_id"
+                        name="usuario_id"
+                        required
+                    >
 
-                    <button
-                        type="button"
-                        class="botao_cancelar"
-                        onclick="window.location.href='tela_inicial.php'">
+                        <option value="">Selecione um responsável</option>
 
+                        <?php foreach ($usuarios as $usuario): ?>
+
+                            <option
+                                value="<?= (int) $usuario["id"] ?>"
+                                <?= (string) $usuario_id_form === (string) $usuario["id"] ? "selected" : "" ?>
+                            >
+                                <?= e($usuario["nome"]) ?>
+                                (<?= $usuario["tipo"] === "administrador" ? "Administrador" : "Usuário" ?>)
+                            </option>
+
+                        <?php endforeach; ?>
+
+                    </select>
+
+                </div>
+
+                <div class="botoes">
+
+                    <a href="tela_inicial.php" class="btn btn-secondary">
                         Cancelar
-
-                    </button>
-
+                    </a>
 
                     <button
                         type="submit"
-                        class="btn-salvar">
-
+                        class="btn btn-primary"
+                        <?= empty($usuarios) ? "disabled" : "" ?>
+                    >
+                        <i class="bi bi-check-circle"></i>
                         Salvar
-
                     </button>
 
                 </div>
@@ -334,6 +434,4 @@ $sucesso = $_GET['sucesso'] ?? null;
 </div>
 
 </body>
-
 </html>
-```

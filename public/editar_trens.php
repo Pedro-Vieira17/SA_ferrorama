@@ -1,195 +1,341 @@
 <?php
+
 require_once "../infra/seguranca.php";
 require_once "../infra/conexao.php";
 
-
 exigirAdministrador();
 
-$id = $_GET['id'] ?? null;
+$id = filter_var(
+    $_GET["id"] ?? null,
+    FILTER_VALIDATE_INT
+);
 
-if (!$id) {
-    header('Location: gerenciar_trens.php?erro=' . urlencode('Trem não informado.'));
+if ($id === false || $id === null || $id <= 0) {
+    header("Location: tela_inicial.php?erro=" . urlencode("Trem não informado."));
     exit;
 }
 
-$stmt = $conexao->prepare('SELECT * FROM TRENS WHERE id = ?');
-$stmt->bind_param('i', $id);
+$stmt = $conexao->prepare("
+    SELECT *
+    FROM TRENS
+    WHERE id = ?
+");
+
+if (!$stmt) {
+    header("Location: tela_inicial.php?erro=" . urlencode("Erro ao consultar o trem."));
+    exit;
+}
+
+$stmt->bind_param("i", $id);
 $stmt->execute();
+
 $resultado = $stmt->get_result();
 $trem = $resultado->fetch_assoc();
+
 $stmt->close();
 
 if (!$trem) {
-    header('Location: gerenciar_trens.php?erro=' . urlencode('Trem não encontrado.'));
+    header("Location: tela_inicial.php?erro=" . urlencode("Trem não encontrado."));
     exit;
 }
 
-$erro = $_GET['erro'] ?? null;
-$sucesso = $_GET['sucesso'] ?? null;
+$consultaUsuarios = $conexao->query("
+    SELECT id, nome, tipo
+    FROM USUARIO
+    ORDER BY nome ASC
+");
+
+$usuarios = $consultaUsuarios
+    ? $consultaUsuarios->fetch_all(MYSQLI_ASSOC)
+    : [];
+
+$erro = trim($_GET["erro"] ?? "");
+
+$tiposPermitidos = [
+    "Velocidade",
+    "Temperatura",
+    "Pressão",
+    "Localização"
+];
+
+$statusPermitidos = [
+    "Ativo",
+    "Inativo",
+    "Manutenção"
+];
+
 ?>
-<html lang="en">
+
+<!DOCTYPE html>
+<html lang="pt-br">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>editar trem</title>
-    <link rel="stylesheet" href="../assets/style/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-      <link rel="icon" href="../assets/icons/TREM_AZUL.svg" type="image/x-icon">
+    <title>Editar Trem</title>
+
+    <link rel="stylesheet" href="../assets/style/style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="icon" href="../assets/icons/TREM_AZUL.svg">
+
 </head>
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
 
-    <header class="cabecalho">
-        <h2><img src="../assets/icons/TREM_AZUL.svg" alt=""> Bem vindo, Administrador</h2>
-        <a href="logout.php">
-    <img src="../assets/icons/exit.svg" class="item" alt="Sair">
-        </a>
-    </header>
+<header class="cabecalho">
 
-    <div class="layout">
+    <h2>
+        <img src="../assets/icons/TREM_AZUL.svg" alt="">
+        Bem vindo, Administrador
+    </h2>
 
-        <aside class="menu-lateral">
+    <a href="../logout.php">
+        <img src="../assets/icons/exit.svg" class="item" alt="Sair">
+    </a>
+
+</header>
+
+<div class="layout">
+
+    <aside class="menu-lateral">
 
         <a href="tela_inicial.php" class="item ativo">
-
-            <img
-                src="../assets/icons/dashboard_preto.svg"
-                alt="">
-
+            <img src="../assets/icons/dashboard_preto.svg" alt="">
             Dashboard
-
         </a>
-
 
         <a href="gerenciar_sensores.php" class="item">
-
-            <img
-                src="../assets/icons/sensor_branco.svg"
-                alt="">
-
+            <img src="../assets/icons/sensor_branco.svg" alt="">
             Sensores
-
         </a>
-
 
         <a href="rotas.php" class="item">
-
-             <img src="../assets/icons/relatorio_branco.svg" alt="">
-
-
+            <img src="../assets/icons/relatorio_branco.svg" alt="">
             Rotas
-
         </a>
-
 
         <a href="cadastro_admin.php" class="item">
-
-            <img
-                src="../assets/icons/cadastrar_branco.svg"
-                alt="">
-
+            <img src="../assets/icons/cadastrar_branco.svg" alt="">
             Cadastrar ADMs e Usuários
-
         </a>
 
-
         <a href="usuarios_cadastrados.php" class="item">
-
-            <img
-                src="../assets/icons/usuarios_branco.svg"
-                alt="">
-
+            <img src="../assets/icons/usuarios_branco.svg" alt="">
             Usuários Cadastrados
-
         </a>
 
     </aside>
 
-           <main class="conteudo">
+    <main class="conteudo">
 
-    <div class="container-sensor">
+        <div class="container-sensor">
 
-        <h1 class="titulo-sensor"  style="color: white;">Editar Trem</h1>
+           
+            <?php if ($erro !== ""): ?>
 
-        <?php if ($erro): ?>
-            <div class="alert alert-danger"><?= htmlspecialchars($erro) ?></div>
-        <?php endif; ?>
-
-        <?php if ($sucesso): ?>
-            <div class="alert alert-success">Trem atualizado com sucesso!</div>
-        <?php endif; ?>
-
-        <form class="form-sensor" method="POST" action="atualizar_trem.php">
-
-            <input type="hidden" name="id" value="<?= (int)$trem['id'] ?>">
-
-            <div class="linha-formulario">
-
-                <div class="grupo-input">
-                    <label for="localizacao"  style="color: white;">Localização</label>
-                    <input type="text" id="localizacao" name="localizacao" required
-                        value="<?= htmlspecialchars($trem['localizacao']) ?>"
-                        placeholder="Ex: Estação central - Eixo B">
+                <div class="alert alert-danger">
+                    <?= e($erro) ?>
                 </div>
 
-                <div class="grupo-input">
-                    <label for="tipoDado" style="color: white;">Tipo de Dado</label>
+            <?php endif; ?>
 
-                    <select id="tipoDado" name="tipoDado" required>
-                        <option value="" disabled>Selecione o tipo de dado</option>
-                        <?php foreach (['Velocidade', 'Temperatura', 'Pressão'] as $opcao): ?>
-                            <option value="<?= $opcao ?>" <?= $trem['tipo_de_dado'] === $opcao ? 'selected' : '' ?>>
-                                <?= $opcao ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+            <?php if (empty($usuarios)): ?>
+
+                <div class="alert alert-warning">
+                    Não existem usuários cadastrados para selecionar como responsáveis.
                 </div>
 
-            </div>
+            <?php endif; ?>
 
-            <div class="linha-formulario">
+            <form
+                class="form-sensor"
+                method="POST"
+                action="atualizar_trem.php"
+            >
 
-                <div class="grupo-input">
-                    <label for="status"  style="color: white;">Status</label>
+                <input
+                    type="hidden"
+                    name="id"
+                    value="<?= (int) $trem["id"] ?>"
+                >
 
-                    <select id="status" name="status" required>
-                        <option value="" disabled>Selecione um status</option>
-                        <?php foreach (['Ativo', 'Inativo', 'Manutenção', 'Alerta'] as $opcao): ?>
-                            <option value="<?= $opcao ?>" <?= $trem['status'] === $opcao ? 'selected' : '' ?>>
-                                <?= $opcao ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="<?= e(gerarTokenCsrf()) ?>"
+                >
+
+               <h3 style="color: white;">
+    <i class="bi bi-train-front"></i>
+    Editar Trem
+</h3>
+
+                <div class="linha-formulario">
+
+                    <div class="grupo-input">
+
+                        <label for="localizacao" style="color: white;">
+                            Localização
+                        </label>
+
+                        <input
+                            type="text"
+                            id="localizacao"
+                            name="localizacao"
+                            maxlength="200"
+                            value="<?= e($trem["localizacao"]) ?>"
+                            placeholder="Ex.: Estação Central"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="grupo-input">
+
+                        <label for="tipo_de_dado" style="color: white;">
+                            Tipo de Dado
+                        </label>
+
+                        <select
+                            id="tipo_de_dado"
+                            name="tipo_de_dado"
+                            required
+                        >
+
+                            <option value="">Selecione o tipo de dado</option>
+
+                            <?php foreach ($tiposPermitidos as $opcao): ?>
+
+                                <option
+                                    value="<?= e($opcao) ?>"
+                                    <?= $trem["tipo_de_dado"] === $opcao ? "selected" : "" ?>
+                                >
+                                    <?= e($opcao) ?>
+                                </option>
+
+                            <?php endforeach; ?>
+
+                        </select>
+
+                    </div>
+
                 </div>
 
-            </div>
+                <div class="linha-formulario">
 
-            <div class="botoes-formulario">
+                    <div class="grupo-input">
 
-                <button type="button" class="botao_cancelar"
-                    onclick="window.location.href='tela_inicial.php'">Cancelar</button>
+                        <label for="horario" style="color: white;">
+                            Horário
+                        </label>
 
-                <button type="submit" class="btn-salvar">
-                    salvar
-                </button>
+                        <input
+                            type="time"
+                            id="horario"
+                            name="horario"
+                            value="<?= e(substr($trem["horario"], 0, 5)) ?>"
+                            required
+                        >
 
-            </div>
+                    </div>
 
-        </form>
+                    <div class="grupo-input">
 
-    </div>
+                        <label for="status" style="color: white;">
+                            Status
+                        </label>
 
-</main>
+                        <select id="status" name="status" required>
 
-    </div>
+                            <option value="">Selecione um status</option>
+
+                            <?php foreach ($statusPermitidos as $opcao): ?>
+
+                                <option
+                                    value="<?= e($opcao) ?>"
+                                    <?= $trem["status"] === $opcao ? "selected" : "" ?>
+                                >
+                                    <?= e($opcao) ?>
+                                </option>
+
+                            <?php endforeach; ?>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="linha-formulario">
+
+                    <div class="grupo-input">
+
+                        <label for="usuario_id" style="color: white;">
+                            Usuário responsável
+                        </label>
+
+                        <select
+                            id="usuario_id"
+                            name="usuario_id"
+                            required
+                        >
+
+                            <option value="">Selecione um responsável</option>
+
+                            <?php foreach ($usuarios as $usuario): ?>
+
+                                <option
+                                    value="<?= (int) $usuario["id"] ?>"
+                                    <?= (int) ($trem["usuario_id"] ?? 0) === (int) $usuario["id"] ? "selected" : "" ?>
+                                >
+                                    <?= e($usuario["nome"]) ?>
+                                    (<?= $usuario["tipo"] === "administrador" ? "Administrador" : "Usuário" ?>)
+                                </option>
+
+                            <?php endforeach; ?>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="botoes-formulario">
+
+                    <button
+                        type="button"
+                        class="botao_cancelar"
+                        onclick="window.location.href='tela_inicial.php'"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn-salvar"
+                        <?= empty($usuarios) ? "disabled" : "" ?>
+                    >
+                        <i class="bi bi-check-circle"></i>
+                        Salvar alterações
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
 
 </body>
-
 </html>

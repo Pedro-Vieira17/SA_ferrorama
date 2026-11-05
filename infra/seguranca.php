@@ -1,7 +1,7 @@
+
 <?php
 
 if (session_status() === PHP_SESSION_NONE) {
-
     session_set_cookie_params([
         'lifetime' => 0,
         'path' => '/',
@@ -15,7 +15,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-
 function exigirLogin(): void
 {
     if (!isset($_SESSION['usuario_id'])) {
@@ -23,7 +22,6 @@ function exigirLogin(): void
         exit;
     }
 }
-
 
 function exigirAdministrador(): void
 {
@@ -33,11 +31,13 @@ function exigirAdministrador(): void
         !isset($_SESSION['usuario_tipo']) ||
         $_SESSION['usuario_tipo'] !== 'administrador'
     ) {
-        http_response_code(403);
-        exit('Acesso não autorizado.');
+        session_unset();
+        session_destroy();
+
+        header('Location: ../index.php');
+        exit;
     }
 }
-
 
 function gerarTokenCsrf(): string
 {
@@ -47,7 +47,6 @@ function gerarTokenCsrf(): string
 
     return $_SESSION['csrf_token'];
 }
-
 
 function validarTokenCsrf(): void
 {
@@ -61,7 +60,6 @@ function validarTokenCsrf(): void
         exit('Requisição inválida.');
     }
 }
-
 
 function e(string $valor): string
 {
