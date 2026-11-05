@@ -5,11 +5,7 @@ $conexao = new mysqli(
     "root",
     "",
     "sa_ferrorama",
-<<<<<<< HEAD
     3306
-=======
-    3307
->>>>>>> c858e06fedcb7780d1020813bbb42ad52fd27de1
 
 );
 
