@@ -24,22 +24,6 @@ $alertas = $conexao->query(
 
 $sensores_ativos = $sensores - $alertas;
 
-$statusCount = $conexao->query("
-    SELECT status, COUNT(*) AS total
-    FROM TRENS
-    GROUP BY status
-");
-
-$statusData = [];
-
-while ($linha = $statusCount->fetch_assoc()) {
-    $statusData[$linha["status"]] = (int) $linha["total"];
-}
-
-$trensAtivos = $statusData["Ativo"] ?? 0;
-$trensManutencao = $statusData["Manutenção"] ?? 0;
-$trensInativos = $statusData["Inativo"] ?? 0;
-
 $sql = "
     SELECT
         TRENS.id,
@@ -78,8 +62,6 @@ $trens_cadastrados = $conexao->query($sql);
 
     <link rel="icon" href="../assets/icons/TREM_AZUL.svg">
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-
     <style>
         /* Topo do dashboard: cards 2x2 à esquerda + clima à direita */
         .painel_topo {
@@ -112,12 +94,13 @@ $trens_cadastrados = $conexao->query($sql);
 
         .painel_topo .clima_card {
             margin: 0;
-            padding: 24px;
+            padding: 28px 30px;
             color: #d9d9d9;
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 28px;
         }
 
         .painel_topo .clima_corpo {
@@ -125,7 +108,23 @@ $trens_cadastrados = $conexao->query($sql);
             justify-content: space-between;
             align-items: flex-end;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 24px;
+        }
+
+        .painel_topo .clima_cidade {
+            margin-bottom: 14px;
+        }
+
+        .painel_topo .clima_temp {
+            margin-bottom: 6px;
+        }
+
+        .painel_topo .clima_horarios {
+            line-height: 1.9;
+        }
+
+        .painel_trens {
+            margin-top: 0;
         }
 
         @media (max-width: 1100px) {
@@ -276,12 +275,12 @@ $trens_cadastrados = $conexao->query($sql);
 
                         <div>
 
-                            <h4 class="fs-6 mb-1" style="color: #d9d9d9;">
+                            <h4 class="fs-6 clima_cidade" style="color: #d9d9d9;">
                                 <i class="bi bi-geo-alt"></i>
                                 <?= e($clima['cidade']) ?>
                             </h4>
 
-                            <div style="font-size: 2.2rem; font-weight: bold; line-height: 1.1;">
+                            <div class="clima_temp" style="font-size: 2.2rem; font-weight: bold; line-height: 1.1;">
                                 <?= (int) $clima['temperatura'] ?>°C
                             </div>
 
@@ -289,7 +288,7 @@ $trens_cadastrados = $conexao->query($sql);
 
                         </div>
 
-                        <small>
+                        <small class="clima_horarios">
                             Última atualização da API: <?= e($clima['atualizado']) ?><br>
                             Consulta feita em: <?= e($clima['consultado']) ?><br>
                             Dados: <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo.com</a>
@@ -308,7 +307,7 @@ $trens_cadastrados = $conexao->query($sql);
 
         </div>
 
-        <div class="planilha_dashboard">
+        <div class="planilha_dashboard painel_trens">
 
             <div class="cabecalho_planilha">
 
@@ -456,81 +455,9 @@ $trens_cadastrados = $conexao->query($sql);
 
         </div>
 
-        <div class="planilha_dashboard mt-4 mb-4" style="max-width: 480px; padding: 28px;">
-
-            <h3 class="fs-5 text-center mb-3" style="color: #d9d9d9 !important;">
-                Funcionamento dos Trens
-            </h3>
-
-            <div style="width: 320px; height: 320px; max-width: 100%; margin: 0 auto;">
-                <canvas id="graficoTrens"></canvas>
-            </div>
-
-            <div class="d-flex justify-content-around text-center mt-3 flex-wrap gap-3"
-                style="color: #d9d9d9;">
-
-                <div>
-                    <div style="font-size: 1.8rem; font-weight: bold; color: #2ecc71;">
-                        <?= $trensAtivos ?>
-                    </div>
-                    <small>Ativo</small>
-                </div>
-
-                <div>
-                    <div style="font-size: 1.8rem; font-weight: bold; color: #f1c40f;">
-                        <?= $trensManutencao ?>
-                    </div>
-                    <small>Manutenção</small>
-                </div>
-
-                <div>
-                    <div style="font-size: 1.8rem; font-weight: bold; color: #95a5a6;">
-                        <?= $trensInativos ?>
-                    </div>
-                    <small>Inativo</small>
-                </div>
-
-            </div>
-
-        </div>
-
     </main>
 
 </div>
-
-<script>
-    new Chart(document.getElementById("graficoTrens"), {
-        type: "doughnut",
-        data: {
-            labels: ["Ativo", "Manutenção", "Inativo"],
-            datasets: [{
-                data: [
-                    <?= $trensAtivos ?>,
-                    <?= $trensManutencao ?>,
-                    <?= $trensInativos ?>
-                ],
-                backgroundColor: [
-                    "#2ecc71",
-                    "#f1c40f",
-                    "#95a5a6"
-                ],
-                borderWidth: 0,
-                spacing: 3,
-                borderRadius: 4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: "70%",
-            plugins: {
-                legend: {
-                    display: false
-                }
-            }
-        }
-    });
-</script>
 
 </body>
 </html>
