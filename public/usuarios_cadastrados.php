@@ -109,7 +109,14 @@ $usuarios = $stmt->get_result();
 
         <main class="conteudo">
 
+        
+
             <div class="planilha_dashboard">
+
+            <h2 class="titulo_cadastro">
+                    Listagem de Usuários Cadastrados
+                </h2>
+
     <table class="table table-borderless">
         <thead>
     <tr>

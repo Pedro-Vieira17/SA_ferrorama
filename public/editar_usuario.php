@@ -165,6 +165,7 @@ $vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
 <html lang="pt-br">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -172,30 +173,63 @@ $vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
 
     <link rel="stylesheet" href="../assets/style/style.css">
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-        crossorigin="anonymous"
-    >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link
-        rel="icon"
-        href="../assets/icons/TREM_AZUL.svg"
-        type="image/svg+xml"
-    >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="icon" href="../assets/icons/TREM_AZUL.svg" type="image/svg+xml">
+
 </head>
 
 <body>
 
-    <!-- min-vh-100 + py-4: com os campos de endereço a tela fica mais alta que a janela -->
-    <div class="container min-vh-100 py-4 d-flex align-items-center justify-content-center">
+<header class="cabecalho">
 
-        <div class="p-4" style="max-width: 400px; width: 100%;">
+    <h2>
+        <img src="../assets/icons/TREM_AZUL.svg" alt="">
+        Bem vindo, Administrador
+    </h2>
 
-            <div class="titulo mb-4" style="color: white;">
-                <h1>Editar Usuário</h1>
-            </div>
+    <a href="../logout.php">
+        <img src="../assets/icons/exit.svg" class="item" alt="Sair">
+    </a>
+
+</header>
+
+<div class="layout">
+
+    <aside class="menu-lateral">
+
+        <a href="tela_inicial.php" class="item">
+            <img src="../assets/icons/dashboard_branco.svg" alt="">
+            Dashboard
+        </a>
+
+        <a href="gerenciar_sensores.php" class="item">
+            <img src="../assets/icons/sensor_branco.svg" alt="">
+            Sensores
+        </a>
+
+        <a href="rotas.php" class="item">
+            <img src="../assets/icons/relatorio_branco.svg" alt="">
+            Rotas
+        </a>
+
+        <a href="cadastro_admin.php" class="item">
+            <img src="../assets/icons/cadastrar_branco.svg" alt="">
+            Cadastrar ADMs e Usuários
+        </a>
+
+        <a href="usuarios_cadastrados.php" class="item ativo">
+            <img src="../assets/icons/usuarios_preto.svg" alt="">
+            Usuários Cadastrados
+        </a>
+
+    </aside>
+
+    <main class="conteudo">
+
+        <div class="container-sensor">
 
             <?php if ($erro !== ""): ?>
                 <div class="alert alert-danger">
@@ -209,7 +243,7 @@ $vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
                 </div>
             <?php endif; ?>
 
-            <form method="POST">
+            <form class="form-sensor" method="POST">
 
                 <input
                     type="hidden"
@@ -217,95 +251,110 @@ $vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
                     value="<?= e(gerarTokenCsrf()) ?>"
                 >
 
-                <label for="nome" class="form-label" style="color: white;">
-                    Nome completo
-                </label>
+                <h3 style="color: white;">
+                    <i class="bi bi-person-gear"></i>
+                    Editar Usuário
+                </h3>
 
-                <input
-                    type="text"
-                    id="nome"
-                    name="nome"
-                    class="form-control mb-3"
-                    value="<?= e($usuario["nome"]) ?>"
-                    maxlength="200"
-                    required
-                >
+                <div class="linha-formulario">
 
-                <label for="cpf" class="form-label" style="color: white;">
-                    CPF
-                </label>
+                    <div class="grupo-input">
+                        <label for="nome" style="color: white;">Nome completo</label>
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            value="<?= e($usuario["nome"]) ?>"
+                            maxlength="200"
+                            required
+                        >
+                    </div>
 
-                <input
-                    type="text"
-                    id="cpf"
-                    name="cpf"
-                    class="form-control mb-3"
-                    value="<?= e($usuario["CPF"]) ?>"
-                    maxlength="11"
-                    inputmode="numeric"
-                    required
-                >
+                    <div class="grupo-input">
+                        <label for="cpf" style="color: white;">CPF</label>
+                        <input
+                            type="text"
+                            id="cpf"
+                            name="cpf"
+                            value="<?= e($usuario["CPF"]) ?>"
+                            maxlength="11"
+                            inputmode="numeric"
+                            required
+                        >
+                    </div>
 
-                <label for="telefone" class="form-label" style="color: white;">
-                    Telefone
-                </label>
+                </div>
 
-                <input
-                    type="text"
-                    id="telefone"
-                    name="telefone"
-                    class="form-control mb-3"
-                    value="<?= e($usuario["telefone"]) ?>"
-                    maxlength="15"
-                    inputmode="numeric"
-                    required
-                >
+                <div class="linha-formulario">
 
-                <label for="email" class="form-label" style="color: white;">
-                    E-mail
-                </label>
+                    <div class="grupo-input">
+                        <label for="telefone" style="color: white;">Telefone</label>
+                        <input
+                            type="text"
+                            id="telefone"
+                            name="telefone"
+                            value="<?= e($usuario["telefone"]) ?>"
+                            maxlength="15"
+                            inputmode="numeric"
+                            required
+                        >
+                    </div>
 
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    class="form-control mb-3"
-                    value="<?= e($usuario["email"]) ?>"
-                    maxlength="200"
-                    required
-                >
+                    <div class="grupo-input">
+                        <label for="email" style="color: white;">E-mail</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value="<?= e($usuario["email"]) ?>"
+                            maxlength="200"
+                            required
+                        >
+                    </div>
 
-                <label for="tipo" class="form-label" style="color: white;">
-                    Tipo de acesso
-                </label>
+                </div>
 
-                <select
-                    id="tipo"
-                    name="tipo"
-                    class="form-select mb-3"
-                    required
-                >
-                    <option
-                        value="usuario"
-                        <?= $usuario["tipo"] === "usuario" ? "selected" : "" ?>
-                    >
-                        Usuário
-                    </option>
+                <div class="linha-formulario">
 
-                    <option
-                        value="administrador"
-                        <?= $usuario["tipo"] === "administrador" ? "selected" : "" ?>
-                    >
-                        Administrador
-                    </option>
-                </select>
+                    <div class="grupo-input">
+                        <label for="tipo" style="color: white;">Tipo de acesso</label>
+                        <select id="tipo" name="tipo" required>
+                            <option
+                                value="usuario"
+                                <?= $usuario["tipo"] === "usuario" ? "selected" : "" ?>
+                            >
+                                Usuário
+                            </option>
+                            <option
+                                value="administrador"
+                                <?= $usuario["tipo"] === "administrador" ? "selected" : "" ?>
+                            >
+                                Administrador
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label for="cep" style="color: white;">CEP</label>
+                        <input
+                            type="text"
+                            id="cep"
+                            name="cep"
+                            placeholder="00000-000"
+                            maxlength="9"
+                            autocomplete="off"
+                            value="<?= e($_POST["cep"] ?? "") ?>"
+                        >
+                        <small id="cep-msg" class="d-block mt-1"></small>
+                    </div>
+
+                </div>
 
                 <!-- ============ ENDEREÇO (API ViaCEP) ============ -->
 
-                <label for="cep" class="form-label" style="color: white;">
-                    CEP
-                </label>
+                <div class="linha-formulario">
 
+<<<<<<< HEAD
                 <input
                     type="text"
                     id="cep"
@@ -316,13 +365,33 @@ $vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
                     autocomplete="off"
                     value="<?= e($vCep) ?>"
                 >
+=======
+                    <div class="grupo-input">
+                        <label for="logradouro" style="color: white;">Logradouro</label>
+                        <input
+                            type="text"
+                            id="logradouro"
+                            name="logradouro"
+                            placeholder="Rua, avenida..."
+                            value="<?= e($_POST["logradouro"] ?? "") ?>"
+                        >
+                    </div>
+>>>>>>> d1c2d62a86ac473181ee0613f95f81fc1cc3da63
 
-                <small id="cep-msg" class="d-block mb-3"></small>
+                    <div class="grupo-input">
+                        <label for="bairro" style="color: white;">Bairro</label>
+                        <input
+                            type="text"
+                            id="bairro"
+                            name="bairro"
+                            placeholder="Bairro"
+                            value="<?= e($_POST["bairro"] ?? "") ?>"
+                        >
+                    </div>
 
-                <label for="logradouro" class="form-label" style="color: white;">
-                    Logradouro
-                </label>
+                </div>
 
+<<<<<<< HEAD
                 <input
                     type="text"
                     id="logradouro"
@@ -331,64 +400,51 @@ $vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
                     placeholder="Rua, avenida..."
                     value="<?= e($vLogradouro) ?>"
                 >
+=======
+                <div class="linha-formulario">
+>>>>>>> d1c2d62a86ac473181ee0613f95f81fc1cc3da63
 
-                <label for="bairro" class="form-label" style="color: white;">
-                    Bairro
-                </label>
+                    <div class="grupo-input">
+                        <label for="cidade" style="color: white;">Cidade</label>
+                        <input
+                            type="text"
+                            id="cidade"
+                            name="cidade"
+                            placeholder="Cidade"
+                            value="<?= e($_POST["cidade"] ?? "") ?>"
+                        >
+                    </div>
 
-                <input
-                    type="text"
-                    id="bairro"
-                    name="bairro"
-                    class="form-control mb-3"
-                    placeholder="Bairro"
-                    value="<?= e($vBairro) ?>"
-                >
+                    <div class="grupo-input">
+                        <label for="uf" style="color: white;">UF</label>
+                        <input
+                            type="text"
+                            id="uf"
+                            name="uf"
+                            placeholder="UF"
+                            maxlength="2"
+                            value="<?= e($_POST["uf"] ?? "") ?>"
+                        >
+                    </div>
 
-                <label for="cidade" class="form-label" style="color: white;">
-                    Cidade
-                </label>
-
-                <input
-                    type="text"
-                    id="cidade"
-                    name="cidade"
-                    class="form-control mb-3"
-                    placeholder="Cidade"
-                    value="<?= e($vCidade) ?>"
-                >
-
-                <label for="uf" class="form-label" style="color: white;">
-                    UF
-                </label>
-
-                <input
-                    type="text"
-                    id="uf"
-                    name="uf"
-                    class="form-control mb-4"
-                    placeholder="UF"
-                    maxlength="2"
-                    value="<?= e($vUf) ?>"
-                >
+                </div>
 
                 <!-- =============================================== -->
 
-                <div class="d-flex gap-2">
+                <div class="botoes-formulario">
 
                     <button
-                        type="submit"
-                        class="btn btn-primary"
+                        type="button"
+                        class="botao_cancelar"
+                        onclick="window.location.href='usuarios_cadastrados.php'"
                     >
-                        Salvar alterações
+                        Cancelar
                     </button>
 
-                    <a
-                        href="usuarios_cadastrados.php"
-                        class="btn btn-secondary"
-                    >
-                        Voltar
-                    </a>
+                    <button type="submit" class="btn-salvar">
+                        <i class="bi bi-check-circle"></i>
+                        Salvar alterações
+                    </button>
 
                 </div>
 
@@ -396,7 +452,9 @@ $vUf = $_POST["uf"] ?? ($usuario["uf"] ?? "");
 
         </div>
 
-    </div>
+    </main>
+
+</div>
 
 <script>
     const cepInput = document.getElementById("cep");
