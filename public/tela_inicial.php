@@ -80,6 +80,67 @@ $trens_cadastrados = $conexao->query($sql);
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 
+    <style>
+        /* Topo do dashboard: cards 2x2 à esquerda + clima à direita */
+        .painel_topo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: stretch;
+            margin-bottom: 24px;
+        }
+
+        .painel_topo .informacoes_dashboard {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-auto-rows: 1fr;
+            gap: 20px;
+            width: 100%;
+            margin: 0;
+        }
+
+        .painel_topo .informacoes {
+            width: 100%;
+            max-width: none;
+            min-width: 0;
+            margin: 0;
+        }
+
+        .painel_topo .informacoes h4 {
+            white-space: normal;
+        }
+
+        .painel_topo .clima_card {
+            margin: 0;
+            padding: 24px;
+            color: #d9d9d9;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .painel_topo .clima_corpo {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        @media (max-width: 1100px) {
+            .painel_topo {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .painel_topo .informacoes_dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
 </head>
 
 <body>
@@ -148,92 +209,104 @@ $trens_cadastrados = $conexao->query($sql);
 
         <?php endif; ?>
 
-        <div class="informacoes_dashboard">
+        <div class="painel_topo">
 
-            <div class="informacoes">
-                <h4>
-                    <img src="../assets/icons/ENGRENAGEM.svg" alt="">
-                    Sensores Cadastrados
-                </h4>
+            <div class="informacoes_dashboard">
 
-                <h3><?= $sensores ?></h3>
-            </div>
+                <div class="informacoes">
+                    <h4>
+                        <img src="../assets/icons/ENGRENAGEM.svg" alt="">
+                        Sensores Cadastrados
+                    </h4>
 
-            <div class="informacoes">
-                <h4>
-                    <img src="../assets/icons/TREM_AZUL.svg" alt="">
-                    Trens Cadastrados
-                </h4>
-
-                <h3><?= $trens ?></h3>
-            </div>
-
-            <div class="informacoes">
-                <h4>
-                    <img src="../assets/icons/ALERTA.svg" alt="">
-                    Alertas
-                </h4>
-
-                <h3><?= $alertas ?></h3>
-            </div>
-
-            <div class="informacoes">
-                <h4>
-                    <img src="../assets/icons/OK_VERDE.svg" alt="">
-                    Sensores Funcionando
-                </h4>
-
-                <h3><?= $sensores_ativos ?></h3>
-            </div>
-
-        </div>
-
-        <!-- ================= CLIMA (API Open-Meteo) ================= -->
-        <div class="planilha_dashboard mt-4 mb-4" style="padding: 24px; color: #d9d9d9;">
-
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
-
-                <h3 class="fs-5 mb-0" style="color: #d9d9d9 !important;">
-                    <i class="bi bi-cloud-sun"></i>
-                    Clima
-                </h3>
-
-                <form method="get" class="d-flex gap-2">
-                    <input type="text" name="cidade" class="form-control form-control-sm"
-                        placeholder="Digite a cidade"
-                        value="<?= e($cidade) ?>">
-                    <button type="submit" class="btn btn-sm btn-primary">Ver clima</button>
-                </form>
-
-            </div>
-
-            <?php if ($clima): ?>
-
-                <h4 class="fs-6" style="color: #d9d9d9;">
-                    <i class="bi bi-geo-alt"></i>
-                    <?= e($clima['cidade']) ?>
-                </h4>
-
-                <div style="font-size: 2.2rem; font-weight: bold;">
-                    <?= (int) $clima['temperatura'] ?>°C
+                    <h3><?= $sensores ?></h3>
                 </div>
 
-                <div class="mb-2"><?= e($clima['condicao']) ?></div>
+                <div class="informacoes">
+                    <h4>
+                        <img src="../assets/icons/TREM_AZUL.svg" alt="">
+                        Trens Cadastrados
+                    </h4>
 
-                <small>
-                    Última atualização da API: <?= e($clima['atualizado']) ?><br>
-                    Consulta feita em: <?= e($clima['consultado']) ?><br>
-                    Dados: <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo.com</a>
-                </small>
+                    <h3><?= $trens ?></h3>
+                </div>
 
-            <?php else: ?>
+                <div class="informacoes">
+                    <h4>
+                        <img src="../assets/icons/ALERTA.svg" alt="">
+                        Alertas
+                    </h4>
 
-                <p class="mb-0">Cidade não encontrada ou clima indisponível no momento.</p>
+                    <h3><?= $alertas ?></h3>
+                </div>
 
-            <?php endif; ?>
+                <div class="informacoes">
+                    <h4>
+                        <img src="../assets/icons/OK_VERDE.svg" alt="">
+                        Sensores Funcionando
+                    </h4>
+
+                    <h3><?= $sensores_ativos ?></h3>
+                </div>
+
+            </div>
+
+            <!-- ================= CLIMA (API Open-Meteo) ================= -->
+            <div class="planilha_dashboard clima_card">
+
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                    <h3 class="fs-5 mb-0" style="color: #d9d9d9 !important;">
+                        <i class="bi bi-cloud-sun"></i>
+                        Clima
+                    </h3>
+
+                    <form method="get" class="d-flex gap-2">
+                        <input type="text" name="cidade" class="form-control form-control-sm"
+                            placeholder="Digite a cidade"
+                            value="<?= e($cidade) ?>">
+                        <button type="submit" class="btn btn-sm btn-primary">Ver clima</button>
+                    </form>
+
+                </div>
+
+                <?php if ($clima): ?>
+
+                    <div class="clima_corpo">
+
+                        <div>
+
+                            <h4 class="fs-6 mb-1" style="color: #d9d9d9;">
+                                <i class="bi bi-geo-alt"></i>
+                                <?= e($clima['cidade']) ?>
+                            </h4>
+
+                            <div style="font-size: 2.2rem; font-weight: bold; line-height: 1.1;">
+                                <?= (int) $clima['temperatura'] ?>°C
+                            </div>
+
+                            <div><?= e($clima['condicao']) ?></div>
+
+                        </div>
+
+                        <small>
+                            Última atualização da API: <?= e($clima['atualizado']) ?><br>
+                            Consulta feita em: <?= e($clima['consultado']) ?><br>
+                            Dados: <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo.com</a>
+                        </small>
+
+                    </div>
+
+                <?php else: ?>
+
+                    <p class="mb-0">Cidade não encontrada ou clima indisponível no momento.</p>
+
+                <?php endif; ?>
+
+            </div>
+            <!-- =========================================================== -->
 
         </div>
-        <!-- =========================================================== -->
 
         <div class="planilha_dashboard">
 
@@ -383,7 +456,80 @@ $trens_cadastrados = $conexao->query($sql);
 
         </div>
 
-       
+        <div class="planilha_dashboard mt-4 mb-4" style="max-width: 480px; padding: 28px;">
+
+            <h3 class="fs-5 text-center mb-3" style="color: #d9d9d9 !important;">
+                Funcionamento dos Trens
+            </h3>
+
+            <div style="width: 320px; height: 320px; max-width: 100%; margin: 0 auto;">
+                <canvas id="graficoTrens"></canvas>
+            </div>
+
+            <div class="d-flex justify-content-around text-center mt-3 flex-wrap gap-3"
+                style="color: #d9d9d9;">
+
+                <div>
+                    <div style="font-size: 1.8rem; font-weight: bold; color: #2ecc71;">
+                        <?= $trensAtivos ?>
+                    </div>
+                    <small>Ativo</small>
+                </div>
+
+                <div>
+                    <div style="font-size: 1.8rem; font-weight: bold; color: #f1c40f;">
+                        <?= $trensManutencao ?>
+                    </div>
+                    <small>Manutenção</small>
+                </div>
+
+                <div>
+                    <div style="font-size: 1.8rem; font-weight: bold; color: #95a5a6;">
+                        <?= $trensInativos ?>
+                    </div>
+                    <small>Inativo</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+    new Chart(document.getElementById("graficoTrens"), {
+        type: "doughnut",
+        data: {
+            labels: ["Ativo", "Manutenção", "Inativo"],
+            datasets: [{
+                data: [
+                    <?= $trensAtivos ?>,
+                    <?= $trensManutencao ?>,
+                    <?= $trensInativos ?>
+                ],
+                backgroundColor: [
+                    "#2ecc71",
+                    "#f1c40f",
+                    "#95a5a6"
+                ],
+                borderWidth: 0,
+                spacing: 3,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "70%",
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
 </script>
 
 </body>
