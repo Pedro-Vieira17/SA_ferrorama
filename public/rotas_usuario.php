@@ -73,6 +73,8 @@ $rotas = $conexao->query($sql);
 
             <div class="planilha_dashboard table-responsive">
 
+             <h3 style="color: white;">Rotas Cadastradas</h3>
+
                 <table class="table table-borderless">
 
                     <thead>
