@@ -138,10 +138,7 @@ $statusPermitidos = [
 
         <div class="container-sensor">
 
-            <h1 class="titulo-sensor" style="color: white;">
-                Editar Trem
-            </h1>
-
+           
             <?php if ($erro !== ""): ?>
 
                 <div class="alert alert-danger">
@@ -175,6 +172,11 @@ $statusPermitidos = [
                     name="csrf_token"
                     value="<?= e(gerarTokenCsrf()) ?>"
                 >
+
+               <h3 style="color: white;">
+    <i class="bi bi-train-front"></i>
+    Editar Trem
+</h3>
 
                 <div class="linha-formulario">
 

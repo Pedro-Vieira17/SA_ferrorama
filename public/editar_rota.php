@@ -51,7 +51,10 @@ $trens = $conexao->query("SELECT id, localizacao, tipo_de_dado FROM TRENS ORDER 
     </aside>
     <main class="conteudo">
         <div class="formulario-rota">
-            <h3><i class="bi bi-pencil-square"></i> Editar Rota</h3>
+  <h3 style="color: white;">
+    <i class="bi bi-signpost-2"></i>
+    Editar Rota
+</h3>
             <form method="POST" action="atualizar_rota.php">
                 <input type="hidden" name="csrf_token" value="<?= e(gerarTokenCsrf()) ?>">
                 <input type="hidden" name="id" value="<?= (int) $rota["id"] ?>">

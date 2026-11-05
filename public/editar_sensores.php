@@ -57,14 +57,21 @@ function h($valor) {
     </aside>
     <main class="conteudo">
         <div class="container-sensor">
-            <h1 class="titulo-sensor">Editar Sensor</h1>
+          
             <?php if ($erro): ?>
                 <div class="alert alert-danger"><?= h($erro) ?></div>
             <?php endif; ?>
             <form class="form-sensor" method="POST" action="salvar_edicao_sensores.php">
                 <input type="hidden" name="id" value="<?= (int)$sensor['id'] ?>">
                 <input type="hidden" name="csrf_token" value="<?= h(gerarTokenCsrf()) ?>">
+
+                <h3 style="color: white;">
+                    <i class="bi bi-cpu"></i>
+                   Editar Sensor
+                </h3>
                 <div class="linha-formulario">
+
+                
                     <div class="grupo-input">
                         <label for="localizacao">Localização</label>
                         <input type="text" id="localizacao" name="localizacao" value="<?= h($sensor['localizacao']) ?>" maxlength="150" required placeholder="Ex: Estação central - Eixo B">
