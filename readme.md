@@ -1,312 +1,168 @@
 # 🚂 Ferrorama
 
-> **Situação de Aprendizagem — Técnico em Desenvolvimento de Sistemas**
+Sistema web para consulta e gerenciamento de informações ferroviárias — trens, sensores e rotas — desenvolvido como Situação de Aprendizagem do curso Técnico em Desenvolvimento de Sistemas.
 
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![HTML](https://img.shields.io/badge/HTML-5-orange)
-![CSS](https://img.shields.io/badge/CSS-3-blue)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
-![PHP](https://img.shields.io/badge/PHP-8-blueviolet)
-![Git](https://img.shields.io/badge/Git-controle%20de%20versão-red)
+> **Status:** em desenvolvimento. Consulte [Limitações conhecidas](#-limitações-conhecidas) antes de usar.
 
----
+## 📋 Sobre o projeto
 
-## 📋 Descrição do Projeto
+O Ferrorama reúne em uma aplicação web informações que, quando dispersas, dificultam o acompanhamento da operação ferroviária. O sistema oferece um dashboard e módulos para consultar informações de trens, sensores e rotas, além de administração de contas e cadastros conforme o perfil de acesso.
 
-O **Ferrorama** é um projeto desenvolvido como uma **Situação de Aprendizagem** do curso Técnico em Desenvolvimento de Sistemas.
+### Problema que busca resolver
 
-O sistema tem como objetivo apresentar uma solução para o **monitoramento e gerenciamento de trens e sensores**, utilizando uma aplicação web.
+A falta de um local único para organizar informações dos trens, acompanhar o estado dos sensores e consultar rotas pode atrasar a identificação de situações que exigem atenção. O Ferrorama busca centralizar esses registros e facilitar sua consulta.
 
-Durante o desenvolvimento são utilizados conhecimentos de **HTML, CSS, JavaScript, PHP, banco de dados, Git e GitHub**.
+### Objetivos
 
----
+- Reunir informações de trens, sensores e rotas em uma interface web.
+- Apresentar indicadores e estados operacionais no dashboard.
+- Permitir que administradores gerenciem os cadastros e as contas de acesso.
+- Permitir que usuários autenticados consultem as informações autorizadas ao seu perfil.
 
-## 🎯 Objetivo
+## ⚙️ Funcionalidades implementadas
 
-O objetivo do projeto é desenvolver um sistema funcional para auxiliar no **controle de trens e sensores**, permitindo visualizar informações, cadastrar dados, gerar relatórios e acompanhar possíveis alertas.
+- Autenticação por e-mail e senha, com redirecionamento conforme o perfil, e logout.
+- Dashboard com indicadores de sensores cadastrados, trens cadastrados, alertas e sensores funcionando; o painel administrativo também inclui a área de consulta/gerenciamento de trens.
+- Consulta de sensores, com informações como localização, tipo de dado, status e trem associado; há filtros disponíveis na área administrativa.
+- Consulta de rotas e visualização de detalhes, incluindo distância, duração, status e trem associado.
+- Para administradores: cadastro e gerenciamento de usuários, trens, sensores e rotas, incluindo operações de edição e exclusão onde disponíveis.
+- Informações auxiliares de clima no dashboard.
 
-Além disso, o projeto busca colocar em prática conhecimentos de:
+> A disponibilidade de botões de edição e exclusão depende do perfil e da tela. O cadastro de sensor exige a associação a um trem existente. Para instruções passo a passo, consulte o [Manual rápido de utilização](MANUAL.md).
 
-* Desenvolvimento web;
-* Programação;
-* Banco de dados;
-* Organização de código;
-* Criação de interfaces;
-* Git e GitHub;
-* Trabalho em equipe;
-* Testes e correção de erros;
-* Documentação de sistemas.
+## 🧰 Tecnologias
 
----
+| Tecnologia | Uso |
+|---|---|
+| PHP 8 | Lógica de aplicação e páginas do servidor |
+| MySQL / MariaDB | Persistência dos usuários, trens, sensores e rotas |
+| HTML5, CSS3 e JavaScript | Interface e interações no navegador |
+| Bootstrap 5 e Bootstrap Icons | Componentes e ícones da interface |
+| Chart.js | Gráficos usados no dashboard |
+| Git e GitHub | Versionamento e colaboração |
 
-# ⚙️ Funcionalidades
+## ✅ Requisitos para executar
 
-O sistema deverá possuir funcionalidades relacionadas ao gerenciamento de usuários, trens, sensores e relatórios.
+- PHP 8 ou compatível, com extensões `mysqli` e suporte a sessões habilitados.
+- MySQL ou MariaDB, com permissão para criar o banco e as tabelas.
+- Apache ou outro servidor web configurado para executar PHP. Para desenvolvimento local, pode-se usar XAMPP com Apache e MySQL.
+- Navegador atualizado.
+- Conexão à internet para carregar recursos externos utilizados pela interface e o serviço de clima.
 
-| Área               | Funcionalidades                                |
-| ------------------ | ---------------------------------------------- |
-| 👤 Usuários        | Login, cadastro, visualização e exclusão       |
-| 🚂 Trens           | Cadastro, alteração e exclusão                 |
-| 📡 Sensores        | Cadastro, edição, exclusão e identificação     |
-| 📊 Dashboard       | Visualização de informações gerais             |
-| 📄 Relatórios      | Geração, busca e filtragem                     |
-| 🔐 Acesso          | Login e logout                                 |
-| 🗄️ Banco de dados | Armazenamento e relacionamento das informações |
+Não há arquivo de dependências Composer no projeto. A configuração atual usa MySQL local na porta `3306`, usuário `root`, senha vazia e banco `sa_ferrorama`; ajuste-a para corresponder ao seu ambiente antes de executar.
 
----
+## 🚀 Instalação e configuração
 
-# 📌 Requisitos do Sistema
+### 1. Obter o código
 
-Os requisitos foram definidos para orientar o desenvolvimento do Ferrorama.
+Clone o repositório ou baixe o ZIP e coloque a pasta do projeto no diretório servido pelo Apache. No XAMPP, normalmente é `htdocs`.
 
-## 📋 Requisitos Funcionais
-
-| Código   | Requisito                                                                                                         |
-| -------- | ----------------------------------------------------------------------------------------------------------------- |
-| **RF01** | O sistema deve permitir o login de usuários por meio de e-mail e senha.                                           |
-| **RF02** | O sistema deve permitir o cadastro de novos usuários.                                                             |
-| **RF03** | O sistema deve exibir um dashboard com informações gerais, como sensores ativos, trens em operação e alertas.     |
-| **RF04** | O sistema deve permitir o gerenciamento de sensores, incluindo cadastrar, editar e excluir.                       |
-| **RF05** | O sistema deve permitir visualizar os sensores com informações de localização, tipo de dado e status.             |
-| **RF06** | O sistema deve permitir o monitoramento em tempo real dos trens, mostrando velocidade, temperatura e localização. |
-| **RF07** | O sistema deve permitir gerar relatórios por período, tipo de falha e trem.                                       |
-| **RF08** | O sistema deve permitir a busca e filtragem de relatórios gerados.                                                |
-| **RF09** | O sistema deve solicitar confirmação antes de excluir um sensor.                                                  |
-| **RF10** | O sistema deve permitir o logout do usuário.                                                                      |
-| **RF11** | O sistema deve ser desenvolvido utilizando PHP.                                                                   |
-| **RF12** | O sistema deve atender todos os requisitos definidos para o projeto.                                              |
-| **RF13** | O sistema deve utilizar padrões para criação e organização das funções.                                           |
-| **RF14** | O sistema deve identificar os sensores cadastrados.                                                               |
-| **RF15** | O sistema deve possuir um banco de dados funcional com as tabelas relacionadas.                                   |
-| **RF16** | O sistema deve permitir alterar dados cadastrados.                                                                |
-| **RF17** | O sistema deve permitir excluir usuários.                                                                         |
-| **RF18** | O sistema deve permitir excluir trens cadastrados.                                                                |
-| **RF19** | O sistema deve mostrar os usuários cadastrados.                                                                   |
-| **RF20** | O sistema deve permitir o cadastro de novos trens.                                                                |
-| **RF21** | O sistema deve permitir associar um ou mais sensores a um trem no cadastro ou edição.                             |
-
----
-
-## 📐 Regras de Negócio
-
-| Código   | Regra                                                                                                      |
-| -------- | ---------------------------------------------------------------------------------------------------------- |
-| **RN01** | Apenas usuários autenticados podem acessar o sistema.                                                      |
-| **RN02** | Um sensor deve estar obrigatoriamente vinculado a um trem no cadastro.                                     |
-| **RN03** | A exclusão de sensores deve exigir confirmação.                                                            |
-| **RN04** | Sensores devem possuir os status **Ativo** ou **Alerta**.                                                  |
-| **RN05** | Relatórios devem utilizar filtros de período, tipo de falha e trem.                                        |
-| **RN06** | O sistema deve exibir informações atualizadas dos sensores e trens.                                        |
-| **RN07** | Um sensor só pode ser vinculado a um trem que já esteja cadastrado.                                        |
-| **RN08** | A exclusão de um trem deve exigir confirmação.                                                             |
-| **RN09** | Um trem só poderá ser excluído se não possuir sensores vinculados, ou conforme regra definida pela equipe. |
-
----
-
-## ⚡ Requisitos Não Funcionais
-
-| Código    | Requisito                                                                                          |
-| --------- | -------------------------------------------------------------------------------------------------- |
-| **RNF01** | O sistema deve apresentar atualização dos dados em tempo real.                                     |
-| **RNF02** | O sistema deve possuir desempenho adequado na exibição das informações.                            |
-| **RNF03** | O sistema deve possuir autenticação segura por e-mail e senha.                                     |
-| **RNF04** | A interface deve ser intuitiva e fácil de utilizar.                                                |
-| **RNF05** | O sistema deve buscar alta disponibilidade.                                                        |
-| **RNF06** | As telas devem possuir uma interface consistente, seguindo padrões de cores, layout e usabilidade. |
-| **RNF07** | O sistema deve ser testado antes da entrega.                                                       |
-| **RNF08** | O sistema deve seguir um padrão de nomenclatura para arquivos e funções.                           |
-| **RNF09** | A equipe deve definir, documentar e registrar a metodologia de desenvolvimento utilizada.          |
-
----
-
-# 🛠️ Tecnologias Utilizadas
-
-| Tecnologia     | Utilização                                                  |
-| -------------- | ----------------------------------------------------------- |
-| **HTML5**      | Estrutura das páginas                                       |
-| **CSS3**       | Estilização e organização visual                            |
-| **JavaScript** | Interações e funcionalidades                                |
-| **PHP**        | Desenvolvimento do back-end e processamento das informações |
-| **MySQL**      | Armazenamento dos dados do sistema                          |
-| **Git**        | Controle de versões                                         |
-| **GitHub**     | Armazenamento e compartilhamento do projeto                 |
-
----
-
-# 📁 Estrutura do Projeto
-
-```text
-Situa--o_de_Aprendizagem_Ferrorama/
-│
-├── 📂 assets/
-├── 📂 doc/
-├── 📂 public/
-├── 📂 scripts/
-│
-├── 📄 index.html
-├── 📄 license
-└── 📄 readme.md
+```bash
+git clone https://github.com/Pedro-Vieira17/SA_ferrorama.git
 ```
 
-| Pasta/Arquivo | Função                            |
-| ------------- | --------------------------------- |
-| `assets/`     | Imagens e outros recursos visuais |
-| `doc/`        | Documentação do projeto           |
-| `public/`     | Arquivos públicos da aplicação    |
-| `scripts/`    | Scripts utilizados no sistema     |
-| `index.html`  | Página principal                  |
-| `license`     | Licença do projeto                |
-| `readme.md`   | Documentação principal            |
+Se usar o clone, mova ou clone a pasta `SA_ferrorama` para `htdocs` (ou configure o Apache para servir o diretório do projeto).
 
----
+### 2. Criar e importar o banco de dados
 
-## 📋 Metodologia
+O script [`database/db.sql`](database/db.sql) cria o banco `sa_ferrorama`, suas tabelas e inclui registros de demonstração.
 
-Para o desenvolvimento do projeto **Ferrorama**, a equipe utiliza a metodologia **Kanban**, através do **GitHub Projects**, para organizar e acompanhar as tarefas.
+**Pelo phpMyAdmin:**
 
-O Kanban permite visualizar o andamento do projeto de forma simples, dividindo as tarefas em diferentes etapas:
+1. Inicie Apache e MySQL no XAMPP.
+2. Abra `http://localhost/phpmyadmin`.
+3. Selecione **Importar**, escolha `database/db.sql` e execute. O script já contém `CREATE DATABASE` e `USE`.
 
-**A Fazer → Em Desenvolvimento → Em Teste → Concluído**
+**Pelo terminal:**
 
-### 🔹 A Fazer
+```bash
+mysql -u root -p < database/db.sql
+```
 
-Tarefas que ainda precisam ser realizadas pela equipe.
+Se sua instalação local do MySQL não usa senha para `root`, pressione Enter quando solicitada. Em instalações com outras credenciais, ajuste o comando conforme sua configuração.
 
-### 🔹 Em Desenvolvimento
+> A importação cria dados de exemplo e uma conta administrativa inicial. A senha dessa conta não é documentada aqui; não presuma uma senha padrão. Em um ambiente local de teste, configure a credencial de forma segura conforme o procedimento da equipe. Nunca exponha credenciais de demonstração nem use uma conta padrão em produção.
 
-Tarefas que estão sendo desenvolvidas por algum integrante da equipe.
+### 3. Configurar a conexão
 
-### 🔹 Em Teste
+Edite [`infra/conexao.php`](infra/conexao.php) para usar host, usuário, senha, banco de dados e porta corretos no seu ambiente. Os valores que vêm no projeto são para desenvolvimento local (`localhost`, usuário `root`, senha vazia, banco `sa_ferrorama`, porta `3306`).
 
-Tarefas que já foram desenvolvidas e estão sendo testadas para verificar se estão funcionando corretamente.
+Não publique credenciais reais no repositório. Para um ambiente compartilhado ou de produção, use credenciais próprias com permissões mínimas e configuração segura do servidor.
 
-Caso seja encontrado algum erro, a tarefa retorna para **Em Desenvolvimento** para ser corrigida.
+### 4. Iniciar a aplicação
 
-### 🔹 Concluído
+Com Apache e MySQL em execução e o banco importado, abra no navegador:
 
-Tarefas que foram desenvolvidas, testadas e estão funcionando corretamente.
+```text
+http://localhost/SA_ferrorama/
+```
 
-### 👥 Organização da equipe
+Se o diretório do projeto tiver outro nome ou o Apache usar outra porta, adapte o endereço. A página inicial apresenta a landing page; use o link/botão de entrada para abrir o formulário de login. Entre com uma conta cadastrada no banco.
 
-Cada tarefa possui um responsável e pode ter uma prioridade definida. O quadro do GitHub Projects é atualizado conforme o andamento das atividades, permitindo que todos os integrantes acompanhem o progresso do projeto.
+## 👥 Perfis de acesso
 
-### 🎯 Objetivo
+| Perfil | Permissões principais |
+|---|---|
+| **Administrador** | Acessa o dashboard administrativo; cadastra e consulta contas; gerencia trens, sensores e rotas, incluindo edição e exclusão nas telas disponíveis. |
+| **Usuário** | Acessa seu dashboard e consulta sensores e rotas. Não tem acesso às opções administrativas de cadastro, edição e exclusão. |
 
-O uso do Kanban tem como objetivo facilitar a **organização das tarefas, divisão do trabalho, acompanhamento do projeto e identificação de erros**, contribuindo para um desenvolvimento mais organizado e colaborativo.
+As páginas protegidas exigem autenticação. Contas e permissões devem ser administradas por pessoas autorizadas. Não compartilhe credenciais.
 
+## 🗂️ Estrutura do projeto
 
----
+```text
+SA_ferrorama/
+├── assets/
+│   ├── icons/          # Ícones
+│   ├── img/            # Imagens utilizadas na interface
+│   └── style/          # Folhas de estilo
+├── database/
+│   └── db.sql          # Criação do banco, tabelas e dados de demonstração
+├── doc/                # Documentação e pesquisas do projeto
+├── infra/
+│   ├── conexao.php     # Conexão com MySQL
+│   └── seguranca.php   # Sessão, permissões e funções de segurança
+├── public/             # Landing page e telas/módulos da aplicação
+├── index.php           # Entrada da aplicação e login
+├── logout.php          # Encerramento da sessão
+├── MANUAL.md           # Manual rápido de utilização
+└── readme.md           # Este documento
+```
 
-# 🧑‍💻 Padrão de Código
+Os arquivos em `public/` incluem dashboards, gerenciamento de sensores, rotas, usuários e operações relacionadas. A estrutura pode evoluir conforme o projeto.
 
-Para evitar diferenças entre os códigos dos integrantes, serão utilizados alguns padrões.
+## 👨‍👩‍👧‍👦 Equipe
 
-| Item        | Padrão                                          |
-| ----------- | ----------------------------------------------- |
-| Arquivos    | Nomes em minúsculo                              |
-| Variáveis   | Nomes claros e descritivos                      |
-| Funções     | Nomes relacionados à função realizada           |
-| Indentação  | Código organizado e identado                    |
-| Comentários | Utilizados quando ajudarem na compreensão       |
-| Pastas      | Cada pasta deve possuir uma finalidade          |
-| HTML        | Estrutura organizada e sem código desnecessário |
-| CSS         | Classes com nomes claros                        |
-| PHP         | Código separado de acordo com suas funções      |
+Projeto desenvolvido pela equipe da Situação de Aprendizagem do curso Técnico em Desenvolvimento de Sistemas — SENAI, turma DS24/M4.
 
-O objetivo é fazer com que todos os integrantes consigam entender e continuar o código desenvolvido pelos outros membros da equipe.
+| Integrante | Contribuição registrada neste README |
+|---|---|
+| Pedro Vieira | Integrante da equipe de desenvolvimento. |
+| Davi Zilz | Integrante da equipe de desenvolvimento. |
+| Enzo Vegini | Integrante da equipe de desenvolvimento. |
+| Francisco Goulart | Integrante da equipe de desenvolvimento. |
 
----
+O repositório não mantém um mapeamento validado de cada funcionalidade para uma pessoa específica; por isso, as contribuições individuais não são atribuídas aqui. A equipe desenvolve e revisa o sistema de forma colaborativa.
 
-# 🧪 Testes
+## 🖼️ Imagens e capturas de tela
 
-Os testes serão realizados durante o desenvolvimento para verificar se os requisitos estão funcionando corretamente.
+As imagens atualmente armazenadas em `assets/img/` são recursos visuais da interface, não capturas de telas funcionais do sistema. Para documentar a versão final, a equipe deve adicionar capturas reais — sem dados pessoais ou credenciais — por exemplo em `doc/imagens/`, e atualizar esta seção com os caminhos:
 
-| Teste          | O que será verificado                  |
-| -------------- | -------------------------------------- |
-| Login          | Entrada com usuário e senha            |
-| Cadastro       | Criação de usuários, trens e sensores  |
-| Alteração      | Alteração dos dados cadastrados        |
-| Exclusão       | Exclusão com confirmação               |
-| Sensores       | Cadastro, identificação e status       |
-| Trens          | Cadastro e associação com sensores     |
-| Relatórios     | Geração, busca e filtros               |
-| Dashboard      | Exibição das informações               |
-| Logout         | Saída segura do sistema                |
-| Banco de dados | Gravação e recuperação das informações |
+- `doc/imagens/login.png` — tela de entrada;
+- `doc/imagens/dashboard.png` — dashboard após login;
+- `doc/imagens/sensores.png` — consulta de sensores;
+- `doc/imagens/rotas.png` — consulta de rotas.
 
----
+As imagens não estão incluídas como capturas neste momento, para não apresentar ilustrações como se fossem telas reais do sistema.
 
-# 🔐 Segurança
+## ⚠️ Limitações conhecidas
 
-Durante o desenvolvimento serão utilizadas boas práticas de segurança, como:
+- O projeto está em desenvolvimento; algumas operações ainda precisam de testes práticos e correções.
+- A atualização automática em tempo real não está implementada; os dados mostrados correspondem ao que está salvo no banco quando a página é carregada.
+- O módulo de relatórios com geração e filtros descrito em requisitos anteriores não foi localizado na versão atual.
+- A validação do projeto registra inconsistências conhecidas em status de sensores, cadastro e operações de exclusão. Verifique os dados antes de confirmar alterações e exclusões.
+- A conexão MySQL vem configurada para um ambiente local de desenvolvimento e deve ser alterada em outros ambientes.
+- Recursos externos (por exemplo, bibliotecas e informações de clima) podem depender de internet e de serviços de terceiros.
+- A instalação não deve ser exposta diretamente à internet usando credenciais de desenvolvimento ou dados de demonstração.
 
-* Autenticação de usuários;
-* Validação dos dados;
-* Proteção das informações do usuário;
-* Não deixar senhas expostas no código;
-* Controle de acesso às páginas;
-* Confirmação antes de exclusões;
-* Organização dos arquivos;
-* Validação das informações antes de salvar no banco.
-
----
-
-# 📚 Aprendizados
-
-Com o desenvolvimento do Ferrorama, a equipe poderá praticar conhecimentos de:
-
-* HTML;
-* CSS;
-* JavaScript;
-* PHP;
-* Banco de dados;
-* Git e GitHub;
-* Kanban;
-* Requisitos de sistema;
-* Regras de negócio;
-* Testes;
-* Segurança;
-* Organização de projetos;
-* Trabalho em equipe.
-
----
-
-# 👥 Equipe
-
-| Integrante            |
-| --------------------- |
-| **Pedro Vieira**      |
-| **Davi Zilz**         |
-| **Enzo Vegini**       |
-| **Francisco Goulart** |
-
-**Curso:** Técnico em Desenvolvimento de Sistemas
-**Instituição:** SENAI
-**Turma:** DS24/M4
-
----
-
-# 🌐 Repositório
-
-O projeto está disponível no GitHub:
-
-[Repositório Ferrorama no GitHub](https://github.com/Pedro-Vieira17/Situa--o_de_Aprendizagem_Ferrorama.git?utm_source=chatgpt.com)
-
----
-
-# 📌 Status do Projeto
-
-🟡 **Em desenvolvimento**
-
-Nesta primeira etapa, a equipe está realizando a revisão do projeto, organização dos requisitos, definição da metodologia, padronização do código e planejamento das próximas tarefas.
-
----
-
-## 🚂 Considerações Finais
-
-O **Ferrorama** é um projeto desenvolvido para colocar em prática os conhecimentos do curso Técnico em Desenvolvimento de Sistemas.
-
-Nesta etapa, o foco principal é **revisar, organizar e planejar** o projeto, deixando definidos os requisitos, regras de negócio, padrões de código e tarefas que serão realizadas pela equipe.
-
-Com isso, o desenvolvimento das próximas etapas poderá ser feito de forma mais organizada, dividindo as atividades entre os integrantes e acompanhando tudo pelo Kanban do GitHub Projects.
-
+Para passos detalhados de login, navegação e consulta/cadastro, veja o [Manual rápido de utilização](MANUAL.md). Sugestões e problemas devem ser relatados à equipe do projeto.
