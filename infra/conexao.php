@@ -5,8 +5,7 @@ $conexao = new mysqli(
     "root",
     "",
     "sa_ferrorama",
-    3313
-
+    3306
 );
 
 if ($conexao->connect_error) {
