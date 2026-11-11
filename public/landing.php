@@ -1,5 +1,10 @@
 <?php
 // Landing Page da Ferrorama (pública, não exige login). Arquivo único: HTML + CSS + PHP.
+// Quando carregada pelo index.php, ele define $base = '' (raiz do projeto).
+// Quando aberta direto em public/landing.php, $base vira '../'.
+$base = $base ?? '../';
+$linkEntrar = $base . 'index.php?login';
+$imagemTrem = $base . 'assets/img/trem-png%20novo.webp';
 $tituloPagina = 'Ferrorama | Monitoramento ferroviário';
 $descricaoPagina = 'A Ferrorama reúne trens, rotas, sensores e alertas em um só painel para acompanhar a operação ferroviária.';
 
@@ -69,6 +74,8 @@ p{color:var(--cinza-claro);max-width:62ch}
 .hero{padding:88px 0 64px}
 .hero h1{font-size:clamp(2.2rem,5.5vw,3.8rem);max-width:16ch;margin-bottom:20px}
 .lead{font-size:1.15rem;margin-bottom:32px}
+.hero-grade{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero-img{width:100%;height:auto;display:block}
 .trilho{display:block;width:100%;height:auto;margin-top:56px}
 .trilho .via{stroke:var(--cinza-claro);stroke-width:3;fill:none}
 .trilho .dormente{stroke:var(--cinza);stroke-width:2}
@@ -108,6 +115,8 @@ p{color:var(--cinza-claro);max-width:62ch}
   .duas-colunas{grid-template-columns:1fr;gap:28px}
   .secao{padding:56px 0}
   .hero{padding:56px 0 40px}
+  .hero-grade{grid-template-columns:1fr}
+  .hero-img{max-width:420px;margin:0 auto}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -127,7 +136,7 @@ p{color:var(--cinza-claro);max-width:62ch}
             <a href="#monitoramento">Monitoramento</a>
             <a href="#beneficios">Benefícios</a>
         </nav>
-        <a class="btn btn-azul" href="index.php">Entrar</a>
+        <a class="btn btn-azul" href="<?= $linkEntrar ?>">Entrar</a>
     </div>
 </header>
 
@@ -136,11 +145,16 @@ p{color:var(--cinza-claro);max-width:62ch}
 <!-- ===== HERO ===== -->
 <section class="hero">
     <div class="container">
+        <div class="hero-grade">
+        <div>
         <h1>Trens, rotas e sensores em um só painel</h1>
         <p class="lead">A Ferrorama organiza as informações da operação ferroviária para que a equipe acompanhe a linha, identifique alertas e consulte o clima sem trocar de ferramenta.</p>
         <div class="acoes">
-            <a class="btn btn-azul" href="index.php">Acessar o sistema</a>
+            <a class="btn btn-azul" href="<?= $linkEntrar ?>">Acessar o sistema</a>
             <a class="btn btn-cinza" href="#funcionalidades">Ver funcionalidades</a>
+        </div>
+        </div>
+        <img class="hero-img" src="<?= $imagemTrem ?>" alt="Ilustração de um trem moderno" width="525" height="350">
         </div>
 
         <svg class="trilho" viewBox="0 0 1000 120" role="img" aria-label="Ilustração de um trem passando por sensores ao longo do trilho">
@@ -220,7 +234,7 @@ p{color:var(--cinza-claro);max-width:62ch}
     <div class="container">
         <h2>Pronto para acompanhar sua linha?</h2>
         <p>Entre com seu usuário e veja trens, rotas e sensores no painel.</p>
-        <a class="btn btn-azul" href="index.php">Acessar o sistema</a>
+        <a class="btn btn-azul" href="<?= $linkEntrar ?>">Acessar o sistema</a>
     </div>
 </section>
 

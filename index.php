@@ -1,5 +1,13 @@
 <?php
 
+// A landing page é a primeira coisa que aparece ao abrir o site.
+// O login só aparece com ?login na URL ou quando o formulário é enviado (POST).
+if ($_SERVER["REQUEST_METHOD"] === "GET" && !isset($_GET["login"])) {
+    $base = "";
+    require __DIR__ . "/public/landing.php";
+    exit;
+}
+
 require_once "infra/seguranca.php";
 require_once "infra/conexao.php";
 
