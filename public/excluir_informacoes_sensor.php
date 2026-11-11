@@ -6,20 +6,18 @@ require_once "../infra/conexao.php";
 exigirAdministrador();
 validarTokenCsrf();
 
-// Recebe o ID enviado pelo formulário
 $id = filter_input(
     INPUT_POST,
     "id",
     FILTER_VALIDATE_INT
 );
 
-// Verifica se o ID é válido
+
 if ($id === false || $id === null || $id <= 0) {
     header("Location: gerenciar_sensores.php?erro=" . urlencode("Sensor inválido."));
     exit;
 }
 
-// Exclui o sensor
 $stmt = $conexao->prepare(
     "DELETE FROM SENSORES WHERE id = ?"
 );
@@ -44,7 +42,6 @@ if (!$stmt->execute()) {
     exit;
 }
 
-// Verifica se realmente excluiu
 if ($stmt->affected_rows === 0) {
 
     header(

@@ -1,5 +1,13 @@
 <?php
 
+// A landing page é a primeira coisa que aparece ao abrir o site.
+// O login só aparece com ?login na URL ou quando o formulário é enviado (POST).
+if ($_SERVER["REQUEST_METHOD"] === "GET" && !isset($_GET["login"])) {
+    $base = "";
+    require __DIR__ . "/public/landing.php";
+    exit;
+}
+
 require_once "infra/seguranca.php";
 require_once "infra/conexao.php";
 
@@ -114,17 +122,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             class="p-3"
             style="max-width: 400px; width: 100%;">
 
-            <div class="titulo">
+           <div class="titulo">
 
-                <h1 class="text-nowrap">
-                    🚄Sistema Ferroviário
-                </h1>
+    <h1 class="text-nowrap d-flex align-items-center gap-2">
+        <img src="assets/icons/TREM_AZUL.svg" alt="Ícone Trem" style="width: 32px; height: 32px;">
+        Sistema Ferroviário
+    </h1>
 
-                <p>
-                    Monitoramento em tempo real
-                </p>
+    <p>
+        Monitoramento em tempo real
+    </p>
 
-            </div>
+</div>
 
             <?php if ($erro !== ""): ?>
 
@@ -191,12 +200,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </div>
 
                 </div>
-
-                <p>
-                    <a href="public/tela_de_cadastro.php">
-                        Criar conta
-                    </a>
-                </p>
 
             </form>
 
