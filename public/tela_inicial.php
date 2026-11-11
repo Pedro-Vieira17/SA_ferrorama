@@ -1,4 +1,3 @@
-
 <?php
 
 require_once "../infra/seguranca.php";
@@ -220,6 +219,7 @@ $usuarios = $consultaUsuarios
             grid-template-columns: 1fr 1fr;
             gap: 20px;
             align-items: stretch;
+            margin-top: 20px;
             margin-bottom: 24px;
         }
 

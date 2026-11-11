@@ -119,6 +119,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="icon"
         href="../assets/icons/TREM_AZUL.svg">
 
+    <style>
+
+        .planilha_dashboard.cadastro_container {
+            margin-top: 20px;
+        }
+
+    </style>
+
 </head>
 
 <body>
