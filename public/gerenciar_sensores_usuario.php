@@ -343,10 +343,6 @@ $sensoresInativos = $statusData["Inativo"] ?? 0;
 
             </div>
 
-            <p class="text-muted mt-2">
-                <?= $resultado->num_rows ?> sensor(es) encontrado(s).
-            </p>
-
         </main>
 
     </div>

@@ -383,10 +383,6 @@ function h($valor) {
 
         </div>
 
-        <p class="quantidade_sensores">
-            <?= $resultado->num_rows ?> sensor(es) encontrado(s).
-        </p>
-
     </main>
 
 </div>
