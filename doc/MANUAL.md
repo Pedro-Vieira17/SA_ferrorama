@@ -127,4 +127,3 @@ O dashboard resume os dados existentes no sistema; não interprete os números c
 - Se uma opção não aparecer, confirme se entrou com o perfil correto. Não tente contornar as permissões.
 - Se os dados não aparecerem, atualize a página uma vez. Se o problema persistir, anote a tela e a mensagem exibida e procure o administrador.
 
-> **Imagens:** recomenda-se que a equipe acrescente capturas de tela da instalação atual ao lado das seções de login, dashboard e formulários. As telas podem variar entre versões; por isso, este guia descreve os passos sem incluir imagens de uma versão diferente.
