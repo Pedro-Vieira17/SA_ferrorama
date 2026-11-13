@@ -2,7 +2,7 @@
 
 Aplicação web acadêmica para consultar e gerenciar informações ferroviárias, como trens, sensores e rotas. O projeto foi desenvolvido como Situação de Aprendizagem do curso Técnico em Desenvolvimento de Sistemas do SENAI, turma DS24/M4.
 
-> **Status:** projeto em desenvolvimento. Algumas funcionalidades ainda precisam de testes e correções; consulte [Limitações e observações](#-limitações-e-observações).
+
 
 ## Sobre o sistema
 
