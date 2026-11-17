@@ -157,15 +157,7 @@ p{color:var(--cinza-claro);max-width:62ch}
         <img class="hero-img" src="<?= $imagemTrem ?>" alt="Ilustração de um trem moderno" width="525" height="350">
         </div>
 
-        <svg class="trilho" viewBox="0 0 1000 120" role="img" aria-label="Ilustração de um trem passando por sensores ao longo do trilho">
-            <path class="via" d="M0 70H1000M0 88H1000"/>
-            <path class="dormente" d="M20 62v34M70 62v34M120 62v34M170 62v34M220 62v34M270 62v34M320 62v34M370 62v34M420 62v34M470 62v34M520 62v34M570 62v34M620 62v34M670 62v34M720 62v34M770 62v34M820 62v34M870 62v34M920 62v34M970 62v34"/>
-            <circle class="sensor-ok" cx="200" cy="40" r="7"/>
-            <circle class="sensor-ok" cx="450" cy="40" r="7"/>
-            <circle class="sensor-alerta" cx="700" cy="40" r="7"/>
-            <circle class="sensor-ok" cx="900" cy="40" r="7"/>
-            <rect class="trem" x="40" y="46" width="110" height="24" rx="5"/>
-        </svg>
+       
     </div>
 </section>
 
