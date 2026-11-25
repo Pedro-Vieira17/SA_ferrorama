@@ -9,8 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-validarTokenCsrf();
-
 $id = filter_input(INPUT_POST, "id", FILTER_VALIDATE_INT);
 $localizacao = trim($_POST["localizacao"] ?? "");
 $tipoDado = trim($_POST["tipoDado"] ?? "");
@@ -87,32 +85,6 @@ if (!$stmt->execute()) {
 }
 
 $stmt->close();
-
-$stmtVerificacao = $conexao->prepare(
-    "SELECT localizacao, tipo_de_dado, trens_id, status FROM SENSORES WHERE id = ?"
-);
-
-if (!$stmtVerificacao) {
-    error_log("Erro ao verificar atualização do sensor: " . $conexao->error);
-    header("Location: editar_sensores.php?id=" . (int)$id . "&erro=" . urlencode("Não foi possível confirmar a atualização."));
-    exit;
-}
-
-$stmtVerificacao->bind_param("i", $id);
-$stmtVerificacao->execute();
-$sensorSalvo = $stmtVerificacao->get_result()->fetch_assoc();
-$stmtVerificacao->close();
-
-$atualizacaoConfirmada = $sensorSalvo &&
-    $sensorSalvo["localizacao"] === $localizacao &&
-    $sensorSalvo["tipo_de_dado"] === $tipoDado &&
-    (int)$sensorSalvo["trens_id"] === (int)$tremVinculado &&
-    $sensorSalvo["status"] === $status;
-
-if (!$atualizacaoConfirmada) {
-    header("Location: editar_sensores.php?id=" . (int)$id . "&erro=" . urlencode("A atualização não foi confirmada no banco de dados."));
-    exit;
-}
 
 header("Location: gerenciar_sensores.php?sucesso=" . urlencode("Sensor atualizado com sucesso."));
 exit;

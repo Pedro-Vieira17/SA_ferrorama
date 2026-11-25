@@ -1,4 +1,3 @@
-
 <?php
 
 require_once "../infra/seguranca.php";
@@ -210,12 +209,6 @@ $usuarios = $stmt->get_result();
                                                 value="<?= (int) $usuario["id"] ?>"
                                             >
 
-                                            <input
-                                                type="hidden"
-                                                name="csrf_token"
-                                                value="<?= e(gerarTokenCsrf()) ?>"
-                                            >
-
                                             <button type="submit" class="btn btn-sm btn-danger">
                                                 <i class="bi bi-trash"></i>
                                                 Excluir
@@ -281,12 +274,6 @@ $usuarios = $stmt->get_result();
                         type="hidden"
                         name="id"
                         id="editarId"
-                    >
-
-                    <input
-                        type="hidden"
-                        name="csrf_token"
-                        value="<?= e(gerarTokenCsrf()) ?>"
                     >
 
                     <div class="row g-3">

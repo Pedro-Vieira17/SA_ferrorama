@@ -4,7 +4,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 // Função que chama a API (fica aqui para não depender de outro arquivo)
 if (!function_exists('chamarApi')) {
-    function chamarApi(string $url): ?array {
+    function chamarApi($url) {
         $ch = curl_init($url);
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,

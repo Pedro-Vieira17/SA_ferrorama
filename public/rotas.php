@@ -1,4 +1,3 @@
-
 <?php
 require_once "../infra/seguranca.php";
 require_once "../infra/conexao.php";
@@ -293,11 +292,6 @@ function h($valor) {
 
                                                 <input
                                                     type="hidden"
-                                                    name="csrf_token"
-                                                    value="<?= e(gerarTokenCsrf()) ?>">
-
-                                                <input
-                                                    type="hidden"
                                                     name="id"
                                                     value="<?= (int)$rota["id"] ?>">
 
@@ -358,11 +352,6 @@ function h($valor) {
                 </div>
 
                 <div class="modal-body">
-
-                    <input
-                        type="hidden"
-                        name="csrf_token"
-                        value="<?= e(gerarTokenCsrf()) ?>">
 
                     <div class="grupo-modal">
                         <label for="cadNomeRota">Nome da rota</label>
@@ -505,8 +494,6 @@ function h($valor) {
                 </div>
 
                 <div class="modal-body">
-
-                    <input type="hidden" name="csrf_token" value="<?= e(gerarTokenCsrf()) ?>">
 
                     <input type="hidden" name="id" id="editIdRota">
 

@@ -24,8 +24,6 @@ $statusPermitidos = [
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["acao"] ?? "") === "cadastrar_trem") {
 
-    validarTokenCsrf();
-
     $localizacao = trim($_POST["localizacao"] ?? "");
     $tipo_de_dado = trim($_POST["tipo_de_dado"] ?? "");
     $horario = trim($_POST["horario"] ?? "");
@@ -625,12 +623,6 @@ $usuarios = $consultaUsuarios
                                                 value="<?= (int) $trem['id'] ?>"
                                             >
 
-                                            <input
-                                                type="hidden"
-                                                name="csrf_token"
-                                                value="<?= e(gerarTokenCsrf()) ?>"
-                                            >
-
                                             <button type="submit" class="btn btn-sm btn-danger">
 
                                                 <i class="bi bi-trash"></i>
@@ -695,12 +687,6 @@ $usuarios = $consultaUsuarios
                 <input type="hidden" name="acao" value="cadastrar_trem">
 
                 <div class="modal-body">
-
-                    <input
-                        type="hidden"
-                        name="csrf_token"
-                        value="<?= e(gerarTokenCsrf()) ?>"
-                    >
 
                     <div class="row g-3">
 
@@ -905,12 +891,6 @@ $usuarios = $consultaUsuarios
                         type="hidden"
                         name="id"
                         id="editar_id"
-                    >
-
-                    <input
-                        type="hidden"
-                        name="csrf_token"
-                        value="<?= e(gerarTokenCsrf()) ?>"
                     >
 
                     <div class="row g-3">

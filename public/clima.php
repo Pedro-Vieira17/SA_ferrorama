@@ -2,7 +2,7 @@
 
 // Função que chama a API (fica aqui mesmo para não depender de outro arquivo)
 if (!function_exists('chamarApi')) {
-    function chamarApi(string $url): ?array {
+    function chamarApi($url) {
         $ch = curl_init($url);
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
@@ -21,7 +21,7 @@ if (!function_exists('chamarApi')) {
     }
 }
 
-function obterClima(string $cidade): ?array {
+function obterClima($cidade) {
     // 1) Cidade -> coordenadas
     $geo = chamarApi(
         "https://geocoding-api.open-meteo.com/v1/search?name=" . urlencode($cidade) .

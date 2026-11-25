@@ -9,8 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-validarTokenCsrf();
-
 $localizacao = trim($_POST["localizacao"] ?? "");
 $tipoDado = trim($_POST["tipoDado"] ?? "");
 $tremVinculado = filter_input(INPUT_POST, "tremVinculado", FILTER_VALIDATE_INT);

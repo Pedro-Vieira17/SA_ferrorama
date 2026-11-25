@@ -10,8 +10,6 @@ $erro = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    validarTokenCsrf();
-
     $nome = trim($_POST["nome"] ?? "");
     $cpf = preg_replace('/\D/', '', $_POST["cpf"] ?? "");
     $telefone = preg_replace('/\D/', '', $_POST["telefone"] ?? "");
@@ -220,12 +218,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <?php endif; ?>
 
                 <form method="POST">
-
-                    <input
-                        type="hidden"
-                        name="csrf_token"
-                        value="<?= e(gerarTokenCsrf()) ?>"
-                    >
 
                     <div class="row">
 

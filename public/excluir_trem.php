@@ -1,11 +1,9 @@
-
 <?php
 
 require_once "../infra/seguranca.php";
 require_once "../infra/conexao.php";
 
 exigirAdministrador();
-validarTokenCsrf();
 
 $id = filter_input(INPUT_POST, "id", FILTER_VALIDATE_INT);
 

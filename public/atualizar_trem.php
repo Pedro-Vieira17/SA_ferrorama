@@ -10,8 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-validarTokenCsrf();
-
 $id = filter_var(
     $_POST["id"] ?? null,
     FILTER_VALIDATE_INT
@@ -45,7 +43,7 @@ $statusPermitidos = [
     "Manutenção"
 ];
 
-function voltarEdicao(int $id, string $mensagem): void
+function voltarEdicao($id, $mensagem)
 {
     header(
         "Location: editar_trens.php?id=" .

@@ -8,8 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-validarTokenCsrf();
-
 $id = filter_var($_POST["id"] ?? null, FILTER_VALIDATE_INT);
 $nome = trim($_POST["nome"] ?? "");
 $descricao = trim($_POST["descricao"] ?? "");

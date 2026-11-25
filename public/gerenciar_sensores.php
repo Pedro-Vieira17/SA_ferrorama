@@ -1,4 +1,3 @@
-
 <?php
 require_once "../infra/seguranca.php";
 require_once "../infra/conexao.php";
@@ -350,8 +349,6 @@ function h($valor) {
 
                                             <input type="hidden" name="id" value="<?= (int)$sensor["id"] ?>">
 
-                                            <input type="hidden" name="csrf_token" value="<?= e(gerarTokenCsrf()) ?>">
-
                                             <button type="submit" class="btn btn-sm btn-danger">
                                                 <i class="bi bi-trash"></i>
                                                 Excluir
@@ -405,8 +402,6 @@ function h($valor) {
                 </div>
 
                 <div class="modal-body">
-
-                    <input type="hidden" name="csrf_token" value="<?= e(gerarTokenCsrf()) ?>">
 
                     <div class="row">
 
@@ -492,8 +487,6 @@ function h($valor) {
                 <div class="modal-body">
 
                     <input type="hidden" name="id" id="editIdSensor">
-
-                    <input type="hidden" name="csrf_token" value="<?= e(gerarTokenCsrf()) ?>">
 
                     <div class="row">
 

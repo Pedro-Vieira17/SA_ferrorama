@@ -1,5 +1,5 @@
 <?php
-function chamarApi(string $url): ?array {
+function chamarApi($url) {
     $ch = curl_init($url);
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,

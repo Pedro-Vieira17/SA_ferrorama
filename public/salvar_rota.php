@@ -10,8 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-validarTokenCsrf();
-
 $nome = trim($_POST["nome"] ?? "");
 $descricao = trim($_POST["descricao"] ?? "");
 $distancia = filter_input(INPUT_POST, "distancia_km", FILTER_VALIDATE_FLOAT);
