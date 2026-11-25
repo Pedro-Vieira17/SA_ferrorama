@@ -1,4 +1,3 @@
-
 <?php
 
 require_once "../infra/seguranca.php";
@@ -14,10 +13,6 @@ if (
     header("Location: ../index.php");
     exit;
 }
-
-// ==========================================
-// CLIMA
-// ==========================================
 
 $cidade = trim($_GET['cidade'] ?? '') ?: 'Joinville';
 $clima = obterClima($cidade);
@@ -96,101 +91,9 @@ $trens_cadastrados = $conexao->query("
 
     <link rel="icon" href="../assets/icons/TREM_AZUL.svg">
 
-    <style>
-
-        .painel_topo {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            align-items: stretch;
-            margin-top: 20px;
-            margin-bottom: 24px;
-        }
-
-        .painel_topo .informacoes_dashboard {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            grid-auto-rows: 1fr;
-            gap: 20px;
-            width: 100%;
-            margin: 0;
-        }
-
-        .painel_topo .informacoes {
-            width: 100%;
-            max-width: none;
-            min-width: 0;
-            margin: 0;
-        }
-
-        .painel_topo .informacoes h4 {
-            white-space: normal;
-        }
-
-        .painel_topo .clima_card {
-            margin: 0;
-            padding: 28px 30px;
-            color: #d9d9d9;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 28px;
-        }
-
-        .painel_topo .clima_corpo {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            gap: 24px;
-        }
-
-        .painel_topo .clima_cidade {
-            margin-bottom: 14px;
-        }
-
-        .painel_topo .clima_temp {
-            margin-bottom: 6px;
-        }
-
-        .painel_topo .clima_horarios {
-            line-height: 1.9;
-        }
-
-        .painel_trens {
-            margin-top: 0;
-        }
-
-        @media (max-width: 1100px) {
-
-            .painel_topo {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        @media (max-width: 576px) {
-
-            .painel_topo .informacoes_dashboard {
-                grid-template-columns: 1fr;
-            }
-
-            .painel_topo .clima_card {
-                padding: 20px;
-            }
-
-        }
-
-    </style>
-
 </head>
 
 <body>
-
-<!-- ========================================== -->
-<!-- CABEÇALHO -->
-<!-- ========================================== -->
 
 <header class="cabecalho">
 
@@ -335,8 +238,7 @@ $trens_cadastrados = $conexao->query("
                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
 
                     <h3
-                        class="fs-5 mb-0"
-                        style="color: #d9d9d9 !important;"
+                        class="fs-5 mb-0 clima_cidade_texto"
                     >
 
                         <i class="bi bi-cloud-sun"></i>
@@ -376,7 +278,6 @@ $trens_cadastrados = $conexao->query("
 
                             <h4
                                 class="fs-6 clima_cidade"
-                                style="color: #d9d9d9;"
                             >
 
                                 <i class="bi bi-geo-alt"></i>
@@ -386,8 +287,7 @@ $trens_cadastrados = $conexao->query("
                             </h4>
 
                             <div
-                                class="clima_temp"
-                                style="font-size: 2.2rem; font-weight: bold; line-height: 1.1;"
+                                class="clima_temp clima_valor"
                             >
 
                                 <?= (int) $clima['temperatura'] ?>°C
@@ -450,7 +350,7 @@ $trens_cadastrados = $conexao->query("
 
             <div class="cabecalho_planilha">
 
-                <h3 style="color: white;">
+                <h3 class="titulo_branco">
 
                     Trens Cadastrados
 

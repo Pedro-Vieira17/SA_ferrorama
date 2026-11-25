@@ -47,54 +47,6 @@ function h($valor) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="icon" href="../assets/icons/TREM_AZUL.svg">
-
-    <style>
-        .modal-rota .modal-content {
-            background: #2e3747;
-            color: white;
-            border: 1px solid #475569;
-            border-radius: 14px;
-        }
-
-        .modal-rota .modal-header {
-            border-bottom: 1px solid #475569;
-        }
-
-        .modal-rota .modal-footer {
-            border-top: 1px solid #475569;
-        }
-
-        .modal-rota .btn-close {
-            filter: invert(1);
-        }
-
-        .modal-rota label {
-            display: block;
-            color: white;
-            margin-bottom: 7px;
-        }
-
-        .modal-rota .form-control,
-        .modal-rota .form-select {
-            min-height: 44px;
-            border-radius: 7px;
-        }
-
-        .modal-rota textarea.form-control {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .modal-rota .grupo-modal {
-            margin-bottom: 18px;
-        }
-
-        @media (max-width: 700px) {
-            .modal-rota .modal-dialog {
-                margin: 10px;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -165,7 +117,7 @@ function h($valor) {
 
                 <div class="cabecalho_planilha">
 
-                    <h3 style="color: white;">Rotas Cadastradas</h3>
+                    <h3 class="titulo_branco">Rotas Cadastradas</h3>
 
                     <?php if ($trensCadastro && $trensCadastro->num_rows > 0): ?>
 
