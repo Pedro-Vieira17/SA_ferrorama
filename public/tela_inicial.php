@@ -487,43 +487,47 @@ $usuarios = $consultaUsuarios
 
                                     <td>
 
-                                        <button
-                                            type="button"
-                                            class="btn btn-sm btn-warning"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalEditarTrem"
-                                            data-id="<?= (int) $trem['id'] ?>"
-                                            data-localizacao="<?= e($trem['localizacao']) ?>"
-                                            data-tipo="<?= e($trem['tipo_de_dado']) ?>"
-                                            data-horario="<?= e(substr($trem['horario'], 0, 5)) ?>"
-                                            data-status="<?= e($trem['status']) ?>"
-                                            data-usuario="<?= (int) ($trem['usuario_id'] ?? 0) ?>"
-                                        >
-                                            <i class="bi bi-pencil"></i>
-                                            Editar
-                                        </button>
+                                        <div class="acoes-tabela">
 
-                                        <form
-                                            method="POST"
-                                            action="excluir_trem.php"
-                                            class="form_inline"
-                                            onsubmit="return confirm('Deseja realmente excluir este trem?');"
-                                        >
-
-                                            <input
-                                                type="hidden"
-                                                name="id"
-                                                value="<?= (int) $trem['id'] ?>"
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-warning"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalEditarTrem"
+                                                data-id="<?= (int) $trem['id'] ?>"
+                                                data-localizacao="<?= e($trem['localizacao']) ?>"
+                                                data-tipo="<?= e($trem['tipo_de_dado']) ?>"
+                                                data-horario="<?= e(substr($trem['horario'], 0, 5)) ?>"
+                                                data-status="<?= e($trem['status']) ?>"
+                                                data-usuario="<?= (int) ($trem['usuario_id'] ?? 0) ?>"
                                             >
-
-                                            <button type="submit" class="btn btn-sm btn-danger">
-
-                                                <i class="bi bi-trash"></i>
-                                                Excluir
-
+                                                <i class="bi bi-pencil"></i>
+                                                Editar
                                             </button>
 
-                                        </form>
+                                            <form
+                                                method="POST"
+                                                action="excluir_trem.php"
+                                                class="form_inline"
+                                                onsubmit="return confirm('Deseja realmente excluir este trem?');"
+                                            >
+
+                                                <input
+                                                    type="hidden"
+                                                    name="id"
+                                                    value="<?= (int) $trem['id'] ?>"
+                                                >
+
+                                                <button type="submit" class="btn btn-sm btn-danger">
+
+                                                    <i class="bi bi-trash"></i>
+                                                    Excluir
+
+                                                </button>
+
+                                            </form>
+
+                                        </div>
 
                                     </td>
 

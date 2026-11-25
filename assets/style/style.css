@@ -878,4 +878,24 @@ body {
     }
 }
 
+.acoes-tabela {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.acoes-tabela .btn {
+    min-width: 82px;
+}
+
+.acoes-tabela form {
+    margin: 0;
+}
+
+.form_inline {
+    display: inline-block;
+}
+
 

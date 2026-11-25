@@ -144,46 +144,50 @@ $usuarios = $stmt->get_result();
 
                                     <td>
 
-                                        <button
-                                            type="button"
-                                            class="btn btn-sm btn-warning"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalEditarUsuario"
-                                            data-id="<?= (int) $usuario["id"] ?>"
-                                            data-nome="<?= e($usuario["nome"]) ?>"
-                                            data-cpf="<?= e($usuario["CPF"]) ?>"
-                                            data-telefone="<?= e($usuario["telefone"]) ?>"
-                                            data-email="<?= e($usuario["email"]) ?>"
-                                            data-tipo="<?= e($usuario["tipo"]) ?>"
-                                            data-cep="<?= e($usuario["cep"] ?? "") ?>"
-                                            data-logradouro="<?= e($usuario["logradouro"] ?? "") ?>"
-                                            data-bairro="<?= e($usuario["bairro"] ?? "") ?>"
-                                            data-cidade="<?= e($usuario["cidade"] ?? "") ?>"
-                                            data-uf="<?= e($usuario["uf"] ?? "") ?>"
-                                        >
-                                            <i class="bi bi-pencil"></i>
-                                            Editar
-                                        </button>
+                                        <div class="acoes-tabela">
 
-                                        <form
-                                            method="POST"
-                                            action="excluir_usuario.php"
-                                            class="form_inline"
-                                            onsubmit="return confirm('Deseja realmente excluir este usuário?');"
-                                        >
-
-                                            <input
-                                                type="hidden"
-                                                name="id"
-                                                value="<?= (int) $usuario["id"] ?>"
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-warning"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalEditarUsuario"
+                                                data-id="<?= (int) $usuario["id"] ?>"
+                                                data-nome="<?= e($usuario["nome"]) ?>"
+                                                data-cpf="<?= e($usuario["CPF"]) ?>"
+                                                data-telefone="<?= e($usuario["telefone"]) ?>"
+                                                data-email="<?= e($usuario["email"]) ?>"
+                                                data-tipo="<?= e($usuario["tipo"]) ?>"
+                                                data-cep="<?= e($usuario["cep"] ?? "") ?>"
+                                                data-logradouro="<?= e($usuario["logradouro"] ?? "") ?>"
+                                                data-bairro="<?= e($usuario["bairro"] ?? "") ?>"
+                                                data-cidade="<?= e($usuario["cidade"] ?? "") ?>"
+                                                data-uf="<?= e($usuario["uf"] ?? "") ?>"
                                             >
-
-                                            <button type="submit" class="btn btn-sm btn-danger">
-                                                <i class="bi bi-trash"></i>
-                                                Excluir
+                                                <i class="bi bi-pencil"></i>
+                                                Editar
                                             </button>
 
-                                        </form>
+                                            <form
+                                                method="POST"
+                                                action="excluir_usuario.php"
+                                                class="form_inline"
+                                                onsubmit="return confirm('Deseja realmente excluir este usuário?');"
+                                            >
+
+                                                <input
+                                                    type="hidden"
+                                                    name="id"
+                                                    value="<?= (int) $usuario["id"] ?>"
+                                                >
+
+                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                    Excluir
+                                                </button>
+
+                                            </form>
+
+                                        </div>
 
                                     </td>
 
