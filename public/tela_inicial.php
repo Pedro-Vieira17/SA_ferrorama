@@ -210,113 +210,6 @@ $usuarios = $consultaUsuarios
 
     <link rel="icon" href="../assets/icons/TREM_AZUL.svg">
 
-    <style>
-
-        .painel_topo {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            align-items: stretch;
-            margin-top: 20px;
-            margin-bottom: 24px;
-        }
-
-        .painel_topo .informacoes_dashboard {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            grid-auto-rows: 1fr;
-            gap: 20px;
-            width: 100%;
-            margin: 0;
-        }
-
-        .painel_topo .informacoes {
-            width: 100%;
-            max-width: none;
-            min-width: 0;
-            margin: 0;
-        }
-
-        .painel_topo .informacoes h4 {
-            white-space: normal;
-        }
-
-        .painel_topo .clima_card {
-            margin: 0;
-            padding: 28px 30px;
-            color: #d9d9d9;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 28px;
-        }
-
-        .painel_topo .clima_corpo {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            gap: 24px;
-        }
-
-        .painel_topo .clima_cidade {
-            margin-bottom: 14px;
-        }
-
-        .painel_topo .clima_temp {
-            margin-bottom: 6px;
-        }
-
-        .painel_topo .clima_horarios {
-            line-height: 1.9;
-        }
-
-        .painel_trens {
-            margin-top: 0;
-        }
-
-        #modalEditarTrem .modal-content,
-        #modalCadastrarTrem .modal-content {
-            background-color: #2e3747;
-            color: white;
-            border: 1px solid #475569;
-        }
-
-        #modalEditarTrem .modal-header,
-        #modalEditarTrem .modal-footer,
-        #modalCadastrarTrem .modal-header,
-        #modalCadastrarTrem .modal-footer {
-            border-color: #475569;
-        }
-
-        #modalEditarTrem .form-label,
-        #modalCadastrarTrem .form-label {
-            color: white;
-        }
-
-        #modalEditarTrem .form-control,
-        #modalEditarTrem .form-select,
-        #modalCadastrarTrem .form-control,
-        #modalCadastrarTrem .form-select {
-            background-color: #ffffff;
-            color: #212529;
-        }
-
-        @media (max-width: 1100px) {
-            .painel_topo {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .painel_topo .informacoes_dashboard {
-                grid-template-columns: 1fr;
-            }
-        }
-
-    </style>
-
 </head>
 
 <body>
@@ -439,7 +332,7 @@ $usuarios = $consultaUsuarios
 
                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
 
-                    <h3 class="fs-5 mb-0" style="color: #d9d9d9 !important;">
+                    <h3 class="fs-5 mb-0 clima_cidade_texto">
                         <i class="bi bi-cloud-sun"></i>
                         Clima
                     </h3>
@@ -468,12 +361,12 @@ $usuarios = $consultaUsuarios
 
                         <div>
 
-                            <h4 class="fs-6 clima_cidade" style="color: #d9d9d9;">
+                            <h4 class="fs-6 clima_cidade clima_cidade_texto">
                                 <i class="bi bi-geo-alt"></i>
                                 <?= e($clima['cidade']) ?>
                             </h4>
 
-                            <div class="clima_temp" style="font-size: 2.2rem; font-weight: bold; line-height: 1.1;">
+                            <div class="clima_temp clima_valor">
                                 <?= (int) $clima['temperatura'] ?>°C
                             </div>
 
@@ -503,7 +396,7 @@ $usuarios = $consultaUsuarios
 
             <div class="cabecalho_planilha">
 
-                <h3 style="color: white;">Trens Cadastrados</h3>
+                <h3 class="titulo_branco">Trens Cadastrados</h3>
 
                 <button
                     type="button"
@@ -613,7 +506,7 @@ $usuarios = $consultaUsuarios
                                         <form
                                             method="POST"
                                             action="excluir_trem.php"
-                                            style="display: inline;"
+                                            class="form_inline"
                                             onsubmit="return confirm('Deseja realmente excluir este trem?');"
                                         >
 

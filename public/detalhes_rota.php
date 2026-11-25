@@ -59,8 +59,8 @@ $voltar = $tipoUsuario === "administrador" ? "rotas.php" : "rotas_usuario.php";
     </aside>
     <main class="conteudo">
         <div class="container-sensor">
-            <h1 class="titulo-sensor" style="color:white;"><i class="bi bi-signpost-2"></i> Detalhes da Rota</h1>
-            <div class="card mt-4" style="max-width:850px;">
+            <h1 class="titulo-sensor"><i class="bi bi-signpost-2"></i> Detalhes da Rota</h1>
+            <div class="card mt-4 card_detalhes_rota">
                 <div class="card-body">
                     <h3 class="card-title"><?= e($rota["nome"]) ?></h3>
                     <p><strong>ID:</strong> <?= (int) $rota["id"] ?></p>

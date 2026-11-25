@@ -35,37 +35,6 @@ $usuarios = $stmt->get_result();
 
     <link rel="icon" href="../assets/icons/TREM_AZUL.svg" type="image/svg+xml">
 
-    <style>
-
-        #modalEditarUsuario .modal-content {
-            background-color: #2e3747;
-            color: white;
-            border: 1px solid #475569;
-        }
-
-        #modalEditarUsuario .modal-header,
-        #modalEditarUsuario .modal-footer {
-            border-color: #475569;
-        }
-
-        #modalEditarUsuario .form-label {
-            color: white;
-        }
-
-        #modalEditarUsuario .form-control,
-        #modalEditarUsuario .form-select {
-            background-color: #ffffff;
-            color: #212529;
-        }
-
-        @media (max-width: 576px) {
-            #modalEditarUsuario .modal-dialog {
-                margin: 10px;
-            }
-        }
-
-    </style>
-
 </head>
 
 <body>
@@ -199,7 +168,7 @@ $usuarios = $stmt->get_result();
                                         <form
                                             method="POST"
                                             action="excluir_usuario.php"
-                                            style="display: inline;"
+                                            class="form_inline"
                                             onsubmit="return confirm('Deseja realmente excluir este usuário?');"
                                         >
 
@@ -523,7 +492,7 @@ $usuarios = $stmt->get_result();
 
     });
 
-    async function buscarCep() {
+    function buscarCep() {
 
         if (cepInput.value.trim() === "") {
             cepMsg.textContent = "";
@@ -533,40 +502,34 @@ $usuarios = $stmt->get_result();
         cepMsg.textContent = "Consultando...";
         cepMsg.style.color = "#555";
 
-        try {
+        var requisicao = new XMLHttpRequest();
+        requisicao.open("GET", "buscar_cep.php?cep=" + encodeURIComponent(cepInput.value), true);
 
-            const resposta = await fetch(
-                "buscar_cep.php?cep=" + encodeURIComponent(cepInput.value)
-            );
+        requisicao.onload = function () {
+            var dados = JSON.parse(requisicao.responseText);
 
-            const dados = await resposta.json();
-
-            if (!resposta.ok) {
-
+            if (requisicao.status !== 200) {
                 cepMsg.textContent = dados.erro || "Erro ao consultar o CEP.";
                 cepMsg.style.color = "#dc3545";
-
                 return;
-
             }
 
             cepInput.value = dados.cep;
-
             document.getElementById("editarLogradouro").value = dados.logradouro || "";
             document.getElementById("editarBairro").value = dados.bairro || "";
             document.getElementById("editarCidade").value = dados.cidade || "";
             document.getElementById("editarUf").value = dados.uf || "";
 
-            cepMsg.textContent = "CEP válido ✔";
+            cepMsg.textContent = "CEP válido";
             cepMsg.style.color = "#198754";
+        };
 
-        } catch (erro) {
-
+        requisicao.onerror = function () {
             cepMsg.textContent = "Erro de conexão com o servidor. Tente novamente.";
             cepMsg.style.color = "#dc3545";
+        };
 
-        }
-
+        requisicao.send();
     }
 
     cepInput.addEventListener("blur", buscarCep);

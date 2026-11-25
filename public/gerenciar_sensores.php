@@ -89,57 +89,6 @@ function h($valor) {
 
     <link rel="icon" href="../assets/icons/TREM_AZUL.svg" type="image/x-icon">
 
-    <style>
-        .modal-sensor .modal-content {
-    background: #2e3747;
-    color: white;
-    border: 1px solid #475569;
-    border-radius: 14px;
-}
-
-        .modal-sensor .modal-header {
-            border-bottom: 1px solid #334155;
-        }
-
-        .modal-sensor .modal-footer {
-            border-top: 1px solid #334155;
-        }
-
-        .modal-sensor .btn-close {
-            filter: invert(1);
-        }
-
-        .modal-sensor label {
-            display: block;
-            color: white;
-            margin-bottom: 7px;
-        }
-
-        .modal-sensor .form-control,
-        .modal-sensor .form-select {
-            min-height: 44px;
-            border-radius: 7px;
-        }
-
-        .modal-sensor .grupo-modal {
-            margin-bottom: 18px;
-        }
-
-        .modal-sensor .modal-title {
-            font-size: 22px;
-        }
-
-        .form_excluir_sensor {
-            display: inline-block;
-            margin-left: 4px;
-        }
-
-        @media (max-width: 700px) {
-            .modal-sensor .modal-dialog {
-                margin: 10px;
-            }
-        }
-    </style>
 </head>
 
 <body>

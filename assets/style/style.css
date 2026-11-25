@@ -576,4 +576,306 @@ body {
     cursor: pointer;
 }
 
+/* Estilos das páginas */
+
+.planilha_dashboard.cadastro_container {
+    margin-top: 20px;
+}
+
+.painel_topo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: stretch;
+    margin-top: 20px;
+    margin-bottom: 24px;
+}
+
+.painel_topo .informacoes_dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    gap: 20px;
+    width: 100%;
+    margin: 0;
+}
+
+.painel_topo .informacoes {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+}
+
+.painel_topo .informacoes h4 {
+    white-space: normal;
+}
+
+.painel_topo .clima_card {
+    margin: 0;
+    padding: 28px 30px;
+    color: #d9d9d9;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 28px;
+}
+
+.painel_topo .clima_corpo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.painel_topo .clima_cidade {
+    margin-bottom: 14px;
+}
+
+.painel_topo .clima_temp {
+    margin-bottom: 6px;
+}
+
+.painel_topo .clima_horarios {
+    line-height: 1.9;
+}
+
+.painel_trens {
+    margin-top: 0;
+}
+
+.modal-rota .modal-content,
+.modal-sensor .modal-content {
+    background: #2e3747;
+    color: white;
+    border: 1px solid #475569;
+    border-radius: 14px;
+}
+
+.modal-rota .modal-header,
+.modal-sensor .modal-header {
+    border-bottom: 1px solid #475569;
+}
+
+.modal-rota .modal-footer,
+.modal-sensor .modal-footer {
+    border-top: 1px solid #475569;
+}
+
+.modal-rota .btn-close,
+.modal-sensor .btn-close {
+    filter: invert(1);
+}
+
+.modal-rota label,
+.modal-sensor label {
+    display: block;
+    color: white;
+    margin-bottom: 7px;
+}
+
+.modal-rota .form-control,
+.modal-rota .form-select,
+.modal-sensor .form-control,
+.modal-sensor .form-select {
+    min-height: 44px;
+    border-radius: 7px;
+}
+
+.modal-rota textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.modal-rota .grupo-modal,
+.modal-sensor .grupo-modal {
+    margin-bottom: 18px;
+}
+
+.modal-sensor .modal-title {
+    font-size: 22px;
+}
+
+#modalEditarUsuario .modal-content {
+    background-color: #2e3747;
+    color: white;
+    border: 1px solid #475569;
+}
+
+#modalEditarUsuario .modal-header,
+#modalEditarUsuario .modal-footer {
+    border-color: #475569;
+}
+
+#modalEditarUsuario .form-label {
+    color: white;
+}
+
+#modalEditarUsuario .form-control,
+#modalEditarUsuario .form-select {
+    background-color: #ffffff;
+    color: #212529;
+}
+
+#modalEditarTrem .modal-content,
+#modalCadastrarTrem .modal-content {
+    background-color: #2e3747;
+    color: white;
+    border: 1px solid #475569;
+}
+
+#modalEditarTrem .modal-header,
+#modalEditarTrem .modal-footer,
+#modalCadastrarTrem .modal-header,
+#modalCadastrarTrem .modal-footer {
+    border-color: #475569;
+}
+
+#modalEditarTrem .form-label,
+#modalCadastrarTrem .form-label {
+    color: white;
+}
+
+#modalEditarTrem .form-control,
+#modalEditarTrem .form-select,
+#modalCadastrarTrem .form-control,
+#modalCadastrarTrem .form-select {
+    background-color: #ffffff;
+    color: #212529;
+}
+
+/* Landing page */
+:root {
+    --marinho: #0f172a;
+    --fundo: #2e3747;
+    --cinza-claro: #cdcdcd;
+    --branco: #ffffff;
+    --verde: #008000;
+    --vermelho: #ff0000;
+    --azul: #0d6efd;
+    --cinza: #6c757d;
+    --borda: rgba(255, 255, 255, .12);
+}
+
+.landing-html,
+.landing-body {
+    margin: 0;
+}
+
+.landing-body {
+    background: var(--fundo);
+    color: var(--branco);
+    font-family: system-ui, Arial, sans-serif;
+}
+
+.landing-body a {
+    color: inherit;
+}
+
+.landing-container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.landing-topo {
+    background: var(--marinho);
+}
+
+.landing-topo-conteudo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    height: 64px;
+}
+
+.landing-logo,
+.landing-links a {
+    text-decoration: none;
+}
+
+.landing-links {
+    display: flex;
+    gap: 24px;
+}
+
+.landing-secao {
+    padding: 80px 0;
+    border-top: 1px solid var(--borda);
+}
+
+.landing-secao-clara {
+    background: var(--marinho);
+}
+
+.landing-duas-colunas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+}
+
+.landing-hero {
+    padding: 88px 0 64px;
+}
+
+.landing-botoes {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.landing-btn {
+    color: white;
+    text-decoration: none;
+    padding: 11px 24px;
+    border-radius: 6px;
+}
+
+.landing-btn-azul {
+    background: var(--azul);
+}
+
+.landing-btn-cinza {
+    background: var(--cinza);
+}
+
+.landing-grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.landing-cartao {
+    background: var(--fundo);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.landing-painel {
+    background: var(--marinho);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.landing-rodape {
+    background: var(--marinho);
+    color: var(--cinza-claro);
+    padding: 26px 0;
+}
+
+@media (max-width: 760px) {
+    .landing-links {
+        display: none;
+    }
+
+    .landing-duas-colunas {
+        grid-template-columns: 1fr;
+    }
+}
+
 

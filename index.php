@@ -119,13 +119,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="container vh-100 d-flex align-items-center">
 
         <div
-            class="p-3"
-            style="max-width: 400px; width: 100%;">
+            class="p-3 login_container">
 
            <div class="titulo">
 
     <h1 class="text-nowrap d-flex align-items-center gap-2">
-        <img src="assets/icons/TREM_AZUL.svg" alt="Ícone Trem" style="width: 32px; height: 32px;">
+        <img src="assets/icons/TREM_AZUL.svg" alt="Ícone Trem" class="login_icone">
         Sistema Ferroviário
     </h1>
 
@@ -208,7 +207,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <img
             src="assets/img/trem-png novo.webp"
             alt="Trem"
-            style="margin-left:auto">
+            class="login_imagem">
 
     </div>
 

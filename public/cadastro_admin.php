@@ -117,14 +117,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="icon"
         href="../assets/icons/TREM_AZUL.svg">
 
-    <style>
-
-        .planilha_dashboard.cadastro_container {
-            margin-top: 20px;
-        }
-
-    </style>
-
 </head>
 
 <body>
@@ -335,7 +327,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                         </div>
 
-                        <!-- ============ ENDEREÇO (API ViaCEP) ============ -->
+                        <!-- Endereço -->
 
                         <div class="col-md-4 mb-3">
 
@@ -474,7 +466,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         cepInput.value = v;
     });
 
-    async function buscarCep() {
+    function buscarCep() {
 
         if (cepInput.value.trim() === "") {
             cepMsg.textContent = "";
@@ -484,15 +476,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         cepMsg.textContent = "Consultando...";
         cepMsg.style.color = "#d9d9d9";
 
-        try {
+        var requisicao = new XMLHttpRequest();
+        requisicao.open("GET", "buscar_cep.php?cep=" + encodeURIComponent(cepInput.value), true);
 
-            const res = await fetch(
-                "buscar_cep.php?cep=" + encodeURIComponent(cepInput.value)
-            );
+        requisicao.onload = function () {
+            var dados = JSON.parse(requisicao.responseText);
 
-            const dados = await res.json();
-
-            if (!res.ok) {
+            if (requisicao.status !== 200) {
                 cepMsg.textContent = dados.erro || "Erro ao consultar o CEP.";
                 cepMsg.style.color = "#ff6b6b";
                 limparEndereco();
@@ -505,15 +495,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 document.getElementById(id).value = dados[id];
             });
 
-            cepMsg.textContent = "CEP válido ✔";
+            cepMsg.textContent = "CEP válido";
             cepMsg.style.color = "#2ecc71";
+        };
 
-        } catch (e) {
-
+        requisicao.onerror = function () {
             cepMsg.textContent = "Erro de conexão com o servidor. Tente novamente.";
             cepMsg.style.color = "#ff6b6b";
             limparEndereco();
-        }
+        };
+
+        requisicao.send();
     }
 
     cepInput.addEventListener("blur", buscarCep);

@@ -81,7 +81,7 @@ $totalSensores = $stmtSensores->fetch()['total'];
                 <p>Localização: <?= htmlspecialchars($trem['localizacao']) ?></p>
 
                 <?php if ($totalSensores > 0): ?>
-                    <p style="color: #d9534f; font-weight: bold;">
+                    <p class="trem_excluir_aviso">
                         Atenção: <?= (int)$totalSensores ?>
                         sensor<?= $totalSensores > 1 ? 'es' : '' ?> vinculado<?= $totalSensores > 1 ? 's' : '' ?>
                         a este trem também <?= $totalSensores > 1 ? 'serão excluídos' : 'será excluído' ?>.
@@ -90,7 +90,7 @@ $totalSensores = $stmtSensores->fetch()['total'];
 
                 <p>Esta ação não pode ser desfeita.</p>
 
-                <form method="POST" action="excluir_trem.php" style="display:inline;">
+                <form method="POST" action="excluir_trem.php" class="form_inline">
                     <input type="hidden" name="id" value="<?= (int)$trem['id'] ?>">
                     <button type="button" class="botao_cancelar"
                         onclick="window.location.href='gerenciar_sensores.html'">Cancelar</button>
