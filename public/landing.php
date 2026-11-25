@@ -29,7 +29,6 @@ $funcionalidades = [
 </head>
 <body>
 
-<!-- ===== TOPO ===== -->
 <header class="topo">
     <div class="container topo-conteudo">
         <a class="logo" href="#topo">Ferrorama</a>
@@ -45,7 +44,6 @@ $funcionalidades = [
 
 <main id="topo">
 
-<!-- ===== HERO ===== -->
 <section class="hero">
     <div class="container">
         <div class="hero-grade">
@@ -64,7 +62,6 @@ $funcionalidades = [
     </div>
 </section>
 
-<!-- ===== PROBLEMA ===== -->
 <section id="problema" class="secao">
     <div class="container duas-colunas">
         <div>
@@ -79,7 +76,6 @@ $funcionalidades = [
     </div>
 </section>
 
-<!-- ===== FUNCIONALIDADES ===== -->
 <section id="funcionalidades" class="secao secao-clara">
     <div class="container">
         <h2>O que você faz na Ferrorama</h2>
@@ -95,15 +91,13 @@ $funcionalidades = [
     </div>
 </section>
 
-<!-- ===== MONITORAMENTO ===== -->
 <section id="monitoramento" class="secao">
     <div class="container duas-colunas">
         <div>
             <h2>Sensores e informações operacionais à vista</h2>
-            <p>Estado dos sensores e situação dos trens aparecem organizados, com cores que indicam o que está normal e o que pede atenção.</p>
-            <p class="nota">Exemplo ilustrativo: os valores ao lado não são dados reais.</p>
+            <p>Estado dos sensores e situação dos trens aparecem organizados para facilitar o acompanhamento da operação.</p>
         </div>
-        <div class="painel" role="group" aria-label="Exemplo ilustrativo de painel de sensores">
+        <div class="painel">
             <div class="painel-linha"><span>Sensor 1</span><span><i class="ponto ponto-ok"></i>Ativo</span></div>
             <div class="painel-linha"><span>Sensor 2</span><span><i class="ponto ponto-ok"></i>Ativo</span></div>
             <div class="painel-linha"><span>Sensor 3</span><span><i class="ponto ponto-alerta"></i>Alerta</span></div>
@@ -112,7 +106,6 @@ $funcionalidades = [
     </div>
 </section>
 
-<!-- ===== BENEFÍCIOS ===== -->
 <section id="beneficios" class="secao secao-clara">
     <div class="container">
         <h2>O que a equipe ganha</h2>
@@ -124,7 +117,6 @@ $funcionalidades = [
     </div>
 </section>
 
-<!-- ===== CHAMADA FINAL ===== -->
 <section class="secao cta">
     <div class="container">
         <h2>Pronto para acompanhar sua linha?</h2>
@@ -135,7 +127,6 @@ $funcionalidades = [
 
 </main>
 
-<!-- ===== RODAPÉ ===== -->
 <footer class="rodape">
     <div class="container">Ferrorama – sistema de monitoramento ferroviário.</div>
 </footer>

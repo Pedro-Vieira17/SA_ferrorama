@@ -17,10 +17,6 @@ if (
 $cidade = trim($_GET['cidade'] ?? '') ?: 'Joinville';
 $clima = obterClima($cidade);
 
-// ==========================================
-// INFORMAÇÕES DO DASHBOARD
-// ==========================================
-
 $sensores = $conexao->query(
     "SELECT COUNT(*) AS total FROM SENSORES"
 )->fetch_assoc()["total"];
@@ -34,10 +30,6 @@ $alertas = $conexao->query(
 )->fetch_assoc()["total"];
 
 $sensores_ativos = $sensores;
-
-// ==========================================
-// STATUS DOS TRENS
-// ==========================================
 
 $statusCount = $conexao->query("
     SELECT status, COUNT(*) AS total
@@ -54,10 +46,6 @@ while ($linha = $statusCount->fetch_assoc()) {
 $trensAtivos = $statusData["Ativo"] ?? 0;
 $trensManutencao = $statusData["Manutenção"] ?? 0;
 $trensInativos = $statusData["Inativo"] ?? 0;
-
-// ==========================================
-// LISTAGEM DE TRENS
-// ==========================================
 
 $trens_cadastrados = $conexao->query("
     SELECT *
@@ -155,15 +143,7 @@ $trens_cadastrados = $conexao->query("
 
     </aside>
 
-    <!-- ========================================== -->
-    <!-- CONTEÚDO PRINCIPAL -->
-    <!-- ========================================== -->
-
     <main class="conteudo">
-
-        <!-- ========================================== -->
-        <!-- PAINEL SUPERIOR -->
-        <!-- ========================================== -->
 
         <div class="painel_topo">
 
@@ -228,10 +208,6 @@ $trens_cadastrados = $conexao->query("
                 </div>
 
             </div>
-
-            <!-- ========================================== -->
-            <!-- CARD DE CLIMA -->
-            <!-- ========================================== -->
 
             <div class="planilha_dashboard clima_card">
 
@@ -303,27 +279,7 @@ $trens_cadastrados = $conexao->query("
                         </div>
 
                         <small class="clima_horarios">
-
-                            Última atualização da API:
-                            <?= e($clima['atualizado']) ?>
-
-                            <br>
-
-                            Consulta feita em:
-                            <?= e($clima['consultado']) ?>
-
-                            <br>
-
-                            Dados:
-
-                            <a
-                                href="https://open-meteo.com"
-                                target="_blank"
-                                rel="noopener"
-                            >
-                                Open-Meteo.com
-                            </a>
-
+                            <?= e($clima['atualizado']) ?> · <?= e($clima['consultado']) ?>
                         </small>
 
                     </div>
@@ -341,10 +297,6 @@ $trens_cadastrados = $conexao->query("
             </div>
 
         </div>
-
-        <!-- ========================================== -->
-        <!-- LISTAGEM DE TRENS -->
-        <!-- ========================================== -->
 
         <div class="planilha_dashboard painel_trens">
 

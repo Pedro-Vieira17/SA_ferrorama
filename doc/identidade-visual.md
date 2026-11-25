@@ -46,12 +46,6 @@ O CSS também possui adaptações para telas menores, como a reorganização dos
 
 Alguns pontos que merecem melhorias são o contraste do menu ao passar o mouse, a visibilidade do foco pelo teclado e o comportamento do menu lateral em celulares.
 
-## Inteligência artificial e uso consciente
-
-Utilizamos o ChatGPT como ferramenta de apoio à pesquisa, organização das ideias, compreensão da teoria das cores e sugestões de melhorias visuais.
-
-As sugestões foram avaliadas considerando as necessidades reais da Ferrorama. A inteligência artificial foi utilizada como auxílio, sem substituir as decisões e a participação da equipe.
-
 ## Ferramentas utilizadas
 
 - Visual Studio Code: edição do código.
@@ -60,7 +54,6 @@ As sugestões foram avaliadas considerando as necessidades reais da Ferrorama. A
 - MySQL: armazenamento dos dados.
 - GitHub: controle e armazenamento do projeto.
 - Google Chrome: visualização das páginas.
-- ChatGPT: apoio à pesquisa e documentação.
 
 ## Testes e melhorias
 
@@ -86,5 +79,4 @@ A pesquisa também mostrou que uma boa interface precisa considerar não apenas 
 
 - Bootstrap 5.3: https://getbootstrap.com/docs/5.3/
 - WebAIM – Verificador de contraste: https://webaim.org/resources/contrastchecker/
-- OpenAI – ChatGPT: https://chatgpt.com/
 - Projeto Ferrorama: arquivo `assets/style/style.css` e demais arquivos do frontend.

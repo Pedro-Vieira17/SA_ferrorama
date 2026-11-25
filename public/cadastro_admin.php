@@ -327,8 +327,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                         </div>
 
-                        <!-- Endereço -->
-
                         <div class="col-md-4 mb-3">
 
                             <label class="form-label">
@@ -413,8 +411,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 value="<?= htmlspecialchars($_POST["uf"] ?? "") ?>">
 
                         </div>
-
-                        <!-- =============================================== -->
 
                     </div>
 

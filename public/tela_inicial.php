@@ -375,9 +375,7 @@ $usuarios = $consultaUsuarios
                         </div>
 
                         <small class="clima_horarios">
-                            Última atualização da API: <?= e($clima['atualizado']) ?><br>
-                            Consulta feita em: <?= e($clima['consultado']) ?><br>
-                            Dados: <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo.com</a>
+                            <?= e($clima['atualizado']) ?> · <?= e($clima['consultado']) ?>
                         </small>
 
                     </div>
