@@ -2,7 +2,7 @@
 
 require_once "../infra/seguranca.php";
 require_once "../infra/conexao.php";
-require_once __DIR__ . '/clima.php';
+require_once __DIR__ . '/clima.php'; //DIR diretorio atual do arquivo
 
 exigirAdministrador();
 
