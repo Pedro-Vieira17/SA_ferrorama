@@ -63,16 +63,16 @@ $voltar = $tipoUsuario === "administrador" ? "rotas.php" : "rotas_usuario.php";
             <div class="card mt-4 card_detalhes_rota">
                 <div class="card-body">
                     <h3 class="card-title"><?= e($rota["nome"]) ?></h3>
-                    <p><strong>ID:</strong> <?= (int) $rota["id"] ?></p>
+                    <p><strong>ID:</strong> <?=  $rota["id"] ?></p>
                     <p><strong>Descrição:</strong><br><?= nl2br(e($rota["descricao"])) ?></p>
-                    <p><strong>Distância:</strong> <?= number_format((float) $rota["distancia_km"], 2, ",", ".") ?> km</p>
+                    <p><strong>Distância:</strong> <?= number_format( $rota["distancia_km"], 2, ",", ".") ?> km</p>
                     <p><strong>Trem vinculado:</strong> <?= e($rota["trem_localizacao"]) ?> (<?= e($rota["trem_tipo"]) ?>)</p>
-                    <p><strong>Duração:</strong> <?= (int) $rota["duracao_min"] ?> minutos</p>
+                    <p><strong>Duração:</strong> <?=  $rota["duracao_min"] ?> minutos</p>
                     <p><strong>Status:</strong> <?= e($rota["status"]) ?></p>
                     <p><strong>Data de criação:</strong> <?= date("d/m/Y H:i", strtotime($rota["data_criacao"])) ?></p>
                     <a href="<?= e($voltar) ?>" class="btn btn-secondary">Voltar</a>
                     <?php if ($tipoUsuario === "administrador"): ?>
-                        <a href="editar_rota.php?id=<?= (int) $rota["id"] ?>" class="btn btn-warning"><i class="bi bi-pencil"></i> Editar</a>
+                        <a href="editar_rota.php?id=<?=  $rota["id"] ?>" class="btn btn-warning"><i class="bi bi-pencil"></i> Editar</a>
                     <?php endif; ?>
                 </div>
             </div>

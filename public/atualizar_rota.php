@@ -18,7 +18,7 @@ $status = trim($_POST["status"] ?? "");
 $statusPermitidos = ["Ativa", "Inativa", "Manutenção"];
 
 if (!$id || $id <= 0 || $nome === "" || mb_strlen($nome) > 200 || $descricao === "" || $distancia === false || $distancia <= 0 || $tremId === false || $tremId <= 0 || $duracao === false || $duracao <= 0 || !in_array($status, $statusPermitidos, true)) {
-    header("Location: editar_rota.php?id=" . (int) $id . "&erro=" . urlencode("Confira os campos preenchidos."));
+    header("Location: editar_rota.php?id=" . $id . "&erro=" . urlencode("Confira os campos preenchidos."));
     exit;
 }
 

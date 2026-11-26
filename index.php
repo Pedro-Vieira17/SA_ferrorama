@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 session_regenerate_id(true);
 
-                $_SESSION["usuario_id"] = (int) $usuario["id"];
+                $_SESSION["usuario_id"] =  $usuario["id"];
                 $_SESSION["usuario_nome"] = $usuario["nome"];
                 $_SESSION["usuario_tipo"] = $usuario["tipo"];
 

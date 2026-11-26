@@ -222,12 +222,12 @@ function h($valor) {
                                                 class="btn btn-sm btn-warning"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalEditarRota"
-                                                data-id="<?= (int)$rota["id"] ?>"
+                                                data-id="<?= $rota["id"] ?>"
                                                 data-nome="<?= h($rota["nome"]) ?>"
                                                 data-descricao="<?= h($rota["descricao"]) ?>"
                                                 data-distancia="<?= h($rota["distancia_km"]) ?>"
-                                                data-duracao="<?= (int)$rota["duracao_min"] ?>"
-                                                data-trem="<?= (int)$rota["trem_id"] ?>"
+                                                data-duracao="<?= $rota["duracao_min"] ?>"
+                                                data-trem="<?= $rota["trem_id"] ?>"
                                                 data-status="<?= h($rota["status"]) ?>"
                                                 data-criacao="<?= h($rota["data_criacao"]) ?>">
 
@@ -245,7 +245,7 @@ function h($valor) {
                                                 <input
                                                     type="hidden"
                                                     name="id"
-                                                    value="<?= (int)$rota["id"] ?>">
+                                                    value="<?= $rota["id"] ?>">
 
                                                 <button type="submit" class="btn btn-sm btn-danger">
                                                     <i class="bi bi-trash"></i>
@@ -376,10 +376,10 @@ function h($valor) {
 
                             <?php while ($trem = $trensCadastro->fetch_assoc()): ?>
 
-                                <option value="<?= (int)$trem["id"] ?>">
+                                <option value="<?= $trem["id"] ?>">
                                     <?= h($trem["localizacao"]) ?>
                                     — <?= h($trem["tipo_de_dado"]) ?>
-                                    (ID: <?= (int)$trem["id"] ?>)
+                                    (ID: <?= $trem["id"] ?>)
                                 </option>
 
                             <?php endwhile; ?>
@@ -512,10 +512,10 @@ function h($valor) {
 
                             <?php while ($trem = $trensEdicao->fetch_assoc()): ?>
 
-                                <option value="<?= (int)$trem["id"] ?>">
+                                <option value="<?= $trem["id"] ?>">
                                     <?= h($trem["localizacao"]) ?>
                                     — <?= h($trem["tipo_de_dado"]) ?>
-                                    (ID: <?= (int)$trem["id"] ?>)
+                                    (ID: <?= $trem["id"] ?>)
                                 </option>
 
                             <?php endwhile; ?>

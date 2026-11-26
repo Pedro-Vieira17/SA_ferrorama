@@ -367,7 +367,7 @@ $usuarios = $consultaUsuarios
                             </h4>
 
                             <div class="clima_temp clima_valor">
-                                <?= (int) $clima['temperatura'] ?>°C
+                                <?=  $clima['temperatura'] ?>°C
                             </div>
 
                             <div><?= e($clima['condicao']) ?></div>
@@ -492,12 +492,12 @@ $usuarios = $consultaUsuarios
                                                 class="btn btn-sm btn-warning"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalEditarTrem"
-                                                data-id="<?= (int) $trem['id'] ?>"
+                                                data-id="<?=  $trem['id'] ?>"
                                                 data-localizacao="<?= e($trem['localizacao']) ?>"
                                                 data-tipo="<?= e($trem['tipo_de_dado']) ?>"
                                                 data-horario="<?= e(substr($trem['horario'], 0, 5)) ?>"
                                                 data-status="<?= e($trem['status']) ?>"
-                                                data-usuario="<?= (int) ($trem['usuario_id'] ?? 0) ?>"
+                                                data-usuario="<?=  ($trem['usuario_id'] ?? 0) ?>"
                                             >
                                                 <i class="bi bi-pencil"></i>
                                                 Editar
@@ -513,7 +513,7 @@ $usuarios = $consultaUsuarios
                                                 <input
                                                     type="hidden"
                                                     name="id"
-                                                    value="<?= (int) $trem['id'] ?>"
+                                                    value="<?=  $trem['id'] ?>"
                                                 >
 
                                                 <button type="submit" class="btn btn-sm btn-danger">
@@ -699,7 +699,7 @@ $usuarios = $consultaUsuarios
                                 <?php foreach ($usuarios as $usuario): ?>
 
                                     <option
-                                        value="<?= (int) $usuario['id'] ?>"
+                                        value="<?=  $usuario['id'] ?>"
                                         <?= (string) ($_POST['usuario_id'] ?? '') === (string) $usuario['id'] ? 'selected' : '' ?>
                                     >
 
@@ -886,7 +886,7 @@ $usuarios = $consultaUsuarios
 
                                 <?php foreach ($usuarios as $usuario): ?>
 
-                                    <option value="<?= (int) $usuario['id'] ?>">
+                                    <option value="<?=  $usuario['id'] ?>">
 
                                         <?= e($usuario['nome']) ?>
 

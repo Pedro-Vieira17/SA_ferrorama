@@ -40,7 +40,7 @@ $statusCount = $conexao->query("
 $statusData = [];
 
 while ($linha = $statusCount->fetch_assoc()) {
-    $statusData[$linha["status"]] = (int) $linha["total"];
+    $statusData[$linha["status"]] =  $linha["total"];
 }
 
 $trensAtivos = $statusData["Ativo"] ?? 0;
@@ -161,7 +161,7 @@ $trens_cadastrados = $conexao->query("
 
                     </h4>
 
-                    <h3><?= (int) $sensores ?></h3>
+                    <h3><?=  $sensores ?></h3>
 
                 </div>
 
@@ -175,7 +175,7 @@ $trens_cadastrados = $conexao->query("
 
                     </h4>
 
-                    <h3><?= (int) $trens ?></h3>
+                    <h3><?=  $trens ?></h3>
 
                 </div>
 
@@ -189,7 +189,7 @@ $trens_cadastrados = $conexao->query("
 
                     </h4>
 
-                    <h3><?= (int) $alertas ?></h3>
+                    <h3><?= $alertas ?></h3>
 
                 </div>
 
@@ -203,7 +203,7 @@ $trens_cadastrados = $conexao->query("
 
                     </h4>
 
-                    <h3><?= (int) $sensores_ativos ?></h3>
+                    <h3><?=  $sensores_ativos ?></h3>
 
                 </div>
 
@@ -266,7 +266,7 @@ $trens_cadastrados = $conexao->query("
                                 class="clima_temp clima_valor"
                             >
 
-                                <?= (int) $clima['temperatura'] ?>°C
+                                <?=  $clima['temperatura'] ?>°C
 
                             </div>
 
@@ -341,7 +341,7 @@ $trens_cadastrados = $conexao->query("
                                     <th>
 
                                         #<?= str_pad(
-                                            (int) $trem["id"],
+                                             $trem["id"],
                                             3,
                                             "0",
                                             STR_PAD_LEFT

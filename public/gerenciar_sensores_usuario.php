@@ -91,7 +91,7 @@ $statusCount = $conexao->query("
 $statusData = [];
 
 while ($linha = $statusCount->fetch_assoc()) {
-    $statusData[$linha["status"]] = (int) $linha["total"];
+    $statusData[$linha["status"]] =  $linha["total"];
 }
 
 $sensoresAtivos = $statusData["Ativo"] ?? 0;
@@ -210,7 +210,7 @@ $sensoresInativos = $statusData["Inativo"] ?? 0;
                                 <?php while ($tr = $listaTrens->fetch_assoc()) { ?>
 
                                     <option
-                                        value="<?= (int)$tr["id"] ?>"
+                                        value="<?= $tr["id"] ?>"
                                         <?= $filtroTrem === (string)$tr["id"] ? "selected" : "" ?>>
 
                                         Trem <?= str_pad($tr["id"], 2, "0", STR_PAD_LEFT) ?>

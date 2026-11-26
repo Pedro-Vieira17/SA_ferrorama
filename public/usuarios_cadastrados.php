@@ -151,7 +151,7 @@ $usuarios = $stmt->get_result();
                                                 class="btn btn-sm btn-warning"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalEditarUsuario"
-                                                data-id="<?= (int) $usuario["id"] ?>"
+                                                data-id="<?= $usuario["id"] ?>"
                                                 data-nome="<?= e($usuario["nome"]) ?>"
                                                 data-cpf="<?= e($usuario["CPF"]) ?>"
                                                 data-telefone="<?= e($usuario["telefone"]) ?>"
@@ -177,7 +177,7 @@ $usuarios = $stmt->get_result();
                                                 <input
                                                     type="hidden"
                                                     name="id"
-                                                    value="<?= (int) $usuario["id"] ?>"
+                                                    value="<?=  $usuario["id"] ?>"
                                                 >
 
                                                 <button type="submit" class="btn btn-sm btn-danger">

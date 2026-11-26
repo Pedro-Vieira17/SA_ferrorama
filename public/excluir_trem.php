@@ -21,7 +21,7 @@ $stmt->execute();
 
 $totalSensores = $stmt->get_result()->fetch_assoc()["total"];
 
-if ((int) $totalSensores > 0) {
+if ( $totalSensores > 0) {
     header("Location: tela_inicial.php?erro=" . urlencode("Não é possível excluir um trem que possui sensores vinculados."));
     exit;
 }
@@ -35,7 +35,7 @@ $stmt->execute();
 
 $totalRotas = $stmt->get_result()->fetch_assoc()["total"];
 
-if ((int) $totalRotas > 0) {
+if ( $totalRotas > 0) {
     header("Location: tela_inicial.php?erro=" . urlencode("Não é possível excluir um trem que possui rotas vinculadas."));
     exit;
 }

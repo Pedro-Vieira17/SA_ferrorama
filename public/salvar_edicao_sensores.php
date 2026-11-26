@@ -28,14 +28,14 @@ if (
     $tremVinculado < 1 ||
     !in_array($status, $statusPermitidos, true)
 ) {
-    header("Location: editar_sensores.php?id=" . (int)$id . "&erro=" . urlencode("Preencha todos os campos corretamente."));
+    header("Location: editar_sensores.php?id=" . $id . "&erro=" . urlencode("Preencha todos os campos corretamente."));
     exit;
 }
 
 $stmtSensor = $conexao->prepare("SELECT id FROM SENSORES WHERE id = ?");
 if (!$stmtSensor) {
     error_log("Erro ao preparar consulta do sensor: " . $conexao->error);
-    header("Location: editar_sensores.php?id=" . (int)$id . "&erro=" . urlencode("Não foi possível verificar o sensor."));
+    header("Location: editar_sensores.php?id=" . $id . "&erro=" . urlencode("Não foi possível verificar o sensor."));
     exit;
 }
 $stmtSensor->bind_param("i", $id);
@@ -51,7 +51,7 @@ if (!$sensorExiste) {
 $stmtTrem = $conexao->prepare("SELECT id FROM TRENS WHERE id = ?");
 if (!$stmtTrem) {
     error_log("Erro ao preparar consulta do trem: " . $conexao->error);
-    header("Location: editar_sensores.php?id=" . (int)$id . "&erro=" . urlencode("Não foi possível verificar o trem."));
+    header("Location: editar_sensores.php?id=" . $id . "&erro=" . urlencode("Não foi possível verificar o trem."));
     exit;
 }
 $stmtTrem->bind_param("i", $tremVinculado);
@@ -60,7 +60,7 @@ $tremExiste = $stmtTrem->get_result()->num_rows === 1;
 $stmtTrem->close();
 
 if (!$tremExiste) {
-    header("Location: editar_sensores.php?id=" . (int)$id . "&erro=" . urlencode("O trem selecionado não existe."));
+    header("Location: editar_sensores.php?id=" . $id . "&erro=" . urlencode("O trem selecionado não existe."));
     exit;
 }
 
@@ -71,7 +71,7 @@ $stmt = $conexao->prepare($sql);
 
 if (!$stmt) {
     error_log("Erro ao preparar atualização do sensor: " . $conexao->error);
-    header("Location: editar_sensores.php?id=" . (int)$id . "&erro=" . urlencode("Não foi possível preparar a atualização."));
+    header("Location: editar_sensores.php?id=" . $id . "&erro=" . urlencode("Não foi possível preparar a atualização."));
     exit;
 }
 
@@ -80,7 +80,7 @@ $stmt->bind_param("ssisi", $localizacao, $tipoDado, $tremVinculado, $status, $id
 if (!$stmt->execute()) {
     error_log("Erro ao atualizar sensor: " . $stmt->error);
     $stmt->close();
-    header("Location: editar_sensores.php?id=" . (int)$id . "&erro=" . urlencode("O banco de dados não conseguiu atualizar o sensor."));
+    header("Location: editar_sensores.php?id=" . $id . "&erro=" . urlencode("O banco de dados não conseguiu atualizar o sensor."));
     exit;
 }
 

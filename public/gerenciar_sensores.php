@@ -182,7 +182,7 @@ function h($valor) {
                             <option value="">Todos</option>
 
                             <?php while ($tr = $listaTrens->fetch_assoc()): ?>
-                                <option value="<?= (int)$tr["id"] ?>" <?= $filtroTrem === (string)$tr["id"] ? "selected" : "" ?>>
+                                <option value="<?= $tr["id"] ?>" <?= $filtroTrem === (string)$tr["id"] ? "selected" : "" ?>>
                                     Trem <?= str_pad($tr["id"], 2, "0", STR_PAD_LEFT) ?>
                                 </option>
                             <?php endwhile; ?>
@@ -279,10 +279,10 @@ function h($valor) {
                                             class="btn btn-sm btn-warning"
                                             data-bs-toggle="modal"
                                             data-bs-target="#modalEditarSensor"
-                                            data-id="<?= (int)$sensor["id"] ?>"
+                                            data-id="<?= $sensor["id"] ?>"
                                             data-localizacao="<?= h($sensor["localizacao"]) ?>"
                                             data-tipo="<?= h($sensor["tipo_de_dado"]) ?>"
-                                            data-trem="<?= (int)$sensor["trens_id"] ?>"
+                                            data-trem="<?= $sensor["trens_id"] ?>"
                                             data-status="<?= h($sensor["status"]) ?>">
 
                                             <i class="bi bi-pencil"></i>
@@ -296,7 +296,7 @@ function h($valor) {
                                             class="form_excluir_sensor"
                                             onsubmit="return confirm('Deseja realmente excluir este sensor?');">
 
-                                            <input type="hidden" name="id" value="<?= (int)$sensor["id"] ?>">
+                                            <input type="hidden" name="id" value="<?= $sensor["id"] ?>">
 
                                             <button type="submit" class="btn btn-sm btn-danger">
                                                 <i class="bi bi-trash"></i>
@@ -387,7 +387,7 @@ function h($valor) {
                             <option value="" selected disabled>Selecione um trem</option>
 
                             <?php while ($trem = $trensModal->fetch_assoc()): ?>
-                                <option value="<?= (int)$trem["id"] ?>">
+                                <option value="<?= $trem["id"] ?>">
                                     Trem <?= str_pad($trem["id"], 2, "0", STR_PAD_LEFT) ?> - <?= h($trem["localizacao"]) ?>
                                 </option>
                             <?php endwhile; ?>
@@ -476,7 +476,7 @@ function h($valor) {
 
                                 while ($trem = $trensEdicao->fetch_assoc()):
                                 ?>
-                                    <option value="<?= (int)$trem["id"] ?>">
+                                    <option value="<?= $trem["id"] ?>">
                                         Trem <?= str_pad($trem["id"], 2, "0", STR_PAD_LEFT) ?> - <?= h($trem["localizacao"]) ?>
                                     </option>
                                 <?php endwhile; ?>

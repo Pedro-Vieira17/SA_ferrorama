@@ -99,7 +99,7 @@ $rotas = $conexao->query($sql);
                                 <tr>
 
                                     <td>
-                                        <?= (int) $rota["id"] ?>
+                                        <?=  $rota["id"] ?>
                                     </td>
 
                                     <td>
@@ -107,7 +107,7 @@ $rotas = $conexao->query($sql);
                                     </td>
 
                                     <td>
-                                        <?= number_format((float) $rota["distancia_km"], 2, ",", ".") ?> km
+                                        <?= number_format( $rota["distancia_km"], 2, ",", ".") ?> km
                                     </td>
 
                                     <td>
@@ -121,7 +121,7 @@ $rotas = $conexao->query($sql);
                                     </td>
 
                                     <td>
-                                        <?= (int) $rota["duracao_min"] ?> min
+                                        <?=  $rota["duracao_min"] ?> min
                                     </td>
 
                                     <td>
@@ -148,7 +148,7 @@ $rotas = $conexao->query($sql);
 
                                     <td>
                                         <a
-                                            href="detalhes_rota.php?id=<?= (int) $rota["id"] ?>"
+                                            href="detalhes_rota.php?id=<?=  $rota["id"] ?>"
                                             class="btn btn-sm btn-info">
 
                                             <i class="bi bi-eye"></i>

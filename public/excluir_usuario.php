@@ -17,7 +17,7 @@ if ($id === false || $id === null || $id <= 0) {
 }
 
 // Impede que o administrador exclua a própria conta.
-if ($id === (int) $_SESSION["usuario_id"]) {
+if ($id ===  $_SESSION["usuario_id"]) {
     header("Location: usuarios_cadastrados.php");
     exit;
 }
