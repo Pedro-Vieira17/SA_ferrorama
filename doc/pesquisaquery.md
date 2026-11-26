@@ -140,7 +140,7 @@ Criação e estrutura do banco de dados
 - NOT NULL — Define que uma coluna não pode ficar sem valor.
 - UNIQUE — Impede que determinados valores sejam repetidos em uma coluna.
 - VARCHAR — Define uma coluna que armazena textos com tamanho variável.
-- INT — Define uma coluna que armazena números inteiros.
+- INT  — Define uma coluna que armazena números inteiros.
 - DECIMAL — Define uma coluna que armazena números decimais.
 
 
